@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block content %}
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js'></script>
+<script type="text/javascript" src="/static/vendors/js/utilities.js"></script>
+<style>
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+	</style>
+<div style="width: 75%">
+    <canvas id="MyChart-1"></canvas>
+</div>
+<script>
+		var color = Chart.helpers.color;
+		var barChartData = {
+			labels: ['UK', 'US', 'FRANCE', 'INDIA', 'CHINA', 'ROW'],
+			datasets: [{
+				label: 'Present',
+				backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(255, 99, 132, 0.5)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132,1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 99, 132, 1)'
+            ],
+            data: [20,30,40,50,60,70],
+            borderWidth: 0.5
+			}, {
+				label: 'Previous',
+				backgroundColor: [
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(255, 205, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 205, 86,1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(255, 205, 86, 1)'
+            ],
+				data: [10,20,30,40,50,60],
+				borderWidth: 1
+			}]
+
+		};
+
+		// Define a plugin to provide data labels
+		Chart.plugins.register({
+			afterDatasetsDraw: function(chart) {
+				var ctx = chart.ctx;
+
+				chart.data.datasets.forEach(function(dataset, i) {
+					var meta = chart.getDatasetMeta(i);
+					if (!meta.hidden) {
+						meta.data.forEach(function(element, index) {
+							// Draw the text in black, with the specified font
+							ctx.fillStyle = 'rgb(0, 0, 0)';
+
+							var fontSize = 12;
+							var fontStyle = 'normal';
+							var fontFamily = 'Helvetica Neue';
+							ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+							// Just naively convert to string for now
+							var dataString = dataset.data[index].toString();
+
+							// Make sure alignment settings are correct
+							ctx.paddingTop = '20px';
+							ctx.textAlign = 'center';
+							ctx.textBaseline = 'middle';
+							var padding = 0;
+							var position = element.tooltipPosition();
+							ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+						});
+					}
+				});
+			}
+		});
+
+		window.onload = function() {
+			var ctx = document.getElementById('MyChart-1').getContext('2d');
+			window.myBar = new Chart(ctx, {
+				type: 'horizontalBar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                        },
+					title: {
+						display: true,
+						text: 'Sessions'
+					},
+					scales: {
+            yAxes: [{
+                gridLines: {
+                    display:false
+                },
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display:false
+                },
+            }]
+        },
+        }
+    });
+};
+</script>
+{% endblock %}

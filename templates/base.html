@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+     <title>Sanctus IT : Illustration web</title>
+
+    <!-- Icons -->
+	<link rel="shortcut icon" type="image/png" href="/static/img/Logo-Social.jpg"/>
+
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/simple-line-icons.css" rel="stylesheet">
+
+    <!-- Main styles for this application -->
+    <link href="/static/css/style.css" rel="stylesheet">
+    <!--Bootstrap Datatable CSS-->
+  <link rel="stylesheet" type="text/css" href="/static/vendors/css/dataTables.bootstrap4.min.css">
+
+	<style>
+	.card{
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+	}
+
+	.app-header.navbar .navbar-brand {
+
+    background-size: 98px auto !important;
+
+    }
+    .table-container
+    {
+        width: 100%;
+        overflow-y: auto;
+        _overflow: auto;
+        margin: 0 0 1em;
+    }
+    .table-container::-webkit-scrollbar
+    {
+        -webkit-appearance: none;
+        width: 10px;
+        height: 10px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb
+    {
+        border-radius: 8px;
+        border: 3px solid #fff;
+        background-color: rgba(0, 0, 0, .3);
+    }
+    .table-container-outer { position: absolute; }
+
+    .table-container-fade
+    {
+        position: absolute;
+        right: 0;
+        width: 30px;
+        height: 100%;
+        background-image: -webkit-linear-gradient(0deg, rgba(255,255,255,.5), #fff);
+        background-image: -moz-linear-gradient(0deg, rgba(255,255,255,.5), #fff);
+        background-image: -ms-linear-gradient(0deg, rgba(255,255,255,.5), #fff);
+        background-image: -o-linear-gradient(0deg, rgba(255,255,255,.5), #fff);
+        background-image: linear-gradient(0deg, rgba(255,255,255,.5), #fff);
+    }
+ul.pagination {
+    justify-content: unset !important;
+}
+@media (min-width: 768px)
+.col-md-7 {
+    flex: 0 0 58.33333%;
+    max-width: 59.33333%;
+}
+.a{
+    cursor: pointer;
+}
+.navbar-brand {
+    background-image: url(static/img/illustration-logo.png) !important;
+    background-repeat: no-repeat;
+}
+.app-header.navbar .navbar-brand{
+    background-size: 130px auto !important;
+}
+</style>
+
+    <!-- Bootstrap and necessary plugins -->
+    <script src="/static/vendors/js/jquery.min.js"></script>
+    <script src="/static/vendors/js/popper.min.js"></script>
+    <script src="/static/vendors/js/bootstrap.min.js"></script>
+    <script src="/static/vendors/js/pace.min.js"></script>
+    <script type="text/javascript" src="/static/vendors/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/static/vendors/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="/static/js/views/datatables.js"></script>
+
+</head>
+
+<body class="app">
+    <header class="app-header navbar">
+        <a class="navbar-brand" href="#"></a>
+
+        <ul class="nav navbar-nav ml-auto"></ul>
+       &nbsp;&nbsp;&nbsp;&nbsp;
+    </header>
+        <!-- /top navigation -->
+
+		<!-- page content -->
+		 <!--<div class="app-body">-->
+        <!--<div class="sidebar">-->
+            <!--<nav class="sidebar-nav">-->
+                <!--<ul class="nav">-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href=#><i class="icon-list"></i> Tables </a>-->
+                    <!--</li>-->
+					<!--&lt;!&ndash;<li class="nav-item">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="nav-link" href="/charts"><i class="icon-pie-chart"></i> Charts</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                <!--</ul>-->
+            <!--</nav>-->
+        <!--</div>-->
+		<!-- Main content -->
+			<main class="main">
+			 {% block content %}{% endblock %}
+			</main>
+		</div>
+		<div id="response_message"></div>
+		<!-- page content -->
+
+
+       <!-- footer content -->
+       <footer class="app-footer">
+        Copyright &copy; 2018 All Right Reserved.
+        <span class="float-right">Developed by <img src="/static/img/sanctusIT_logo.png" alt="logo" width="100" height="40"></span>
+       </footer>
+
+    <!-- GenesisUI main scripts -->
+    <script src="/static/js/app.js"></script>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Custom scripts required by this view -->
+    <script src="/static/js/views/widgets.js"></script>
+
+</body>
+
+</html>
