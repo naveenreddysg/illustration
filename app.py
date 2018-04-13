@@ -32,7 +32,6 @@ def index():
     cpc = CPCService('2017-10-14', '2017-10-18')
     side_btn = SideBtnService('2017-10-14', '2017-10-18')
     top_conversions = TopConversionsService('2017-10-14', '2017-10-18')
-
     print 'session category'
     print sessions_category.get_data()
     print 'sessions'
@@ -51,8 +50,12 @@ def index():
     print side_btn.get_data()
     print 'top_conversions'
     print top_conversions.get_data()
-    print
-    return render_template("index.html")
+    return render_template("results.html",
+                           sessionCategory=sessions_category.get_data(), sessions=sessions.get_data(),
+                           agents=agents.get_data(), devices=devices.get_data(), events=events.get_data(),
+                           portfolio=portfolio.get_data(), cpc=cpc.get_data(), side_btn=side_btn.get_data(),
+                           top_conversions=top_conversions.get_data()
+                           )
 
 if __name__ == '__main__':
     from models.models import db
