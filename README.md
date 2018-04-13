@@ -1,7 +1,7 @@
 # illustration
 
 ## create venv
-python -m venv venv
+python2 -m venv venv
 
 
 ## installing requirements
