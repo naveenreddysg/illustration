@@ -29,7 +29,7 @@ class Db():
         # print('DB is initiated')
         self.conn = MySQLdb.connect(user="webanalytics", password="PyPrince@123", database="webanalytics", host='68.178.217.13')
         # print('DB is created')
-        print(self.conn)
+        # print(self.conn)
 
     def execute(self, query):
         cur = self.conn.cursor()

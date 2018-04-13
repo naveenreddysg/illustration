@@ -481,8 +481,8 @@ def main(argv):
           for n in range(int((end_date - start_date).days)):
               yield start_date + timedelta(n)
 
-      start_date = date(2018, 4, 7)
-      end_date = date(2018, 4, 12)
+      start_date = date(2018, 4, 12)
+      end_date = date(2018, 4, 13)
 
       for single_date in daterange(start_date, end_date):
           startDate1 = endDate1 = single_date.strftime("%Y-%m-%d")

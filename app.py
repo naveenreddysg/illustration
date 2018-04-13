@@ -33,7 +33,7 @@ def index():
     # side_btn = SideBtnService('2017-10-14', '2017-10-14')
     # top_conversions = TopConversionsService('2017-10-14', '2017-10-14')
     #
-    # print sessions_category.get_data()
+    print sessions_category.get_data()
     # print sessions.get_data()
     # print agents.get_data()
     # print devices.get_data()
