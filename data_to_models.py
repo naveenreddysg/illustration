@@ -413,7 +413,6 @@ def print_CPC(results, date):
 
     cpc = CPCModel(result1.get('google', '0'), result1.get('Bingads', '0'), result1.get('facebookads', '0'), result1.get('Instagram', '0'), date)
     cpc.save_to_db()
-
     print("CPC:\n")
     print(result1, '\n')
     return result1

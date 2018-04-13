@@ -42,4 +42,4 @@ class Db():
     def close(self):
         self.conn.close()
 
-Db()
+# Db()

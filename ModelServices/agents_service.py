@@ -14,5 +14,15 @@ class AgentsService:
 
         req_data = db.session.query(self.model).filter(self.model.date >= self.start_date, self.model.date <= self.end_date)
         req_data = req_data.all()
-        res_data = group(req_data)
+        res_data1 = group(req_data)
+        res_data = []
+        keys = res_data1[0].keys()
+        new = {}
+        for key in keys:
+            if key != 'country' and key != 'date':
+                x = 0
+                for data in res_data1:
+                    x += int(float(data[key]))
+                new[key] = x
+        res_data.append(new)
         return res_data
