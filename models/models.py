@@ -1,4 +1,4 @@
-from Db import db
+from DbConnections.Db import db
 class SessionsCategoryModel(db.Model):
 
     __tablename__ = 'sessions_category'

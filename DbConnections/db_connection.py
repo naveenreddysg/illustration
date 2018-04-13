@@ -22,7 +22,6 @@ import MySQLdb
 #
 # Db()
 
-
 class Db():
 
     def __init__(self ):

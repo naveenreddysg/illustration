@@ -23,8 +23,8 @@ def create_tables():
 @app.route('/')
 def index():
 
-    sessions_category = SessionsCategoryService('2017-10-14', '2017-10-14')
-    # sessions = SessionsService('2017-10-14', '2017-10-14')
+    # sessions_category = SessionsCategoryService('2017-10-14', '2017-10-14')
+    sessions = SessionsService('2017-10-14', '2017-10-18')
     # agents = AgentsService('2017-10-14', '2017-10-14')
     # devices = DevicesService('2017-10-14', '2017-10-14')
     # events = EventsService('2017-10-14', '2017-10-14')
@@ -33,8 +33,8 @@ def index():
     # side_btn = SideBtnService('2017-10-14', '2017-10-14')
     # top_conversions = TopConversionsService('2017-10-14', '2017-10-14')
     #
-    print sessions_category.get_data()
-    # print sessions.get_data()
+    # print sessions_category.get_data()
+    print sessions.get_data()
     # print agents.get_data()
     # print devices.get_data()
     # print events.get_data()
@@ -42,7 +42,7 @@ def index():
     # print cpc.get_data()
     # print side_btn.get_data()
     # print top_conversions.get_data()
-    # return render_template("index.html")
+    return render_template("index.html")
 
 if __name__ == '__main__':
     from models.models import db

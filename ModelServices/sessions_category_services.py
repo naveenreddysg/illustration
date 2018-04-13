@@ -1,5 +1,6 @@
+from DbConnections.Db import db
 from models.models import SessionsCategoryModel
-from Db import db
+from utilities import group
 
 class SessionsCategoryService:
 
@@ -13,10 +14,6 @@ class SessionsCategoryService:
 
         req_data = db.session.query(self.model).filter(self.model.date >= self.start_date, self.model.date <= self.end_date)
         req_data = req_data.all()
-        res_data = [item.__dict__ for item in req_data]
-        def del_key(d):
-            del d['_sa_instance_state']
-            return d
-        res_data = map(del_key, res_data)
+        res_data = group(req_data, 'country')
         return res_data
 
