@@ -23,5 +23,5 @@ def index():
 if __name__ == '__main__':
     from models.models import db
     db.init_app(app)
-    app.run(port=8000, debug=True)
+    app.run(debug=True)
 
