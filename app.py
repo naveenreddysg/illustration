@@ -1,14 +1,5 @@
 from flask import Flask, render_template
-# from data_to_models import *
-from ModelServices.sessions_category_services import SessionsCategoryService
-from ModelServices.agents_service import AgentsService
-from ModelServices.cpc_service import CPCService
-from ModelServices.devices_service import DevicesService
-from ModelServices.events_service import EventsService
-from ModelServices.portfolio_service import PortflioService
-from ModelServices.sessions_service import SessionsService
-from ModelServices.side_btn_service import SideBtnService
-from ModelServices.top_conversion_service import TopConversionsService
+from ResultsServices.sessions_results import SessionsResults
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://webanalytics:PyPrince@123@68.178.217.13/webanalytics'
@@ -22,43 +13,14 @@ def create_tables():
 
 @app.route('/')
 def index():
-
-    sessions_category = SessionsCategoryService('2017-10-14', '2017-10-18')
-    sessions = SessionsService('2017-10-14', '2017-10-18')
-    agents = AgentsService('2017-10-14', '2017-10-18')
-    devices = DevicesService('2017-10-14', '2017-10-18')
-    events = EventsService('2017-10-14', '2017-10-18')
-    portfolio = PortflioService('2017-10-14', '2017-10-18')
-    cpc = CPCService('2017-10-14', '2017-10-18')
-    side_btn = SideBtnService('2017-10-14', '2017-10-18')
-    top_conversions = TopConversionsService('2017-10-14', '2017-10-18')
-    print 'session category'
-    print sessions_category.get_data()
-    print 'sessions'
-    print sessions.get_data()
-    print 'agents'
-    print agents.get_data()
-    print 'devices'
-    print devices.get_data()
-    print 'events'
-    print events.get_data()
-    print 'portfolio'
-    print portfolio.get_data()
-    print 'cpc'
-    print cpc.get_data()
-    print 'side_btn'
-    print side_btn.get_data()
-    print 'top_conversions'
-    print top_conversions.get_data()
+    sessions = SessionsResults('2017-10-1', '2017-10-31', '2017-12-1', '2017-12-30')
+    print(sessions.main())
     return render_template("results.html",
-                           sessionCategory=sessions_category.get_data(), sessions=sessions.get_data(),
-                           agents=agents.get_data(), devices=devices.get_data(), events=events.get_data(),
-                           portfolio=portfolio.get_data(), cpc=cpc.get_data(), side_btn=side_btn.get_data(),
-                           top_conversions=top_conversions.get_data()
+                           sessions=sessions.main()
                            )
 
 if __name__ == '__main__':
     from models.models import db
     db.init_app(app)
-    app.run(port=5000, debug=True)
+    app.run(port=8000, debug=True)
 
