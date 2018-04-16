@@ -29,5 +29,5 @@ class DeviceResults:
                               float(previous_results[0]['mobileTablet'])) * 100, 2)) + '%'
             }
          ]
-        print(main_result)
+        # print(main_result)
         return main_result
