@@ -18,7 +18,8 @@ class SessionsResults:
             'Current': i[0]['totalSessions'],
             'Previous': i[1]['totalSessions'],
             'Change': str(round((((float(i[0]['totalSessions'])-float(i[1]['totalSessions']))
-                                  /float(i[1]['totalSessions']))*100), 2))+'%'}
+                                  /float(i[1]['totalSessions']))*100), 2))+'%'
+             }
             for i in zip(current_results, previous_results)
         ]
 
