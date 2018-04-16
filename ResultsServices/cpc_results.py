@@ -9,7 +9,6 @@ class CPCResults:
     def main(self):
 
         current_results = CPCService(self.current_start_date, self.current_end_date).get_data()
-        print(current_results)
         main_result = [
             {'Paid Source': 'Google ads', 'Goal Completions': current_results[0]['google']},
             {'Paid Source': 'Bing ads', 'Goal Completions': current_results[0]['Bingads']},

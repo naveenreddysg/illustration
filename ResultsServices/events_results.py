@@ -15,7 +15,7 @@ class EventsResults:
 
         main_result = [
             {'Country': i[0]['country'],
-            'Hello Bar Events': i[0]['HelloBarEvents'],
+            'HelloBar Events': i[0]['HelloBarEvents'],
             'Previous': i[1]['HelloBarEvents']
              }
             for i in zip(current_results, previous_results)
