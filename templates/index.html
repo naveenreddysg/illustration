@@ -5,13 +5,13 @@
 
 //----------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------
-$(document).ready(function() {
-    $('.example').DataTable( {
-        "paging":   false,
-        "ordering": false,
-        "info":     false
-    } );
-} );
+<!--$(document).ready(function() {-->
+    <!--$('.example').DataTable( {-->
+        <!--"paging":   false,-->
+        <!--"ordering": false,-->
+        <!--"info":     false-->
+    <!--} );-->
+<!--} );-->
 function SwapDivsWithClick(div1,div2)
 {
    d1 = document.getElementById(div1);
@@ -98,11 +98,16 @@ margin: 10px;
                                     <button type="submit" class="btn btn-danger btn-sm">Submit</button>
                                 </div>
                             </form>
+                            <div class="container" style="text-align:center; margin-top:10px">
+                                    {% if result %}
+                                    <a href="javascript:SwapDivsWithClick('swapper-first','swapper-other')"><button class="btn btn-primary btn-sm" onclick="changeText(this)">Show Charts</button></a>
+                                    {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {% if sessions %}
+            {% if result %}
         <div id="swapper-first" style="display:block;">
         <div class="animated fadeIn">
             <div class="card-columns cols-2">
@@ -112,7 +117,7 @@ margin: 10px;
                         </div>
                         <div class="card-body">
                             <div class="table-container">
-                                <table  class="table table-hover table-outline table-sortable mb-0 example"  style="border-collapse: collapse !important;">
+                                <table  class="table table-hover table-outline table-sortable mb-0"  style="border-collapse: collapse !important;">
                                     <thead>
                                         <tr>
                                             <th>Country</th>
@@ -122,7 +127,7 @@ margin: 10px;
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for item in sessions %}
+                                        {% for item in result['sessions'] %}
                                             <tr>
                                                 <td>{{item['Country']}}</td>
                                                 <td>{{item['Current']}}</td>
@@ -135,630 +140,625 @@ margin: 10px;
                             </div>
                         </div>
                 </div>
-                <!--<div class="card">-->
-                    <!--<div class="card-header">-->
-                            <!--<font size="4">Sessions by categories</font>-->
-                            <!--</div>-->
-                            <!--<div class="card-body">-->
-                                <!--<div class="table-container">-->
-                                    <!--<table class="table table-hover table-outline table-sortable mb-0 example"  style="border-collapse: collapse !important;">-->
-                                        <!--<thead>-->
-                                            <!--<tr>-->
-                                                <!--<th>Country</th>-->
-                                                <!--<th>Organic Search</th>-->
-                                                <!--<th>Direct</th>-->
-                                                <!--<th>Referral</th>-->
-                                                <!--<th>Social</th>-->
-                                                <!--<th>Paid Search</th>-->
-                                                <!--<th>Email</th>-->
-                                            <!--</tr>-->
-                                            <!--</thead>-->
-                                            <!--<tbody>-->
-                                            <!--{% for item in result['result_sessions1'] %}-->
-                                                <!--<tr>-->
-                                                    <!--<td>{{item['Country']}}</td>-->
-                                                    <!--<td>{{item['Organic Search']}}</td>-->
-                                                    <!--<td>{{item['Direct']}}</td>-->
-                                                    <!--<td>{{item['Referral']}}</td>-->
-                                                    <!--<td>{{item['Social']}}</td>-->
-                                                    <!--<td>{{item['Paid Search']}}</td>-->
-                                                    <!--<td>{{item['Email']}}</td>-->
-                                                <!--</tr>-->
-                                            <!--{% endfor %}-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                <!--</div>-->
-                <!--<div class="card">-->
-                    <!--<div class="card-header">-->
-                        <!--<font size="4">Events</font>-->
-                    <!--</div>-->
-                    <!--<div class="card-body">-->
-                        <!--<div class="table-container">-->
-                            <!--<table  class="table table-hover table-outline table-sortable mb-0 example"  style="border-collapse: collapse !important;">-->
-                                <!--<thead>-->
-                                    <!--<tr>-->
-                                        <!--<th>Country</th>-->
-                                        <!--<th>HelloBar Events</th>-->
-                                        <!--<th>Previous</th>-->
-                                    <!--</tr>-->
-                                <!--</thead>-->
-                                <!--<tbody>-->
-                                    <!--{% for item in result['Events'] %}-->
-                                        <!--<tr>-->
-                                            <!--<td>{{item['Country']}}</td>-->
-                                            <!--<td>{{item['HelloBar Events']}}</td>-->
-                                            <!--<td>{{item['Previous']}}</td>-->
-                                        <!--</tr>-->
-                                    <!--{% endfor %}-->
-                                <!--</tbody>-->
-                            <!--</table>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="card">-->
-                    <!--<div class="card-header">-->
-                        <!--<font size="4">Devices</font>-->
-                        <!--</div>-->
-                        <!--<div class="card-body">-->
-                            <!--<div class="table-container">-->
-                                <!--<table class="table table-hover table-outline table-sortable mb-0 example"  style="border-collapse: collapse !important;">-->
-                                    <!--<thead>-->
-                                        <!--<tr>-->
-                                            <!--<th>Device</th>-->
-                                            <!--<th>Goal Completions</th>-->
-                                            <!--<th>Previous</th>-->
-                                        <!--</tr>-->
-                                        <!--</thead>-->
-                                        <!--<tbody>-->
-                                    <!--{% for item in result['Devices'] %}-->
-                                        <!--<tr>-->
-                                            <!--<td>{{item['Device']}}</td>-->
-                                            <!--<td>{{item['Goal Completions']}}</td>-->
-                                            <!--<td>{{item['Previous']}}</td>-->
-                                        <!--</tr>-->
-                                    <!--{% endfor %}-->
-                                <!--</tbody>-->
-                            <!--</table>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="card">-->
-                    <!--<div class="card-header">-->
-                        <!--<font size="4">CPC</font>-->
-                        <!--</div>-->
-                        <!--<div class="card-body">-->
-                            <!--<div class="table-container">-->
-                                <!--<table class="table table-hover table-outline table-sortable mb-0 example"  style="border-collapse: collapse !important;">-->
-                                    <!--<thead>-->
-                                        <!--<tr>-->
-                                            <!--<th>Paid Source</th>-->
-                                            <!--<th>Goal Completions</th>-->
-                                        <!--</tr>-->
-                                        <!--</thead>-->
-                                        <!--<tbody>-->
-                                            <!--{% for item in result['CPC'] %}-->
-                                                <!--<tr>-->
-                                                    <!--<td>{{item['Paid Source']}}</td>-->
-                                                    <!--<td>{{item['Goal Completions']}}</td>-->
-                                                <!--</tr>-->
-                                            <!--{% endfor %}-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js'></script>-->
-    <!--<div class="container-fluid" id="swapper-other" style="display:none">-->
-        <!--<div class="animated fadeIn">-->
-            <!--<div class="card-columns cols-2">-->
-                <!--<div class="card">-->
-                    <!--<div class="card-body">-->
-                        <!--<div class="chart-wrapper">-->
-                            <!--<canvas id="myChart-1"></canvas>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="card">-->
-                    <!--<div class="card-body">-->
-                        <!--<div class="chart-wrapper">-->
-                            <!--<canvas id="myChart-2"></canvas>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="card">-->
-                    <!--<div class="card-body">-->
-                        <!--<div class="chart-wrapper">-->
-                            <!--<canvas id="myChart-3"></canvas>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="card">-->
-                    <!--<div class="card-body">-->
-                        <!--<div class="chart-wrapper">-->
-                            <!--<canvas id="myChart-4"></canvas>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="card">-->
-                    <!--<div class="card-body">-->
-                        <!--<div class="chart-wrapper">-->
-                            <!--<canvas id="myChart-5"></canvas>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="card">-->
-                    <!--<div class="card-body">-->
-                        <!--<div class="chart-wrapper">-->
-                            <!--<canvas id="myChart-6"></canvas>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--<script>-->
-<!--var ctx1 = document.getElementById("myChart-1").getContext('2d');-->
-<!--var myChart1 = new Chart(ctx1, {-->
-    <!--type: 'horizontalBar',-->
-    <!--data: {-->
-        <!--labels: [{% for item in result['sessions'] %}-->
-                  <!--{%if item['Country'] != 'Total' %}-->
-                  <!--"{{item['Country']}}",-->
-                  <!--{% endif %}-->
-              <!--{% endfor %}],-->
-        <!--datasets: [{-->
-            <!--label: ['Current'],-->
-            <!--data: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--"{{item['Current']}}",-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--backgroundColor: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--'rgba(255, 99, 132, 0.5)',-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--borderColor: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--'rgba(255,99,132,1)',-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--borderWidth: 0.5-->
-        <!--},-->
-        <!--{-->
-            <!--label: ['Previous'],-->
-            <!--data: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--"{{item['Previous']}}",-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--backgroundColor: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--'rgba(54, 162, 235, 0.5)',-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--borderColor: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--'rgba(54, 162, 235, 1)',-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--borderWidth: 0.5-->
-        <!--}]-->
-    <!--},-->
-    <!--options: {-->
-        <!--title: {-->
-			<!--display: true,-->
-			<!--text: 'SESSIONS'-->
-			<!--},-->
-        <!--tooltips: {-->
-            <!--mode: 'index',-->
-            <!--intersect: false,-->
-            <!--},-->
-        <!--scales: {-->
-            <!--yAxes: [{-->
-                <!--gridLines: {-->
-                    <!--display:false-->
-                <!--},-->
-                <!--ticks: {-->
-                    <!--beginAtZero:true-->
-                <!--}-->
-            <!--}],-->
-            <!--xAxes: [{-->
-                <!--gridLines: {-->
-                    <!--display:true-->
-                <!--},-->
-            <!--}]-->
-        <!--}-->
-    <!--}-->
-<!--});-->
-<!--var ctx2 = document.getElementById("myChart-2").getContext('2d');-->
-<!--var myChart2 = new Chart(ctx2, {-->
-			<!--type: 'line',-->
-			<!--data: {-->
-				<!--labels: ['Organic Search', 'Direct', 'Referral', 'Social', 'Paid Search', 'Email'],-->
-				<!--datasets: [{-->
-                <!--label: ['UK'],-->
-                <!--data: [{{result['result_sessions1'][0]['Organic Search']}},{{result['result_sessions1'][0]['Direct']}},-->
-                <!--{{result['result_sessions1'][0]['Referral']}},{{result['result_sessions1'][0]['Social']}},{{result['result_sessions1'][0]['Paid Search']}},-->
-                <!--{{result['result_sessions1'][0]['Email']}}],-->
-                <!--backgroundColor: [-->
-                    <!--'rgba(252, 5, 5, 0.2)',-->
-                <!--],-->
-                <!--borderColor: [-->
-                    <!--'rgba(252, 5, 5,1)',-->
-                <!--],-->
-                <!--borderWidth: 1-->
-            <!--},-->
-            <!--{-->
-                <!--label: ['USA'],-->
-                <!--data: [{{result['result_sessions1'][1]['Organic Search']}},{{result['result_sessions1'][1]['Direct']}},-->
-                <!--{{result['result_sessions1'][1]['Referral']}},{{result['result_sessions1'][1]['Social']}},{{result['result_sessions1'][1]['Paid Search']}},-->
-                <!--{{result['result_sessions1'][1]['Email']}}],-->
-                <!--backgroundColor: [-->
-                    <!--'rgba(163, 161, 161, 0.2)',-->
-                <!--],-->
-                <!--borderColor: [-->
-                    <!--'rgba(163, 161, 161, 1)',-->
-                <!--],-->
-                <!--borderWidth: 1-->
-                <!--},-->
-            <!--{-->
-                <!--label: ['France'],-->
-                <!--data: [{{result['result_sessions1'][2]['Organic Search']}},{{result['result_sessions1'][2]['Direct']}},-->
-                <!--{{result['result_sessions1'][2]['Referral']}},{{result['result_sessions1'][2]['Social']}},{{result['result_sessions1'][2]['Paid Search']}},-->
-                <!--{{result['result_sessions1'][2]['Email']}}],-->
-                <!--backgroundColor: [-->
-                    <!--'rgba(227, 5, 252, 0.2)',-->
-                <!--],-->
-                <!--borderColor: [-->
-                    <!--'rgba(227, 5, 252,1)',-->
-                <!--],-->
-                <!--borderWidth: 1-->
-                <!--},-->
-            <!--{-->
-                <!--label: ['China'],-->
-                <!--data: [{{result['result_sessions1'][3]['Organic Search']}},{{result['result_sessions1'][3]['Direct']}},-->
-                <!--{{result['result_sessions1'][3]['Referral']}},{{result['result_sessions1'][3]['Social']}},{{result['result_sessions1'][3]['Paid Search']}},-->
-                <!--{{result['result_sessions1'][3]['Email']}}],-->
-                <!--backgroundColor: [-->
-                    <!--'rgba(248, 252, 5, 0.2)',-->
-                <!--],-->
-                <!--borderColor: [-->
-                    <!--'rgba(248, 252, 5,1)',-->
-                <!--],-->
-                <!--borderWidth: 1-->
-                <!--},-->
-            <!--{-->
-                <!--label: ['India'],-->
-                <!--data: [{{result['result_sessions1'][4]['Organic Search']}},{{result['result_sessions1'][4]['Direct']}},-->
-                <!--{{result['result_sessions1'][4]['Referral']}},{{result['result_sessions1'][4]['Social']}},{{result['result_sessions1'][4]['Paid Search']}},-->
-                <!--{{result['result_sessions1'][4]['Email']}}],-->
-                <!--backgroundColor: [-->
-                    <!--'rgba(252, 165, 5, 0.2)',-->
-                <!--],-->
-                <!--borderColor: [-->
-                    <!--'rgba(252, 165, 5,1)',-->
-                <!--],-->
-                <!--borderWidth: 1-->
-                <!--},-->
-            <!--{-->
-                <!--label: ['SEA'],-->
-                <!--data: [{{result['result_sessions1'][5]['Organic Search']}},{{result['result_sessions1'][5]['Direct']}},-->
-                <!--{{result['result_sessions1'][5]['Referral']}},{{result['result_sessions1'][5]['Social']}},{{result['result_sessions1'][5]['Paid Search']}},-->
-                <!--{{result['result_sessions1'][5]['Email']}}],-->
-                <!--backgroundColor: [-->
-                    <!--'rgba(5, 235, 252, 0.2)',-->
-                <!--],-->
-                <!--borderColor: [-->
-                    <!--'rgba(5, 235, 252,1)',-->
-                <!--],-->
-                <!--borderWidth: 1-->
-                <!--},-->
-            <!--{-->
-                <!--label: ['ANZ'],-->
-                <!--data: [{{result['result_sessions1'][6]['Organic Search']}},{{result['result_sessions1'][6]['Direct']}},-->
-                <!--{{result['result_sessions1'][6]['Referral']}},{{result['result_sessions1'][6]['Social']}},{{result['result_sessions1'][6]['Paid Search']}},-->
-                <!--{{result['result_sessions1'][6]['Email']}}],-->
-                <!--backgroundColor: [-->
-                    <!--'rgba(239, 167, 140, 0.2)',-->
-                <!--],-->
-                <!--borderColor: [-->
-                    <!--'rgba(239, 167, 140,1)',-->
-                <!--],-->
-                <!--borderWidth: 1-->
-                            <!--},-->
-            <!--{-->
-                <!--label: ['ROW'],-->
-                <!--data: [{{result['result_sessions1'][7]['Organic Search']}},{{result['result_sessions1'][7]['Direct']}},-->
-                <!--{{result['result_sessions1'][7]['Referral']}},{{result['result_sessions1'][7]['Social']}},{{result['result_sessions1'][7]['Paid Search']}},-->
-                <!--{{result['result_sessions1'][7]['Email']}}],-->
-                <!--backgroundColor: [-->
-                    <!--'rgba(5, 252, 9, 0.2)',-->
-                <!--],-->
-                <!--borderColor: [-->
-                    <!--'rgba(5, 252, 9,1)',-->
-                <!--],-->
-                <!--borderWidth: 1-->
-            <!--}]-->
-        <!--},-->
-    <!--options: {-->
-        <!--title: {-->
-			<!--display: true,-->
-			<!--text: 'SESSIONS BY CATEGORIES'-->
-			<!--},-->
-        <!--tooltips: {-->
-                    <!--mode: 'index',-->
-                    <!--intersect: false,-->
-                <!--},-->
-                <!--hover: {-->
-                    <!--mode: 'index'-->
-                <!--},-->
-        <!--scales: {-->
-            <!--yAxes: [{-->
-                <!--ticks: {-->
-                    <!--stacked: true,-->
-                    <!--beginAtZero:true-->
-                <!--}-->
-            <!--}]-->
-        <!--}-->
-    <!--}-->
-<!--});-->
-
-<!--var ctx3 = document.getElementById("myChart-3").getContext('2d');-->
-<!--var myChart3 = new Chart(ctx3, {-->
-    <!--type: 'line',-->
-    <!--data: {-->
-        <!--labels: [{% for item in result['Events'] %}-->
-                  <!--{%if item['Country'] != 'Total' %}-->
-                  <!--"{{item['Country']}}",-->
-                  <!--{% endif %}-->
-              <!--{% endfor %}],-->
-        <!--datasets: [{-->
-            <!--label: ['HelloBar Events'],-->
-            <!--data: [{% for item in result['Events'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--"{{item['HelloBar Events']}}",-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--backgroundColor: [-->
-                <!--'rgba(255, 99, 132, 1)',-->
-            <!--],-->
-            <!--borderColor: [-->
-                <!--'rgba(255,99,132,1)',-->
-            <!--],-->
-            <!--fill:false,-->
-
-        <!--},{-->
-            <!--label: ['Previous'],-->
-            <!--data: [{% for item in result['Events'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--"{{item['Previous']}}",-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--backgroundColor: [-->
-                <!--'rgba(2, 60, 252, 1)',-->
-            <!--],-->
-            <!--borderColor: [-->
-                <!--'rgba(2, 60, 252, 1)',-->
-            <!--],-->
-            <!--fill:false-->
-        <!--}]-->
-    <!--},-->
-    <!--options: {-->
-        <!--title: {-->
-			<!--display: true,-->
-			<!--text: 'EVENTS'-->
-			<!--},-->
-        <!--tooltips: {-->
-                    <!--mode: 'index',-->
-                    <!--intersect: false,-->
-                <!--},-->
-                <!--hover: {-->
-                    <!--mode: 'index'-->
-                <!--},-->
-        <!--scales: {-->
-            <!--yAxes: [{-->
-                <!--ticks: {-->
-                    <!--stacked: true,-->
-                    <!--beginAtZero:true-->
-                <!--}-->
-            <!--}]-->
-        <!--}-->
-    <!--}-->
-<!--});-->
-
-<!--var ctx4 = document.getElementById("myChart-4").getContext('2d');-->
-<!--var myChart4 = new Chart(ctx4, {-->
-    <!--type: 'bar',-->
-    <!--data: {-->
-        <!--labels: [{% for item in result['Devices'] %}-->
-                  <!--"{{item['Device']}}",-->
-              <!--{% endfor %}],-->
-        <!--datasets: [{-->
-            <!--label: ['Current'],-->
-            <!--data: [{% for item in result['Devices'] %}-->
-                  <!--"{{item['Goal Completions']}}",-->
-                  <!--{% endfor %}],-->
-            <!--backgroundColor: [{% for item in result['Devices'] %}-->
-                  <!--'rgba(255, 99, 132, 0.5)',-->
-                  <!--{% endfor %}],-->
-            <!--borderColor: [{% for item in result['Devices'] %}-->
-                  <!--'rgba(255,99,132,1)',-->
-                  <!--{% endfor %}],-->
-            <!--borderWidth: 0.5-->
-        <!--},-->
-        <!--{-->
-            <!--label: ['Previous'],-->
-            <!--data: [{% for item in result['Devices'] %}-->
-                  <!--"{{item['Previous']}}",-->
-                  <!--{% endfor %}],-->
-            <!--backgroundColor: [{% for item in result['Devices'] %}-->
-                  <!--'rgba(54, 162, 235, 0.5)',-->
-                  <!--{% endfor %}],-->
-            <!--borderColor: [{% for item in result['Devices'] %}-->
-                  <!--'rgba(54, 162, 235, 1)',-->
-                  <!--{% endfor %}],-->
-            <!--borderWidth: 0.5-->
-        <!--}]-->
-    <!--},-->
-    <!--options: {-->
-        <!--title: {-->
-			<!--display: true,-->
-			<!--text: 'DEVICES'-->
-			<!--},-->
-        <!--tooltips: {-->
-            <!--mode: 'index',-->
-            <!--intersect: false,-->
-            <!--},-->
-        <!--scales: {-->
-            <!--yAxes: [{-->
-                <!--gridLines: {-->
-                    <!--display:true-->
-                <!--},-->
-                <!--ticks: {-->
-                    <!--beginAtZero:true-->
-                <!--}-->
-            <!--}],-->
-            <!--xAxes: [{-->
-                <!--gridLines: {-->
-                    <!--display:true-->
-                <!--},-->
-            <!--}]-->
-        <!--}-->
-    <!--}-->
-<!--});-->
-
-<!--var ctx5 = document.getElementById("myChart-5").getContext('2d');-->
-<!--var myChart5 = new Chart(ctx5, {-->
-    <!--type: 'pie',-->
-    <!--data: {-->
-        <!--labels: [{% for item in result['CPC'] %}-->
-                   <!--{% if item['Paid Source'] != 'Total' %}-->
-                  <!--"{{item['Paid Source']}}",-->
-                  <!--{% endif %}-->
-                <!--{% endfor %}],-->
-        <!--datasets: [{-->
-            <!--label: ['# of Votes'],-->
-            <!--data: [{% for item in result['CPC'] %}-->
-                   <!--{% if item['Paid Source'] != 'Total' %}-->
-                  <!--"{{item['Goal Completions']}}",-->
-                  <!--{% endif %}-->
-                <!--{% endfor %}],-->
-            <!--backgroundColor: [-->
-                <!--'rgba(255, 99, 132, 0.5)',-->
-                <!--'rgba(54, 162, 235, 0.5)',-->
-                <!--'rgba(255, 206, 86, 0.5)',-->
-                <!--'rgba(75, 192, 192, 0.5)',-->
-                <!--'rgba(153, 102, 255, 0.5)',-->
-                <!--'rgba(255, 159, 64, 0.5)'-->
-            <!--],-->
-            <!--borderColor: [-->
-                <!--'rgba(255,99,132,1)',-->
-                <!--'rgba(54, 162, 235, 1)',-->
-                <!--'rgba(255, 206, 86, 1)',-->
-                <!--'rgba(75, 192, 192, 1)',-->
-                <!--'rgba(153, 102, 255, 1)',-->
-                <!--'rgba(255, 159, 64, 1)'-->
-            <!--],-->
-            <!--borderWidth: 0.5-->
-        <!--}]-->
-    <!--},-->
-    <!--options: {-->
-        <!--title: {-->
-			<!--display: true,-->
-			<!--text: 'CPC'-->
-        <!--},-->
-
-    <!--}-->
-<!--});-->
-
-<!--var ctx6 = document.getElementById("myChart-6").getContext('2d');-->
-<!--var myChart6 = new Chart(ctx6, {-->
-    <!--type: 'bar',-->
-    <!--data: {-->
-        <!--labels: [{% for item in result['sessions'] %}-->
-                  <!--{%if item['Country'] != 'Total' %}-->
-                  <!--"{{item['Country']}}",-->
-                  <!--{% endif %}-->
-              <!--{% endfor %}],-->
-        <!--datasets: [{-->
-            <!--label: ['Current'],-->
-            <!--data: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--"{{item['Current']}}",-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--backgroundColor: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--'rgba(255, 99, 132, 0.5)',-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--borderColor: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--'rgba(255,99,132,1)',-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--borderWidth: 0.5-->
-        <!--},-->
-        <!--{-->
-            <!--label: ['Previous'],-->
-            <!--data: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--"{{item['Previous']}}",-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--backgroundColor: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--'rgba(54, 162, 235, 0.5)',-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--borderColor: [{% for item in result['sessions'] %}-->
-                    <!--{%if item['Country'] != 'Total' %}-->
-                  <!--'rgba(54, 162, 235, 1)',-->
-                  <!--{% endif %}-->
-                  <!--{% endfor %}],-->
-            <!--borderWidth: 0.5-->
-        <!--}]-->
-    <!--},-->
-    <!--options: {-->
-        <!--title: {-->
-			<!--display: true,-->
-			<!--text: 'SESSIONS'-->
-			<!--},-->
-        <!--tooltips: {-->
-            <!--mode: 'index',-->
-            <!--intersect: false,-->
-            <!--},-->
-        <!--scales: {-->
-            <!--yAxes: [{-->
-                <!--gridLines: {-->
-                    <!--display:false-->
-                <!--},-->
-                <!--ticks: {-->
-                    <!--beginAtZero:true-->
-                <!--}-->
-            <!--}],-->
-            <!--xAxes: [{-->
-                <!--gridLines: {-->
-                    <!--display:true-->
-                <!--},-->
-            <!--}]-->
-        <!--}-->
-    <!--}-->
-<!--});-->
-
-<!--</script>-->
+                <div class="card">
+                    <div class="card-header">
+                            <font size="4">Sessions by categories</font>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-container">
+                                    <table class="table table-hover table-outline table-sortable mb-0"  style="border-collapse: collapse !important;">
+                                        <thead>
+                                            <tr>
+                                                <th>Country</th>
+                                                <th>Organic Search</th>
+                                                <th>Direct</th>
+                                                <th>Referral</th>
+                                                <th>Social</th>
+                                                <th>Paid Search</th>
+                                                <th>Email</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for item in result['session_category'] %}
+                                                <tr>
+                                                    <td>{{item['Country']}}</td>
+                                                    <td>{{item['Organic Search']}}</td>
+                                                    <td>{{item['Direct']}}</td>
+                                                    <td>{{item['Referral']}}</td>
+                                                    <td>{{item['Social']}}</td>
+                                                    <td>{{item['Paid Search']}}</td>
+                                                    <td>{{item['Email']}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <font size="4">Events</font>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table  class="table table-hover table-outline table-sortable mb-0"  style="border-collapse: collapse !important;">
+                                <thead>
+                                    <tr>
+                                        <th>Country</th>
+                                        <th>HelloBar Events</th>
+                                        <th>Previous</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in result['Events'] %}
+                                        <tr>
+                                            <td>{{item['Country']}}</td>
+                                            <td>{{item['HelloBar Events']}}</td>
+                                            <td>{{item['Previous']}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <font size="4">Devices</font>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-container">
+                                <table class="table table-hover table-outline table-sortable mb-0"  style="border-collapse: collapse !important;">
+                                    <thead>
+                                        <tr>
+                                            <th>Device</th>
+                                            <th>Goal Completions</th>
+                                            <th>Previous</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                    {% for item in result['Devices'] %}
+                                        <tr>
+                                            <td>{{item['Device']}}</td>
+                                            <td>{{item['Goal Completions']}}</td>
+                                            <td>{{item['Previous']}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <font size="4">CPC</font>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-container">
+                                <table class="table table-hover table-outline table-sortable mb-0"  style="border-collapse: collapse !important;">
+                                    <thead>
+                                        <tr>
+                                            <th>Paid Source</th>
+                                            <th>Goal Completions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in result['CPC'] %}
+                                                <tr>
+                                                    <td>{{item['Paid Source']}}</td>
+                                                    <td>{{item['Goal Completions']}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js'></script>
+    <div class="container-fluid" id="swapper-other" style="display:none">
+        <div class="animated fadeIn">
+            <div class="card-columns cols-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="myChart-1"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="myChart-2"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="myChart-3"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="myChart-4"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="myChart-5"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="myChart-6"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+<script>
+var ctx1 = document.getElementById("myChart-1").getContext('2d');
+var myChart1 = new Chart(ctx1, {
+    type: 'horizontalBar',
+    data: {
+        labels: [{% for item in result['sessions'] %}
+                  {%if item['Country'] != 'Total' %}
+                  "{{item['Country']}}",
+                  {% endif %}
+              {% endfor %}],
+        datasets: [{
+            label: ['Current'],
+            data: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  "{{item['Current']}}",
+                  {% endif %}
+                  {% endfor %}],
+            backgroundColor: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  'rgba(255, 99, 132, 0.5)',
+                  {% endif %}
+                  {% endfor %}],
+            borderColor: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  'rgba(255,99,132,1)',
+                  {% endif %}
+                  {% endfor %}],
+            borderWidth: 0.5
+        },
+        {
+            label: ['Previous'],
+            data: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  "{{item['Previous']}}",
+                  {% endif %}
+                  {% endfor %}],
+            backgroundColor: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  'rgba(54, 162, 235, 0.5)',
+                  {% endif %}
+                  {% endfor %}],
+            borderColor: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  'rgba(54, 162, 235, 1)',
+                  {% endif %}
+                  {% endfor %}],
+            borderWidth: 0.5
+        }]
+    },
+    options: {
+        title: {
+			display: true,
+			text: 'SESSIONS'
+			},
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    display:false
+                },
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display:true
+                },
+            }]
+        }
+    }
+});
+var ctx2 = document.getElementById("myChart-2").getContext('2d');
+var myChart2 = new Chart(ctx2, {
+			type: 'line',
+			data: {
+				labels: ['Organic Search', 'Direct', 'Referral', 'Social', 'Paid Search', 'Email'],
+				datasets: [{
+                label: ['UK'],
+                data: [{{result['session_category'][0]['Organic Search']}},{{result['session_category'][0]['Direct']}},
+                {{result['session_category'][0]['Referral']}},{{result['session_category'][0]['Social']}},{{result['session_category'][0]['Paid Search']}},
+                {{result['session_category'][0]['Email']}}],
+                backgroundColor: [
+                    'rgba(252, 5, 5, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(252, 5, 5,1)',
+                ],
+                borderWidth: 1
+            },
+            {
+                label: ['USA'],
+                data: [{{result['session_category'][1]['Organic Search']}},{{result['session_category'][1]['Direct']}},
+                {{result['session_category'][1]['Referral']}},{{result['session_category'][1]['Social']}},{{result['session_category'][1]['Paid Search']}},
+                {{result['session_category'][1]['Email']}}],
+                backgroundColor: [
+                    'rgba(163, 161, 161, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(163, 161, 161, 1)',
+                ],
+                borderWidth: 1
+                },
+            {
+                label: ['France'],
+                data: [{{result['session_category'][2]['Organic Search']}},{{result['session_category'][2]['Direct']}},
+                {{result['session_category'][2]['Referral']}},{{result['session_category'][2]['Social']}},{{result['session_category'][2]['Paid Search']}},
+                {{result['session_category'][2]['Email']}}],
+                backgroundColor: [
+                    'rgba(227, 5, 252, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(227, 5, 252,1)',
+                ],
+                borderWidth: 1
+                },
+            {
+                label: ['China'],
+                data: [{{result['session_category'][3]['Organic Search']}},{{result['session_category'][3]['Direct']}},
+                {{result['session_category'][3]['Referral']}},{{result['session_category'][3]['Social']}},{{result['session_category'][3]['Paid Search']}},
+                {{result['session_category'][3]['Email']}}],
+                backgroundColor: [
+                    'rgba(248, 252, 5, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(248, 252, 5,1)',
+                ],
+                borderWidth: 1
+                },
+            {
+                label: ['India'],
+                data: [{{result['session_category'][4]['Organic Search']}},{{result['session_category'][4]['Direct']}},
+                {{result['session_category'][4]['Referral']}},{{result['session_category'][4]['Social']}},{{result['session_category'][4]['Paid Search']}},
+                {{result['session_category'][4]['Email']}}],
+                backgroundColor: [
+                    'rgba(252, 165, 5, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(252, 165, 5,1)',
+                ],
+                borderWidth: 1
+                },
+            {
+                label: ['SEA'],
+                data: [{{result['session_category'][5]['Organic Search']}},{{result['session_category'][5]['Direct']}},
+                {{result['session_category'][5]['Referral']}},{{result['session_category'][5]['Social']}},{{result['session_category'][5]['Paid Search']}},
+                {{result['session_category'][5]['Email']}}],
+                backgroundColor: [
+                    'rgba(5, 235, 252, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(5, 235, 252,1)',
+                ],
+                borderWidth: 1
+                },
+            {
+                label: ['ANZ'],
+                data: [{{result['session_category'][6]['Organic Search']}},{{result['session_category'][6]['Direct']}},
+                {{result['session_category'][6]['Referral']}},{{result['session_category'][6]['Social']}},{{result['session_category'][6]['Paid Search']}},
+                {{result['session_category'][6]['Email']}}],
+                backgroundColor: [
+                    'rgba(239, 167, 140, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(239, 167, 140,1)',
+                ],
+                borderWidth: 1
+                            },
+            {
+                label: ['ROW'],
+                data: [{{result['session_category'][7]['Organic Search']}},{{result['session_category'][7]['Direct']}},
+                {{result['session_category'][7]['Referral']}},{{result['session_category'][7]['Social']}},{{result['session_category'][7]['Paid Search']}},
+                {{result['session_category'][7]['Email']}}],
+                backgroundColor: [
+                    'rgba(5, 252, 9, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(5, 252, 9,1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+    options: {
+        title: {
+			display: true,
+			text: 'SESSIONS BY CATEGORIES'
+			},
+        tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'index'
+                },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    stacked: true,
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+var ctx3 = document.getElementById("myChart-3").getContext('2d');
+var myChart3 = new Chart(ctx3, {
+    type: 'line',
+    data: {
+        labels: [{% for item in result['Events'] %}
+                  {%if item['Country'] != 'Total' %}
+                  "{{item['Country']}}",
+                  {% endif %}
+              {% endfor %}],
+        datasets: [{
+            label: ['HelloBar Events'],
+            data: [{% for item in result['Events'] %}
+                    {%if item['Country'] != 'Total' %}
+                  "{{item['HelloBar Events']}}",
+                  {% endif %}
+                  {% endfor %}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+            ],
+            fill:false,
+
+        },{
+            label: ['Previous'],
+            data: [{% for item in result['Events'] %}
+                    {%if item['Country'] != 'Total' %}
+                  "{{item['Previous']}}",
+                  {% endif %}
+                  {% endfor %}],
+            backgroundColor: [
+                'rgba(2, 60, 252, 1)',
+            ],
+            borderColor: [
+                'rgba(2, 60, 252, 1)',
+            ],
+            fill:false
+        }]
+    },
+    options: {
+        title: {
+			display: true,
+			text: 'EVENTS'
+			},
+        tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'index'
+                },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    stacked: true,
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+var ctx4 = document.getElementById("myChart-4").getContext('2d');
+var myChart4 = new Chart(ctx4, {
+    type: 'bar',
+    data: {
+        labels: [{% for item in result['Devices'] %}
+                  "{{item['Device']}}",
+              {% endfor %}],
+        datasets: [{
+            label: ['Current'],
+            data: [{% for item in result['Devices'] %}
+                  "{{item['Goal Completions']}}",
+                  {% endfor %}],
+            backgroundColor: [{% for item in result['Devices'] %}
+                  'rgba(255, 99, 132, 0.5)',
+                  {% endfor %}],
+            borderColor: [{% for item in result['Devices'] %}
+                  'rgba(255,99,132,1)',
+                  {% endfor %}],
+            borderWidth: 0.5
+        },
+        {
+            label: ['Previous'],
+            data: [{% for item in result['Devices'] %}
+                  "{{item['Previous']}}",
+                  {% endfor %}],
+            backgroundColor: [{% for item in result['Devices'] %}
+                  'rgba(54, 162, 235, 0.5)',
+                  {% endfor %}],
+            borderColor: [{% for item in result['Devices'] %}
+                  'rgba(54, 162, 235, 1)',
+                  {% endfor %}],
+            borderWidth: 0.5
+        }]
+    },
+    options: {
+        title: {
+			display: true,
+			text: 'DEVICES'
+			},
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    display:true
+                },
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display:true
+                },
+            }]
+        }
+    }
+});
+
+var ctx5 = document.getElementById("myChart-5").getContext('2d');
+var myChart5 = new Chart(ctx5, {
+    type: 'pie',
+    data: {
+        labels: [{% for item in result['CPC'] %}
+                   {% if item['Paid Source'] != 'Total' %}
+                  "{{item['Paid Source']}}",
+                  {% endif %}
+                {% endfor %}],
+        datasets: [{
+            label: ['# of Votes'],
+            data: [{% for item in result['CPC'] %}
+                   {% if item['Paid Source'] != 'Total' %}
+                  "{{item['Goal Completions']}}",
+                  {% endif %}
+                {% endfor %}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 0.5
+        }]
+    },
+    options: {
+        title: {
+			display: true,
+			text: 'CPC'
+        },
+
+    }
+});
+
+var ctx6 = document.getElementById("myChart-6").getContext('2d');
+var myChart6 = new Chart(ctx6, {
+    type: 'bar',
+    data: {
+        labels: [{% for item in result['sessions'] %}
+                  {%if item['Country'] != 'Total' %}
+                  "{{item['Country']}}",
+                  {% endif %}
+              {% endfor %}],
+        datasets: [{
+            label: ['Current'],
+            data: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  "{{item['Current']}}",
+                  {% endif %}
+                  {% endfor %}],
+            backgroundColor: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  'rgba(255, 99, 132, 0.5)',
+                  {% endif %}
+                  {% endfor %}],
+            borderColor: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  'rgba(255,99,132,1)',
+                  {% endif %}
+                  {% endfor %}],
+            borderWidth: 0.5
+        },
+        {
+            label: ['Previous'],
+            data: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  "{{item['Previous']}}",
+                  {% endif %}
+                  {% endfor %}],
+            backgroundColor: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  'rgba(54, 162, 235, 0.5)',
+                  {% endif %}
+                  {% endfor %}],
+            borderColor: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  'rgba(54, 162, 235, 1)',
+                  {% endif %}
+                  {% endfor %}],
+            borderWidth: 0.5
+        }]
+    },
+    options: {
+        title: {
+			display: true,
+			text: 'SESSIONS'
+			},
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    display:false
+                },
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display:true
+                },
+            }]
+        }
+    }
+});
+
+</script>
 {% endif %}
 {% endblock %}

@@ -1,9 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from ResultsServices.sessions_results import SessionsResults
-from ResultsServices.sessions_category_result import SessionsCategoryResults
+from ResultsServices.sessions_category_results import SessionsCategoryResults
 from ResultsServices.events_results import EventsResults
-from ModelServices.devices_service import DevicesService
 from ResultsServices.devices_results import DeviceResults
+from ResultsServices.cpc_results import CPCResults
 #=======================================================================================================================
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://webanalytics:PyPrince@123@68.178.217.13/webanalytics'
@@ -17,16 +17,26 @@ def create_tables():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    sessions = SessionsResults('2017-10-01', '2017-10-31', '2017-12-1', '2017-12-30')
-    session_category = SessionsCategoryResults('2017-10-01', '2017-10-31', '2017-12-1', '2017-12-30')
-    events = EventsResults('2017-10-01', '2017-10-31', '2017-12-1', '2017-12-30')
-    devices = DeviceResults('2017-10-01', '2017-10-31', '2017-12-1', '2017-12-30')
-    return render_template("results.html",
-                           sessions=sessions.main(),
-                           session_category=session_category.main(),
-                           events=events.main(),
-                           devices=devices.main()
-                           )
+    try:
+        dates = request.form.to_dict()
+        if dates['pre_start'] != "":
+            sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+            session_category = SessionsCategoryResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+            events = EventsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+            devices = DeviceResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+            cpc = CPCResults(dates['pre_start'], dates['pre_end'])
+            result = {"sessions": sessions.main(),
+                      "session_category": session_category.main(),
+                      "Events": events.main(),
+                      "Devices": devices.main(),
+                      "CPC": cpc.main()}
+
+            return render_template("index.html",
+                                   result=result
+                               )
+    except Exception as e:
+            # print(e)
+            return (render_template('index.html'))
 
 if __name__ == '__main__':
     from models.models import db
