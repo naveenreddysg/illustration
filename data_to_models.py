@@ -6,7 +6,7 @@ from googleapiclient import sample_tools
 from googleapiclient.errors import HttpError
 from oauth2client.client import AccessTokenRefreshError
 from DbConnections.db_connection import Db
-from models.models import *
+# from models.models import *
 
 
 #----------------------------------------------------------------------------------------------------
@@ -98,15 +98,15 @@ def get_top_keywords(service, profile_id, startDate1, endDate1):
 
 def print_top_keywords(results, startDate1):
 
-    # query = "INSERT INTO top_conversions (mobile_tablet, bounce_rate, returning_conversions, unique_conversions, session_duration, date)\
-    #       VALUES ('{}', '{}', '{}', '{}', '{}', '{}');".format \
-    #     (sum(results[0]), sum(results[1])/4, sum(results[2])/4, sum(results[3])/4, sum(results[4])/4, startDate1)
-    # db = Db()
-    # db.execute(query)
-    # db.commit()
-    topConversions = TopConversionsModel(sum(results[0]), sum(results[1])/4, sum(results[2])/4, sum(results[3])/4, sum(results[4])/4, startDate1)
-    topConversions.save_to_db()
-    print('TopConversions')
+    query = "INSERT INTO top_conversions (mobile_tablet, bounce_rate, returning_conversions, unique_conversions, session_duration, date)\
+          VALUES ('{}', '{}', '{}', '{}', '{}', '{}');".format \
+        (sum(results[0]), sum(results[1])/4, sum(results[2])/4, sum(results[3])/4, sum(results[4])/4, startDate1)
+    db = Db()
+    db.execute(query)
+    db.commit()
+    # topConversions = TopConversionsModel(sum(results[0]), sum(results[1])/4, sum(results[2])/4, sum(results[3])/4, sum(results[4])/4, startDate1)
+    # topConversions.save_to_db()
+    # print('TopConversions')
 
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -131,16 +131,16 @@ def print_agents(results, date):
     present_result = dict(map(dict_conversion, results.get('rows', [["", ""]])))
     print('print_agents')
 
-    # query = "INSERT INTO agents (click, email_click, call_click, date)\
-    #   VALUES ('{}', '{}', '{}', '{}');".format \
-    #     (present_result.get('Click', '0'), present_result.get('EmailClick', '0'), present_result.get('EmailClick','0'), date)
-    # db = Db()
-    # db.execute(query)
-    # db.commit()
+    query = "INSERT INTO agents (click, email_click, call_click, date)\
+      VALUES ('{}', '{}', '{}', '{}');".format \
+        (present_result.get('Click', '0'), present_result.get('EmailClick', '0'), present_result.get('EmailClick','0'), date)
+    db = Db()
+    db.execute(query)
+    db.commit()
 
-    agents = AgentsModel(present_result.get('Click', '0'), present_result.get('EmailClick','0'), present_result.get('EmailClick','0'), date)
-    agents.save_to_db()
-    return present_result
+    # agents = AgentsModel(present_result.get('Click', '0'), present_result.get('EmailClick','0'), present_result.get('EmailClick','0'), date)
+    # agents.save_to_db()
+    # return present_result
 
 def get_sidebtn(service, profile_id,pre_startDate,pre_endDate):
   pres_month = service.data().ga().get(
@@ -157,16 +157,17 @@ def get_sidebtn(service, profile_id,pre_startDate,pre_endDate):
 def print_sidebtn(results, date):
     present_result = (dict(results.get('rows', [["", ""]])))
 
-    # query = "INSERT INTO side_btn (recently_viewed_portfolios, Help, date)\
-    #       VALUES ('{}', '{}', '{}');".format \
-    #     (present_result.get('RecentlyViewedPortfolios', '0'), present_result.get('Help', '0'), date)
-    # db = Db()
-    # db.execute(query)
-    # db.commit()
-    # print('side_btn')
-    agents = SideBtnModel(present_result.get('RecentlyViewedPortfolios', '0'), present_result.get('Help', '0'), date)
-    agents.save_to_db()
-    return present_result
+    query = "INSERT INTO side_btn (recently_viewed_portfolios, Help, date)\
+          VALUES ('{}', '{}', '{}');".format \
+        (present_result.get('RecentlyViewedPortfolios', '0'), present_result.get('Help', '0'), date)
+    db = Db()
+    db.execute(query)
+    db.commit()
+    print('side_btn')
+
+    # agents = SideBtnModel(present_result.get('RecentlyViewedPortfolios', '0'), present_result.get('Help', '0'), date)
+    # agents.save_to_db()
+    # return present_result
 
 def get_portpolio(service, profile_id,pre_startDate,pre_endDate):
   pres_month = service.data().ga().get(
@@ -181,17 +182,18 @@ def get_portpolio(service, profile_id,pre_startDate,pre_endDate):
   return pres_month
 
 def print_portpolio(results, date):
+
     print('portfolio')
     present_result = (dict(results.get('rows', [["", ""]])))
-    # query = "INSERT INTO portfolio (PDF_downloads, email_clicks, call_clicks, video_Image_Clicks, date)\
-    #           VALUES ('{}', '{}', '{}', '{}', '{}');".format \
-    #     (present_result.get('PDFClick', '0'), present_result.get('EmailClick', '0'), present_result.get('CallClick', '0'), present_result.get('VideoImgClick', '0'), date)
-    # db = Db()
-    # db.execute(query)
-    # db.commit()
+    query = "INSERT INTO portfolio (PDF_downloads, email_clicks, call_clicks, video_Image_Clicks, date)\
+              VALUES ('{}', '{}', '{}', '{}', '{}');".format \
+        (present_result.get('PDFClick', '0'), present_result.get('EmailClick', '0'), present_result.get('CallClick', '0'), present_result.get('VideoImgClick', '0'), date)
+    db = Db()
+    db.execute(query)
+    db.commit()
 
-    agents = PortflioModel(present_result.get('PDFClick', '0'), present_result.get('EmailClick', '0'), present_result.get('CallClick', '0'), present_result.get('VideoImgClick', '0'), date)
-    agents.save_to_db()
+    # agents = PortflioModel(present_result.get('PDFClick', '0'), present_result.get('EmailClick', '0'), present_result.get('CallClick', '0'), present_result.get('VideoImgClick', '0'), date)
+    # agents.save_to_db()
     return present_result
 
 #----------------------------------------------------------------------------------------------------------------
@@ -274,24 +276,25 @@ def print_sessions(results, country, date):
   print(result1, "\n")
   print(d_sessions, "\n")
 
-  # query = "INSERT INTO sessions_category (country, organic_search, direct, referral, social, paid_search, email, date)\
-  # VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');".format\
-  #     (result1['Country'], result1.get('Organic Search', '0'), result1.get('Direct', '0'), result1.get('Social', '0'), result1.get('Referral', '0'), result1.get('Paid Search', '0'), result1.get('Email', '0'), date)
-  # db = Db()
-  # db.execute(query)
-  # db.commit()
+  query = "INSERT INTO sessions_category (country, organic_search, direct, referral, social, paid_search, email, date)\
+  VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');".format\
+      (result1['Country'], result1.get('Organic Search', '0'), result1.get('Direct', '0'), result1.get('Social', '0'), result1.get('Referral', '0'), result1.get('Paid Search', '0'), result1.get('Email', '0'), date)
+  db = Db()
+  db.execute(query)
+  db.commit()
+
+  query = "INSERT INTO sessions (country, total, date)VALUES ('{}', '{}', '{}');".format(d_sessions['Country'], d_sessions.get('TotalSessions', '0'), date)
+  db = Db()
+  db.execute(query)
+  db.commit()
+  db.close()
+
+  # sessions_category = SessionsCategoryModel(result1['Country'], result1.get('Organic Search', '0'), result1.get('Direct', '0'), result1.get('Social', '0'), result1.get('Referral', '0'), result1.get('Paid Search', '0'), result1.get('Email', '0'), date)
+  # sessions_category.save_to_db()
   #
-  # query = "INSERT INTO sessions (country, total, date)VALUES ('{}', '{}', '{}');".format(d_sessions['Country'], d_sessions.get('TotalSessions', '0'), date)
-  # db = Db()
-  # db.execute(query)
-  # db.commit()
-  # db.close()
+  # sessions = SessionsModel(d_sessions['Country'], d_sessions.get('TotalSessions', '0'), date)
+  # sessions.save_to_db()
 
-  sessions_category = SessionsCategoryModel(result1['Country'], result1.get('Organic Search', '0'), result1.get('Direct', '0'), result1.get('Social', '0'), result1.get('Referral', '0'), result1.get('Paid Search', '0'), result1.get('Email', '0'), date)
-  sessions_category.save_to_db()
-
-  sessions = SessionsModel(d_sessions['Country'], d_sessions.get('TotalSessions', '0'), date)
-  sessions.save_to_db()
   return result1, d_sessions
 
 #-----------------------------------------------------------------------------
@@ -367,14 +370,14 @@ def print_devices(results, date):
     except:
         pass
 
-    # query = "INSERT INTO devices (mobile_tablet, desktop, date)VALUES ('{}', '{}', '{}');".format(result1.get('Mobile + Tablet', '0'), result1.get('desktop', '0'), date)
-    # db = Db()
-    # db.execute(query)
-    # db.commit()
-    # db.close()
+    query = "INSERT INTO devices (mobile_tablet, desktop, date)VALUES ('{}', '{}', '{}');".format(result1.get('Mobile + Tablet', '0'), result1.get('desktop', '0'), date)
+    db = Db()
+    db.execute(query)
+    db.commit()
+    db.close()
 
-    devices = DevicesModel(result1.get('Mobile + Tablet', '0'), result1.get('desktop', '0'), date)
-    devices.save_to_db()
+    # devices = DevicesModel(result1.get('Mobile + Tablet', '0'), result1.get('desktop', '0'), date)
+    # devices.save_to_db()
 
     print("DEVICES:\n")
     print(result1, "\n")
@@ -405,14 +408,14 @@ def print_CPC(results, date):
     except:
         result1 = {}
 
-    # query = "INSERT INTO cpc (google, Bingads, facebookads, Instagram, date)VALUES ('{}', '{}', '{}', '{}', '{}');".format(result1.get('google', '0'), result1.get('Bingads', '0'), result1.get('facebookads', '0'), result1.get('Instagram', '0'), date)
-    # db = Db()
-    # db.execute(query)
-    # db.commit()
-    # db.close()
+    query = "INSERT INTO cpc (google, Bingads, facebookads, Instagram, date)VALUES ('{}', '{}', '{}', '{}', '{}');".format(result1.get('google', '0'), result1.get('Bingads', '0'), result1.get('facebookads', '0'), result1.get('Instagram', '0'), date)
+    db = Db()
+    db.execute(query)
+    db.commit()
+    db.close()
 
-    cpc = CPCModel(result1.get('google', '0'), result1.get('Bingads', '0'), result1.get('facebookads', '0'), result1.get('Instagram', '0'), date)
-    cpc.save_to_db()
+    # cpc = CPCModel(result1.get('google', '0'), result1.get('Bingads', '0'), result1.get('facebookads', '0'), result1.get('Instagram', '0'), date)
+    # cpc.save_to_db()
     print("CPC:\n")
     print(result1, '\n')
     return result1
@@ -483,8 +486,8 @@ def main(argv):
           for n in range(int((end_date - start_date).days)):
               yield start_date + timedelta(n)
 
-      start_date = date(2018, 4, 12)
-      end_date = date(2018, 4, 13)
+      start_date = date(2018, 4, 14)
+      end_date = date(2018, 4, 16)
 
       for single_date in daterange(start_date, end_date):
           startDate1 = endDate1 = single_date.strftime("%Y-%m-%d")
@@ -500,9 +503,8 @@ def main(argv):
           #     lst[2].append(float(results[2].get('totalsForAllResults')['ga:goalconversionrateall']))
           #     lst[3].append(float(results[3].get('totalsForAllResults')['ga:goalconversionrateall']))
           #     lst[4].append(float(results[4].get('totalsForAllResults')['ga:avgsessionduration']))
-          #
+          #     print('top_conversions')
           # print_top_keywords(lst, startDate1)
-
 
           # for profile_id in agents:
           #     results = get_agents(service, profile_id[0], startDate1, endDate1)
@@ -518,7 +520,7 @@ def main(argv):
           #     results = get_portpolio(service, profile_id[0], startDate1, endDate1)
           #     # print(results)
           #     print_portpolio(results, startDate1)
-          #
+
           # for profile_id in events:
           #
           #     results = get_events(service, profile_id[0], startDate1, endDate1)
