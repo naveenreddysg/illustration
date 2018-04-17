@@ -486,8 +486,8 @@ def main(argv):
           for n in range(int((end_date - start_date).days)):
               yield start_date + timedelta(n)
 
-      start_date = date(2018, 4, 14)
-      end_date = date(2018, 4, 16)
+      start_date = date(2018, 4, 15)
+      end_date = date(2018, 4, 17)
 
       for single_date in daterange(start_date, end_date):
           startDate1 = endDate1 = single_date.strftime("%Y-%m-%d")
@@ -505,7 +505,7 @@ def main(argv):
           #     lst[4].append(float(results[4].get('totalsForAllResults')['ga:avgsessionduration']))
           #     print('top_conversions')
           # print_top_keywords(lst, startDate1)
-
+          #
           # for profile_id in agents:
           #     results = get_agents(service, profile_id[0], startDate1, endDate1)
           #     # print(results)
@@ -520,7 +520,7 @@ def main(argv):
           #     results = get_portpolio(service, profile_id[0], startDate1, endDate1)
           #     # print(results)
           #     print_portpolio(results, startDate1)
-
+          #
           # for profile_id in events:
           #
           #     results = get_events(service, profile_id[0], startDate1, endDate1)

@@ -5,6 +5,7 @@ from ResultsServices.events_results import EventsResults
 from ResultsServices.devices_results import DeviceResults
 from ResultsServices.cpc_results import CPCResults
 from ResultsServices.top_conversions import TopConversionsResults
+from utilities import get_dates, date_converter
 #=======================================================================================================================
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://webanalytics:PyPrince@123@68.178.217.13/webanalytics'
@@ -20,6 +21,8 @@ def create_tables():
 def index():
     try:
         dates = request.form.to_dict()
+        dates = date_converter(dates)
+        print(dates)
         if dates['pre_start'] != "":
             sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
             session_category = SessionsCategoryResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
@@ -37,12 +40,29 @@ def index():
               }
 
             return render_template("index.html",
-                                   result=result
-                               )
+                                   result=result)
     except Exception as e:
-            # print(e)
-            return render_template('index.html',
-                                   )
+        # print(e)
+        dates = get_dates(7)
+        print(dates)
+        sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+        session_category = SessionsCategoryResults(dates['pre_start'], dates['pre_end'], dates['prv_start'],
+                                                   dates['prv_end'])
+        events = EventsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+        devices = DeviceResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+        cpc = CPCResults(dates['pre_start'], dates['pre_end'])
+        Top_conversions = TopConversionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'],
+                                                dates['prv_end'])
+        result = {
+            "sessions": sessions.main(),
+            "session_category": session_category.main(),
+            "Events": events.main(),
+            "Devices": devices.main(),
+            "CPC": cpc.main(),
+            "Top_conversions": Top_conversions.main()
+        }
+        return render_template("index.html", result=result)
+
 if __name__ == '__main__':
     from models.models import db
     db.init_app(app)

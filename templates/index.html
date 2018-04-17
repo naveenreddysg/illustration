@@ -35,6 +35,15 @@ function changeText(id) {
         id.innerHTML = "Show Charts";
     }
 };
+$(function() {
+var date = new Date();
+var currentMonth = date.getMonth();
+var currentDate = date.getDate();
+var currentYear = date.getFullYear();
+$('.datepicker').datepicker({
+maxDate: new Date(currentYear, currentMonth, currentDate-1)
+});
+});
 </script>
 <style>
 .card-body{
@@ -78,19 +87,19 @@ margin: 10px;
                                 <div class="form-row">
                                     <div class="col-md-3">
                                         <label><b>Present Start Date</b></label>
-                                      <input name="pre_start" type="date" class="form-control" required>
+                                      <input name="pre_start" class="form-control datepicker a" placeholder="mm/dd/yyyy" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label><b>Present End Date</b></label>
-                                      <input name="pre_end" type="date" class="form-control" required>
+                                      <input name="pre_end" class="form-control datepicker a" placeholder="mm/dd/yyyy" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label><b>Previous Start Date</b></label>
-                                      <input name="prv_start" type="date" class="form-control" required>
+                                      <input name="prv_start" class="form-control datepicker a" placeholder="mm/dd/yyyy" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label><b>Previous End Date</b></label>
-                                      <input name="prv_end" type="date" class="form-control" required>
+                                      <input name="prv_end" class="form-control datepicker a" placeholder="mm/dd/yyyy" required>
                                     </div>
                                 </div>
                                 <div class="container" style="text-align:center; margin-top:10px">

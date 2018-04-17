@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from collections import defaultdict
 
 def group(req_data, group_by=None):
@@ -26,3 +27,23 @@ def group(req_data, group_by=None):
                     new[key] = item[0][key]
             res_data.append(new)
     return res_data
+
+def get_dates(N):
+
+    pre_end = datetime.now() - timedelta(days=1)
+    pre_start = datetime.now() - timedelta(days=N)
+    prv_end = pre_end - timedelta(days=1)
+    prv_start = prv_end - timedelta(days=N)
+
+    return {'pre_start': pre_start.strftime('%Y-%m-%d'),
+            'pre_end': pre_end.strftime('%Y-%m-%d'),
+            'prv_start': prv_start.strftime('%Y-%m-%d'),
+            'prv_end': prv_end.strftime('%Y-%m-%d')
+            }
+
+def date_converter(dates):
+    newdates = {}
+    for key, value in dates.iteritems():
+        date = dates[key].split('/')
+        newdates[key] = date[2]+'-'+date[0]+'-'+date[1]
+    return newdates
