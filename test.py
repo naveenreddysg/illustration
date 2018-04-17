@@ -20,18 +20,34 @@ import datetime
 #         newdates[key] = date[2]+'-'+date[0]+'-'+date[1]
 #     return newdates
 
-res_data = [{'totalSessions': 71129, u'country': u'UK'}, {'totalSessions': 9210, u'country': u'India'}, {'totalSessions': 57473, u'country': u'US'}, {'totalSessions': 14142, u'country': u'France'}, {'totalSessions': 8658, u'country': u'China'}, {'totalSessions': 9554, u'country': u'SEA'}, {'totalSessions': 6951, u'country': u'ANZ'}, {'totalSessions': 54144, 'country': 'ROW'}, {'totalSessions': 231261, 'country': 'Total'}]
+# res_data = [{'totalSessions': 71129, u'country': u'UK'}, {'totalSessions': 9210, u'country': u'India'}, {'totalSessions': 57473, u'country': u'US'}, {'totalSessions': 14142, u'country': u'France'}, {'totalSessions': 8658, u'country': u'China'}, {'totalSessions': 9554, u'country': u'SEA'}, {'totalSessions': 6951, u'country': u'ANZ'}, {'totalSessions': 54144, 'country': 'ROW'}, {'totalSessions': 231261, 'country': 'Total'}]
 
-sort_list = ['UK', 'US', 'France', 'China', 'India', 'SEA', 'ANZ', 'ROW', 'Total']
+# sort_list = ['UK', 'US', 'France', 'China', 'India', 'SEA', 'ANZ', 'ROW', 'Total']
+#
+# new_data = []
+#
+# for item in sort_list:
+#     i = 0
+#     condition = True
+#     while condition:
+#         if res_data[i]['country']==item:
+#             new_data.append(res_data[i])
+#             condition = False
+#         i += 1
+# print(new_data)
 
-new_data = []
+import calendar
+prev_month, year = int(datetime.datetime.now().strftime('%m'))-1, int((datetime.datetime.now().strftime('%Y-%m')).split('-')[0])
+num_days = calendar.monthrange(year, prev_month)
+pre_start = datetime.date(year, prev_month, 1)
+pre_end = datetime.date(year, prev_month, num_days[1])
+year = year if prev_month != 1 else year-1
+prev_month = (prev_month-1) if prev_month != 1 else 12
+num_days = calendar.monthrange(year, prev_month)
+prv_start = datetime.date(year, prev_month, 1)
+prv_end = datetime.date(year, prev_month, num_days[1])
 
-for item in sort_list:
-    i = 0
-    condition = True
-    while condition:
-        if res_data[i]['country']==item:
-            new_data.append(res_data[i])
-            condition = False
-        i += 1
-print(new_data)
+print pre_start.strftime('%Y-%m-%d')
+print pre_end.strftime('%Y-%m-%d')
+print prv_start.strftime('%Y-%m-%d')
+print prv_end.strftime('%Y-%m-%d')
