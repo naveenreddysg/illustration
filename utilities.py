@@ -32,7 +32,7 @@ def get_dates(N):
 
     pre_end = datetime.now() - timedelta(days=1)
     pre_start = datetime.now() - timedelta(days=N)
-    prv_end = pre_end - timedelta(days=1)
+    prv_end = pre_start - timedelta(days=1)
     prv_start = prv_end - timedelta(days=N)
 
     return {'pre_start': pre_start.strftime('%Y-%m-%d'),

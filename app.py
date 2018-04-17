@@ -22,7 +22,7 @@ def index():
     try:
         dates = request.form.to_dict()
         dates = date_converter(dates)
-        print(dates)
+        # print(dates)
         if dates['pre_start'] != "":
             sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
             session_category = SessionsCategoryResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
@@ -43,8 +43,8 @@ def index():
                                    result=result)
     except Exception as e:
         # print(e)
-        dates = get_dates(7)
-        print(dates)
+        dates = get_dates(30)
+        # print(dates)
         sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
         session_category = SessionsCategoryResults(dates['pre_start'], dates['pre_end'], dates['prv_start'],
                                                    dates['prv_end'])

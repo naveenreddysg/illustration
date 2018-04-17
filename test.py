@@ -12,10 +12,26 @@ import datetime
 # lst.append(new)
 # print lst
 
-dates = {'prv_end': u'04/16/2018', 'pre_end': u'04/16/2018', 'prv_start': u'04/15/2018', 'pre_start': u'04/15/2018'}
-def date_converter(dates):
-    newdates = {}
-    for key, value in dates.iteritems():
-        date = dates[key].split('/')
-        newdates[key] = date[2]+'-'+date[0]+'-'+date[1]
-    return newdates
+# dates = {'prv_end': u'04/16/2018', 'pre_end': u'04/16/2018', 'prv_start': u'04/15/2018', 'pre_start': u'04/15/2018'}
+# def date_converter(dates):
+#     newdates = {}
+#     for key, value in dates.iteritems():
+#         date = dates[key].split('/')
+#         newdates[key] = date[2]+'-'+date[0]+'-'+date[1]
+#     return newdates
+
+res_data = [{'totalSessions': 71129, u'country': u'UK'}, {'totalSessions': 9210, u'country': u'India'}, {'totalSessions': 57473, u'country': u'US'}, {'totalSessions': 14142, u'country': u'France'}, {'totalSessions': 8658, u'country': u'China'}, {'totalSessions': 9554, u'country': u'SEA'}, {'totalSessions': 6951, u'country': u'ANZ'}, {'totalSessions': 54144, 'country': 'ROW'}, {'totalSessions': 231261, 'country': 'Total'}]
+
+sort_list = ['UK', 'US', 'France', 'China', 'India', 'SEA', 'ANZ', 'ROW', 'Total']
+
+new_data = []
+
+for item in sort_list:
+    i = 0
+    condition = True
+    while condition:
+        if res_data[i]['country']==item:
+            new_data.append(res_data[i])
+            condition = False
+        i += 1
+print(new_data)
