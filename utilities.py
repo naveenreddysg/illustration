@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 import calendar
 import datetime
 from collections import defaultdict
@@ -39,8 +39,8 @@ def date_converter(dates):
 
 def get_dates(N):
 
-    pre_end = datetime.now() - timedelta(days=1)
-    pre_start = datetime.now() - timedelta(days=N)
+    pre_end = datetime.datetime.now() - timedelta(days=1)
+    pre_start = datetime.datetime.now() - timedelta(days=N)
     prv_end = pre_start - timedelta(days=1)
     prv_start = prv_end - timedelta(days=N)
     return {'pre_start': pre_start.strftime('%Y-%m-%d'),

@@ -272,9 +272,8 @@ def print_sessions(results, country, date):
       pass
   d_sessions['TotalSessions'] = float(results.get('totalsForAllResults')['ga:sessions'])
 
-  print("SESSIONS:\n")
-  print(result1, "\n")
-  print(d_sessions, "\n")
+  print("Sessions")
+  print("Sessions_category")
 
   query = "INSERT INTO sessions_category (country, organic_search, direct, referral, social, paid_search, email, date)\
   VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');".format\
