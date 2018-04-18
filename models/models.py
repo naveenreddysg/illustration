@@ -68,12 +68,14 @@ class DevicesModel(db.Model):
     __tablename__ = 'devices'
 
     id = db.Column(db.Integer, primary_key=True)
-    mobileTablet = db.Column('mobile_tablet', db.String(30))
+    mobile = db.Column('mobile', db.String(30))
+    tablet = db.Column('tablet', db.String(30))
     desktop = db.Column('desktop', db.String(30))
     date = db.Column('date', db.Date)
 
-    def __init__(self,mobileTablet, desktop, date):
-        self.mobileTablet = mobileTablet
+    def __init__(self, mobile, tablet, desktop, date):
+        self.mobile = mobile
+        self.tablet = tablet
         self.desktop = desktop
         self.date = date
 

@@ -22,11 +22,19 @@ class DeviceResults:
                                  float(previous_results[0]['desktop'])) * 100, 2)) + '%'
             },
             {
-            'Device': 'Mobile + Tablet',
-            'Goal Completions': current_results[0]['mobileTablet'],
-            'Previous': previous_results[0]['mobileTablet'],
-            'Change': str(round(((float(current_results[0]['mobileTablet']) - float(previous_results[0]['mobileTablet'])) /
-                              float(previous_results[0]['mobileTablet'])) * 100, 2)) + '%'
+            'Device': 'Mobile',
+            'Goal Completions': current_results[0]['mobile'],
+            'Previous': previous_results[0]['mobile'],
+            'Change': str(round(((float(current_results[0]['mobile']) - float(previous_results[0]['mobile'])) /
+                              float(previous_results[0]['mobile'])) * 100, 2)) + '%'
+            },
+            {
+                'Device': 'Tablet',
+                'Goal Completions': current_results[0]['tablet'],
+                'Previous': previous_results[0]['tablet'],
+                'Change': str(round(((float(current_results[0]['tablet']) - float(previous_results[0]['tablet'])) /
+                                     float(previous_results[0]['tablet'])) * 100, 2)) + '%'
             }
+
          ]
         return main_result

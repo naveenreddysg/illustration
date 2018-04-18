@@ -331,8 +331,7 @@ def print_events(results, country, date):
     # events = EventsModel(country.split('Events')[0], result1.get('HelloBar', '0'), date)
     # events.save_to_db()
 
-    print("EVENTS:\n")
-    print(result)
+    print("Events")
     return result
 
 #-----------------------------------------------------------------------------
@@ -356,20 +355,12 @@ def print_devices(results, date):
 
     try:
         result1 = (dict(results.get('rows')))
+        print(result1)
     except:
         result1 = {}
 
-    result1['Mobile + Tablet'] = int(result1.get('mobile', '0')) + int(result1.get('tablet', '0'))
-    try:
-        del result1['mobile']
-    except:
-        pass
-    try:
-        del result1['tablet']
-    except:
-        pass
-
-    query = "INSERT INTO devices (mobile_tablet, desktop, date)VALUES ('{}', '{}', '{}');".format(result1.get('Mobile + Tablet', '0'), result1.get('desktop', '0'), date)
+    query = "INSERT INTO devices (mobile, tablet, desktop, date)VALUES ('{}', '{}', '{}', '{}');"\
+        .format(result1.get('mobile', '0'), result1.get('tablet', '0'), result1.get('desktop', '0'), date)
     db = Db()
     db.execute(query)
     db.commit()
@@ -378,8 +369,7 @@ def print_devices(results, date):
     # devices = DevicesModel(result1.get('Mobile + Tablet', '0'), result1.get('desktop', '0'), date)
     # devices.save_to_db()
 
-    print("DEVICES:\n")
-    print(result1, "\n")
+    print("Devices")
     return result1
 
 #-----------------------------------------------------------------------------
@@ -415,8 +405,7 @@ def print_CPC(results, date):
 
     # cpc = CPCModel(result1.get('google', '0'), result1.get('Bingads', '0'), result1.get('facebookads', '0'), result1.get('Instagram', '0'), date)
     # cpc.save_to_db()
-    print("CPC:\n")
-    print(result1, '\n')
+    print("CPC")
     return result1
 
 #-----------------------------------------------------------------------------
@@ -485,8 +474,8 @@ def main(argv):
           for n in range(int((end_date - start_date).days)):
               yield start_date + timedelta(n)
 
-      start_date = date(2016, 12, 1)
-      end_date = date(2017, 1, 1)
+      start_date = date(2016, 10, 1)
+      end_date = date(2017, 4, 18)
 
       for single_date in daterange(start_date, end_date):
           startDate1 = endDate1 = single_date.strftime("%Y-%m-%d")
@@ -494,53 +483,53 @@ def main(argv):
 
           print("******--Sit back and relax this will take sometime--******".upper())
 
-          lst = [[], [], [], [], []]
-          for profile_id in out:
-              results = get_top_keywords(service, profile_id[0], startDate1, endDate1)
-              lst[0].append(int(results[0].get('totalsForAllResults')['ga:sessions']))
-              lst[1].append(float(results[1].get('totalsForAllResults')['ga:bouncerate']))
-              lst[2].append(float(results[2].get('totalsForAllResults')['ga:goalconversionrateall']))
-              lst[3].append(float(results[3].get('totalsForAllResults')['ga:goalconversionrateall']))
-              lst[4].append(float(results[4].get('totalsForAllResults')['ga:avgsessionduration']))
-              print('top_conversions')
-          print_top_keywords(lst, startDate1)
+          # lst = [[], [], [], [], []]
+          # for profile_id in out:
+          #     results = get_top_keywords(service, profile_id[0], startDate1, endDate1)
+          #     lst[0].append(int(results[0].get('totalsForAllResults')['ga:sessions']))
+          #     lst[1].append(float(results[1].get('totalsForAllResults')['ga:bouncerate']))
+          #     lst[2].append(float(results[2].get('totalsForAllResults')['ga:goalconversionrateall']))
+          #     lst[3].append(float(results[3].get('totalsForAllResults')['ga:goalconversionrateall']))
+          #     lst[4].append(float(results[4].get('totalsForAllResults')['ga:avgsessionduration']))
+          #     print('top_conversions')
+          # print_top_keywords(lst, startDate1)
 
-          for profile_id in agents:
-              results = get_agents(service, profile_id[0], startDate1, endDate1)
-              # print(results)
-              print_agents(results, startDate1)
+          # for profile_id in agents:
+          #     results = get_agents(service, profile_id[0], startDate1, endDate1)
+          #     # print(results)
+          #     print_agents(results, startDate1)
 
-          for profile_id in sidebtn:
-              results = get_sidebtn(service, profile_id[0], startDate1, endDate1)
-              # print(results)
-              print_sidebtn(results, startDate1)
+          # for profile_id in sidebtn:
+          #     results = get_sidebtn(service, profile_id[0], startDate1, endDate1)
+          #     # print(results)
+          #     print_sidebtn(results, startDate1)
 
-          for profile_id in portpolio:
-              results = get_portpolio(service, profile_id[0], startDate1, endDate1)
-              # print(results)
-              print_portpolio(results, startDate1)
+          # for profile_id in portpolio:
+          #     results = get_portpolio(service, profile_id[0], startDate1, endDate1)
+          #     # print(results)
+          #     print_portpolio(results, startDate1)
 
-          for profile_id in events:
-
-              results = get_events(service, profile_id[0], startDate1, endDate1)
-
-              print_events(results, profile_id[1], startDate1)
+          # for profile_id in events:
+          #
+          #     results = get_events(service, profile_id[0], startDate1, endDate1)
+          #
+          #     print_events(results, profile_id[1], startDate1)
 
           for profile_id in devices:
 
               results = get_devices(service, profile_id[0], startDate1, endDate1)
               print_devices(results, startDate1)
 
+          #
+          # for profile_id in cpc:
+          #
+          #     results = get_CPC(service, profile_id[0], startDate1, endDate1)
+          #     print_CPC(results, startDate1)
 
-          for profile_id in cpc:
-
-              results = get_CPC(service, profile_id[0], startDate1, endDate1)
-              print_CPC(results, startDate1)
-
-          for profile_id in session:
-
-            results = get_sessions(service, profile_id[0], profile_id[1], startDate1, endDate1)
-            print_sessions(results, profile_id[1], startDate1)
+          # for profile_id in session:
+          #
+          #   results = get_sessions(service, profile_id[0], profile_id[1], startDate1, endDate1)
+          #   print_sessions(results, profile_id[1], startDate1)
 
       print("Done...!")
 
