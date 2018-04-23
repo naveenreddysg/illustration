@@ -32,9 +32,8 @@ class SessionsCategoryResults:
                 pass
         return change_dict
 
-    def main(self):
-        current_results = SessionsCategoryService(self.current_start_date, self.current_end_date).get_data()
-        previous_results = SessionsCategoryService(self.previous_start_date, self.previous_end_date).get_data()
+    @staticmethod
+    def result(results):
         main_result = [
             {'Country': i['country'],
              'Direct': i['direct'],
@@ -42,10 +41,16 @@ class SessionsCategoryResults:
              'Organic Search': i['organicSearch'],
              'Referral': i['referral'],
              'Social': i['social'],
-             'Email':i['email']
+             'Email': i['email']
              }
-            for i in current_results
+            for i in results
         ]
+        return main_result
+    
+    def main(self):
+        current_results = SessionsCategoryService(self.current_start_date, self.current_end_date).get_data()
+        previous_results = SessionsCategoryService(self.previous_start_date, self.previous_end_date).get_data()
+        main_result = self.result(current_results)
         total_current = self.total(current_results, 'Total')
         total_previous = self.total(previous_results, 'Total(Prev)')
         change = self.change_cal(total_current, total_previous)
