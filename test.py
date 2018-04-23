@@ -36,18 +36,29 @@ import datetime
 #         i += 1
 # print(new_data)
 
-import calendar
-prev_month, year = int(datetime.datetime.now().strftime('%m'))-1, int((datetime.datetime.now().strftime('%Y-%m')).split('-')[0])
-num_days = calendar.monthrange(year, prev_month)
-pre_start = datetime.date(year, prev_month, 1)
-pre_end = datetime.date(year, prev_month, num_days[1])
-year = year if prev_month != 1 else year-1
-prev_month = (prev_month-1) if prev_month != 1 else 12
-num_days = calendar.monthrange(year, prev_month)
-prv_start = datetime.date(year, prev_month, 1)
-prv_end = datetime.date(year, prev_month, num_days[1])
+# import calendar
+# prev_month, year = int(datetime.datetime.now().strftime('%m'))-1, int((datetime.datetime.now().strftime('%Y-%m')).split('-')[0])
+# num_days = calendar.monthrange(year, prev_month)
+# pre_start = datetime.date(year, prev_month, 1)
+# pre_end = datetime.date(year, prev_month, num_days[1])
+# year = year if prev_month != 1 else year-1
+# prev_month = (prev_month-1) if prev_month != 1 else 12
+# num_days = calendar.monthrange(year, prev_month)
+# prv_start = datetime.date(year, prev_month, 1)
+# prv_end = datetime.date(year, prev_month, num_days[1])
+#
+# print pre_start.strftime('%Y-%m-%d')
+# print pre_end.strftime('%Y-%m-%d')
+# print prv_start.strftime('%Y-%m-%d')
+# print prv_end.strftime('%Y-%m-%d')
 
-print pre_start.strftime('%Y-%m-%d')
-print pre_end.strftime('%Y-%m-%d')
-print prv_start.strftime('%Y-%m-%d')
-print prv_end.strftime('%Y-%m-%d')
+
+devices = [{'Device': 'Desktop', 'Goal Completions': 68, 'Change': '-33.98%', 'Previous': 103}, {'Device': 'Mobile', 'Goal Completions': 24, 'Change': '33.33%', 'Previous': 18},{'Device': 'Tablet', 'Goal Completions': 3, 'Change': '-50.0%', 'Previous': 6}]
+
+for item in devices:
+    print item
+
+print ['Devices', 'Goal Completions']
+
+for item in devices:
+    print [item['Device'], item['Goal Completions']]

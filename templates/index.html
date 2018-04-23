@@ -41,9 +41,11 @@ var currentMonth = date.getMonth();
 var currentDate = date.getDate();
 var currentYear = date.getFullYear();
 $('.datepicker').datepicker({
-maxDate: new Date(currentYear, currentMonth, currentDate-1)
+maxDate: new Date(currentYear, currentMonth, currentDate-1),
+minDate: new Date(2015, 12, 1)
 });
 });
+
 </script>
 <style>
 .card-body{

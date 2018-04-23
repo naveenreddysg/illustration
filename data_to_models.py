@@ -474,60 +474,61 @@ def main(argv):
           for n in range(int((end_date - start_date).days)):
               yield start_date + timedelta(n)
 
-      start_date = date(2018, 4, 17)
-      end_date = date(2018, 4, 18)
+      start_date = date(2016, 3, 1)
+      end_date = date(2016, 4, 1)
 
       for single_date in daterange(start_date, end_date):
           startDate1 = endDate1 = single_date.strftime("%Y-%m-%d")
           print(single_date.strftime("%Y-%m-%d"))
           print("####---Sit back and relax this will take sometime---####".upper())
 
-          # lst = [[], [], [], [], []]
-          # for profile_id in out:
-          #     results = get_top_keywords(service, profile_id[0], startDate1, endDate1)
-          #     lst[0].append(int(results[0].get('totalsForAllResults')['ga:sessions']))
-          #     lst[1].append(float(results[1].get('totalsForAllResults')['ga:bouncerate']))
-          #     lst[2].append(float(results[2].get('totalsForAllResults')['ga:goalconversionrateall']))
-          #     lst[3].append(float(results[3].get('totalsForAllResults')['ga:goalconversionrateall']))
-          #     lst[4].append(float(results[4].get('totalsForAllResults')['ga:avgsessionduration']))
-          #     print('top_conversions')
-          # print_top_keywords(lst, startDate1)
-          #
-          # for profile_id in agents:
-          #     results = get_agents(service, profile_id[0], startDate1, endDate1)
-          #     # print(results)
-          #     print_agents(results, startDate1)
-          #
-          # for profile_id in sidebtn:
-          #     results = get_sidebtn(service, profile_id[0], startDate1, endDate1)
-          #     # print(results)
-          #     print_sidebtn(results, startDate1)
-          #
-          # for profile_id in portpolio:
-          #     results = get_portpolio(service, profile_id[0], startDate1, endDate1)
-          #     # print(results)
-          #     print_portpolio(results, startDate1)
-          #
-          # for profile_id in events:
-          #
-          #     results = get_events(service, profile_id[0], startDate1, endDate1)
-          #
-          #     print_events(results, profile_id[1], startDate1)
+          lst = [[], [], [], [], []]
+          for profile_id in out:
+              results = get_top_keywords(service, profile_id[0], startDate1, endDate1)
+              lst[0].append(int(results[0].get('totalsForAllResults')['ga:sessions']))
+              lst[1].append(float(results[1].get('totalsForAllResults')['ga:bouncerate']))
+              lst[2].append(float(results[2].get('totalsForAllResults')['ga:goalconversionrateall']))
+              lst[3].append(float(results[3].get('totalsForAllResults')['ga:goalconversionrateall']))
+              lst[4].append(float(results[4].get('totalsForAllResults')['ga:avgsessionduration']))
+              print('top_conversions')
+          print_top_keywords(lst, startDate1)
 
-          # for profile_id in devices:
-          #
-          #     results = get_devices(service, profile_id[0], startDate1, endDate1)
-          #     print_devices(results, startDate1)
+          for profile_id in session:
 
-          # for profile_id in cpc:
-          #
-          #     results = get_CPC(service, profile_id[0], startDate1, endDate1)
-          #     print_CPC(results, startDate1)
-          #
-          # for profile_id in session:
-          #
-          #   results = get_sessions(service, profile_id[0], profile_id[1], startDate1, endDate1)
-          #   print_sessions(results, profile_id[1], startDate1)
+            results = get_sessions(service, profile_id[0], profile_id[1], startDate1, endDate1)
+            print_sessions(results, profile_id[1], startDate1)
+
+          for profile_id in agents:
+              results = get_agents(service, profile_id[0], startDate1, endDate1)
+              # print(results)
+              print_agents(results, startDate1)
+
+          for profile_id in sidebtn:
+              results = get_sidebtn(service, profile_id[0], startDate1, endDate1)
+              # print(results)
+              print_sidebtn(results, startDate1)
+
+          for profile_id in portpolio:
+              results = get_portpolio(service, profile_id[0], startDate1, endDate1)
+              # print(results)
+              print_portpolio(results, startDate1)
+
+          for profile_id in events:
+
+              results = get_events(service, profile_id[0], startDate1, endDate1)
+
+              print_events(results, profile_id[1], startDate1)
+
+          for profile_id in devices:
+
+              results = get_devices(service, profile_id[0], startDate1, endDate1)
+              print_devices(results, startDate1)
+
+          for profile_id in cpc:
+
+              results = get_CPC(service, profile_id[0], startDate1, endDate1)
+              print_CPC(results, startDate1)
+
 
       print("Done...!")
 
