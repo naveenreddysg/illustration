@@ -69,14 +69,7 @@ class TopConversionsResults:
              'Change': str(round((((float(agents_current_results[0]['emailClick']) -
                                     float(agents_previous_results[0]['emailClick']))
                                    / float(agents_previous_results[0]['emailClick'])) * 100), 2)) + '%'
-             },
-            {'Metric': 'Agent PopUp Call Btn Click',
-             'Current': agents_current_results[0]['callClick'],
-             'Previous': agents_previous_results[0]['callClick'],
-             'Change': str(round((((float(agents_current_results[0]['callClick']) -
-                                    float(agents_previous_results[0]['callClick']))
-                                   / float(agents_previous_results[0]['callClick'])) * 100), 2)) + '%'
-             },
+             }
         ]
         side_btn_result = [
             {'Metric': 'Side Nav- Recently Viewed Clicks',

@@ -25,6 +25,9 @@ class TopConversionsService:
                 x = 0
                 for data in res_data1:
                     x += float(data[key])
-                new[key] = round(float(x/length), 2)
+                if key != 'MobileTablet':
+                    new[key] = round(float(x/length), 2)
+                else:
+                    new[key] = int(x)
         res_data.append(new)
         return res_data

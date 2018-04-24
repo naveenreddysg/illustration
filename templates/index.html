@@ -298,8 +298,8 @@ margin: 10px;
                 </div>
             </div>
         </div>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0'></script>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js'></script>
+    <!--<script src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0'></script>-->
     <div class="container-fluid" id="swapper-other" style="display:none">
         <div class="animated fadeIn">
             <div class="card-columns cols-2">
@@ -331,20 +331,81 @@ margin: 10px;
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="chart-wrapper">
-                            <canvas id="myChart-6"></canvas>
-                        </div>
-                    </div>
-                </div>
+                <!--<div class="card">-->
+                    <!--<div class="card-body">-->
+                        <!--<div class="chart-wrapper">-->
+                            <!--<canvas id="myChart-6"></canvas>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
 <script>
-var ctx1 = document.getElementById("myChart-1").getContext('2d');
+var plugin1 = { afterDatasetsDraw: function(chart) {
+				var ctx = chart.ctx;
+
+				chart.data.datasets.forEach(function(dataset, i) {
+					var meta = chart.getDatasetMeta(i);
+					if (!meta.hidden) {
+						meta.data.forEach(function(element, index) {
+							// Draw the text in black, with the specified font
+							ctx.fillStyle = 'rgb(0, 0, 0)';
+
+							var fontSize = 10;
+							var fontStyle = 'normal';
+							var fontFamily = 'Helvetica Neue';
+							ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+							// Just naively convert to string for now
+							var dataString = dataset.data[index].toString();
+
+							// Make sure alignment settings are correct
+							ctx.textAlign = 'center';
+							ctx.textBaseline = 'middle';
+
+							var padding = 5;
+							var position = element.tooltipPosition();
+							ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+						});
+					}
+				});
+			}};
+
+var plugin2 = { afterDatasetsDraw: function(chart) {
+				var ctx = chart.ctx;
+
+				chart.data.datasets.forEach(function(dataset, i) {
+					var meta = chart.getDatasetMeta(i);
+					if (!meta.hidden) {
+						meta.data.forEach(function(element, index) {
+							// Draw the text in black, with the specified font
+							ctx.fillStyle = 'rgb(0, 0, 0)';
+
+							var fontSize = 10;
+							var fontStyle = 'normal';
+							var fontFamily = 'Helvetica Neue';
+							ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+							// Just naively convert to string for now
+							var dataString = dataset.data[index].toString();
+
+							// Make sure alignment settings are correct
+							ctx.textAlign = 'center';
+							ctx.textBaseline = 'middle';
+
+							var padding = 5;
+							var position = element.tooltipPosition();
+							ctx.fillText(dataString, position.x, position.y);
+						});
+					}
+				});
+			}};
+
+var ctx1 = document.getElementById("myChart-2").getContext('2d');
 var myChart1 = new Chart(ctx1, {
-    type: 'horizontalBar',
+    plugins: [plugin1],
+    type: 'bar',
     data: {
         labels: [{% for item in result['sessions'] %}
                   {%if item['Country'] != 'Total' %}
@@ -360,34 +421,27 @@ var myChart1 = new Chart(ctx1, {
                   {% endfor %}],
             backgroundColor: [{% for item in result['sessions'] %}
                     {%if item['Country'] != 'Total' %}
-                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(240, 94, 16, 0.8)',
                   {% endif %}
                   {% endfor %}],
             borderColor: [{% for item in result['sessions'] %}
                     {%if item['Country'] != 'Total' %}
-                  'rgba(255,99,132,1)',
+                  'rgba(240, 94, 16,1)',
                   {% endif %}
                   {% endfor %}],
             borderWidth: 0.5
         },
         {
-            label: ['Previous'],
-            data: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['Previous']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(54, 162, 235, 0.5)',
-                  {% endif %}
-                  {% endfor %}],
-            borderColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(54, 162, 235, 1)',
-                  {% endif %}
-                  {% endfor %}],
-            borderWidth: 0.5
+            label: ['Change percentage'],
+            type: 'line',
+            fill: false,
+            data: [-30.5, -6.77, -15.82,-2.13,-9.5,-4.51-35.85,-10.61,-16.61],
+            backgroundColor: [
+                  'rgba(16, 26, 240, 0.8)',
+                  ],
+            borderColor: [
+                  'rgba(16, 26, 240, 0.8)',
+                  ]
         }]
     },
     options: {
@@ -401,14 +455,16 @@ var myChart1 = new Chart(ctx1, {
             },
         scales: {
             yAxes: [{
+                stacked: true,
                 gridLines: {
-                    display:false
+                    display:true
                 },
                 ticks: {
                     beginAtZero:true
                 }
             }],
             xAxes: [{
+                stacked: true,
                 gridLines: {
                     display:true
                 },
@@ -416,139 +472,126 @@ var myChart1 = new Chart(ctx1, {
         }
     }
 });
-var ctx2 = document.getElementById("myChart-2").getContext('2d');
+var ctx2 = document.getElementById("myChart-1").getContext('2d');
 var myChart2 = new Chart(ctx2, {
-			type: 'line',
+			type: 'bar',
 			data: {
-				labels: ['Organic Search', 'Direct', 'Referral', 'Social', 'Paid Search', 'Email'],
+				labels: ['UK', 'US', 'France', 'China', 'India', 'SEA', 'ANZ', 'ROW'],
 				datasets: [{
+				datalabels: {
+                    display: false,
+                },
+                label: ['Organic Search'],
+                data: [{{result['session_category'][0]['Organic Search']}},{{result['session_category'][1]['Organic Search']}},
+                {{result['session_category'][2]['Organic Search']}},{{result['session_category'][3]['Organic Search']}},
+                {{result['session_category'][4]['Organic Search']}},{{result['session_category'][5]['Organic Search']}},
+                {{result['session_category'][6]['Organic Search']}},{{result['session_category'][7]['Organic Search']}}],
+                backgroundColor: [
+                    'rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)',
+                    'rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'
+                ],
+                borderWidth: 0.5
+            },
+            {
                 datalabels: {
                     display: false
                 },
-                label: ['UK'],
-                data: [{{result['session_category'][0]['Organic Search']}},{{result['session_category'][0]['Direct']}},
-                {{result['session_category'][0]['Referral']}},{{result['session_category'][0]['Social']}},{{result['session_category'][0]['Paid Search']}},
-                {{result['session_category'][0]['Email']}}],
+                label: ['Direct'],
+                data: [{{result['session_category'][0]['Direct']}},{{result['session_category'][1]['Direct']}},
+                {{result['session_category'][2]['Direct']}},{{result['session_category'][3]['Direct']}},
+                {{result['session_category'][4]['Direct']}},{{result['session_category'][5]['Direct']}},
+                {{result['session_category'][6]['Direct']}},{{result['session_category'][7]['Direct']}}],
                 backgroundColor: [
-                    'rgba(252, 5, 5, 0.2)',
+                    'rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)',
+                    'rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)'
                 ],
                 borderColor: [
-                    'rgba(252, 5, 5,1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'
                 ],
-                borderWidth: 1
-            },
-            {
-            datalabels: {
-                display: false
-            },
-                label: ['USA'],
-                data: [{{result['session_category'][1]['Organic Search']}},{{result['session_category'][1]['Direct']}},
-                {{result['session_category'][1]['Referral']}},{{result['session_category'][1]['Social']}},{{result['session_category'][1]['Paid Search']}},
-                {{result['session_category'][1]['Email']}}],
-                backgroundColor: [
-                    'rgba(163, 161, 161, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(163, 161, 161, 1)',
-                ],
-                borderWidth: 1
+                borderWidth: 0.5
                 },
             {
-            datalabels: {
-                display: false
-            },
-                label: ['France'],
-                data: [{{result['session_category'][2]['Organic Search']}},{{result['session_category'][2]['Direct']}},
-                {{result['session_category'][2]['Referral']}},{{result['session_category'][2]['Social']}},{{result['session_category'][2]['Paid Search']}},
-                {{result['session_category'][2]['Email']}}],
+                datalabels: {
+                    display: false
+                },
+                label: ['Referral'],
+                data: [{{result['session_category'][0]['Referral']}},{{result['session_category'][1]['Referral']}},
+                {{result['session_category'][2]['Referral']}},{{result['session_category'][3]['Referral']}},
+                {{result['session_category'][4]['Referral']}},{{result['session_category'][5]['Referral']}},
+                {{result['session_category'][6]['Referral']}},{{result['session_category'][7]['Referral']}}],
                 backgroundColor: [
-                    'rgba(227, 5, 252, 0.2)',
+                    'rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)',
+                    'rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)'
                 ],
                 borderColor: [
-                    'rgba(227, 5, 252,1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'
                 ],
-                borderWidth: 1
+                borderWidth: 0.5
                 },
             {
-            datalabels: {
-                display: false
-            },
-                label: ['China'],
-                data: [{{result['session_category'][3]['Organic Search']}},{{result['session_category'][3]['Direct']}},
-                {{result['session_category'][3]['Referral']}},{{result['session_category'][3]['Social']}},{{result['session_category'][3]['Paid Search']}},
-                {{result['session_category'][3]['Email']}}],
+                datalabels: {
+                    display: false
+                },
+                label: ['Social'],
+                data: [{{result['session_category'][0]['Social']}},{{result['session_category'][1]['Social']}},
+                {{result['session_category'][2]['Social']}},{{result['session_category'][3]['Social']}},
+                {{result['session_category'][4]['Social']}},{{result['session_category'][5]['Social']}},
+                {{result['session_category'][6]['Social']}},{{result['session_category'][7]['Social']}}],
                 backgroundColor: [
-                    'rgba(248, 252, 5, 0.2)',
+                    'rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)',
+                    'rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)'
                 ],
                 borderColor: [
-                    'rgba(248, 252, 5,1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'
                 ],
-                borderWidth: 1
+                borderWidth: 0.5
                 },
             {
-            datalabels: {
-                display: false
-            },
-                label: ['India'],
-                data: [{{result['session_category'][4]['Organic Search']}},{{result['session_category'][4]['Direct']}},
-                {{result['session_category'][4]['Referral']}},{{result['session_category'][4]['Social']}},{{result['session_category'][4]['Paid Search']}},
-                {{result['session_category'][4]['Email']}}],
+                datalabels: {
+                    display: false
+                },
+                label: ['Paid Search'],
+                data: [{{result['session_category'][0]['Paid Search']}},{{result['session_category'][1]['Paid Search']}},
+                {{result['session_category'][2]['Paid Search']}},{{result['session_category'][3]['Paid Search']}},
+                {{result['session_category'][4]['Paid Search']}},{{result['session_category'][5]['Paid Search']}},
+                {{result['session_category'][6]['Paid Search']}},{{result['session_category'][7]['Paid Search']}}],
                 backgroundColor: [
-                    'rgba(252, 165, 5, 0.2)',
+                    'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)',
+                    'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)'
                 ],
                 borderColor: [
-                    'rgba(252, 165, 5,1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'
                 ],
-                borderWidth: 1
+                borderWidth: 0.5
                 },
             {
-            datalabels: {
-                display: false
-            },
-                label: ['SEA'],
-                data: [{{result['session_category'][5]['Organic Search']}},{{result['session_category'][5]['Direct']}},
-                {{result['session_category'][5]['Referral']}},{{result['session_category'][5]['Social']}},{{result['session_category'][5]['Paid Search']}},
-                {{result['session_category'][5]['Email']}}],
-                backgroundColor: [
-                    'rgba(5, 235, 252, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(5, 235, 252,1)',
-                ],
-                borderWidth: 1
+                datalabels: {
+                    display: false
                 },
-            {
-            datalabels: {
-                display: false
-            },
-                label: ['ANZ'],
-                data: [{{result['session_category'][6]['Organic Search']}},{{result['session_category'][6]['Direct']}},
-                {{result['session_category'][6]['Referral']}},{{result['session_category'][6]['Social']}},{{result['session_category'][6]['Paid Search']}},
-                {{result['session_category'][6]['Email']}}],
+                label: ['Email'],
+                data: [{{result['session_category'][0]['Email']}},{{result['session_category'][1]['Email']}},
+                {{result['session_category'][2]['Email']}},{{result['session_category'][3]['Email']}},
+                {{result['session_category'][4]['Email']}},{{result['session_category'][5]['Email']}},
+                {{result['session_category'][6]['Email']}},{{result['session_category'][7]['Email']}}],
                 backgroundColor: [
-                    'rgba(239, 167, 140, 0.2)',
+                    'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)',
+                    'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)'
                 ],
                 borderColor: [
-                    'rgba(239, 167, 140,1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'
                 ],
-                borderWidth: 1
-                            },
-            {
-            datalabels: {
-                display: false
-            },
-                label: ['ROW'],
-                data: [{{result['session_category'][7]['Organic Search']}},{{result['session_category'][7]['Direct']}},
-                {{result['session_category'][7]['Referral']}},{{result['session_category'][7]['Social']}},{{result['session_category'][7]['Paid Search']}},
-                {{result['session_category'][7]['Email']}}],
-                backgroundColor: [
-                    'rgba(5, 252, 9, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(5, 252, 9,1)',
-                ],
-                borderWidth: 1
-            }]
+                borderWidth: 0.5
+                },
+            ]
         },
     options: {
         title: {
@@ -564,10 +607,16 @@ var myChart2 = new Chart(ctx2, {
                 },
         scales: {
             yAxes: [{
-                ticks: {
-                    stacked: true,
-                    beginAtZero:true
+                stacked: true,
+                gridLines: {
+                    display:true
                 }
+            }],
+            xAxes: [{
+                stacked: true,
+                gridLines: {
+                    display:false
+                },
             }]
         }
     }
@@ -575,6 +624,7 @@ var myChart2 = new Chart(ctx2, {
 
 var ctx4 = document.getElementById("myChart-4").getContext('2d');
 var myChart4 = new Chart(ctx4, {
+    plugins: [plugin1],
     type: 'bar',
     data: {
         labels: [{% for item in result['Devices'] %}
@@ -586,12 +636,12 @@ var myChart4 = new Chart(ctx4, {
                   "{{item['Goal Completions']}}",
                   {% endfor %}],
             backgroundColor: [{% for item in result['Devices'] %}
-                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(255, 99, 132, 1)',
                   {% endfor %}],
             borderColor: [{% for item in result['Devices'] %}
                   'rgba(255,99,132,1)',
                   {% endfor %}],
-            borderWidth: 0.5
+            borderWidth: 1
         },
         {
             label: ['Previous'],
@@ -599,12 +649,12 @@ var myChart4 = new Chart(ctx4, {
                   "{{item['Previous']}}",
                   {% endfor %}],
             backgroundColor: [{% for item in result['Devices'] %}
-                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(54, 162, 235, 1)',
                   {% endfor %}],
             borderColor: [{% for item in result['Devices'] %}
                   'rgba(54, 162, 235, 1)',
                   {% endfor %}],
-            borderWidth: 0.5
+            borderWidth: 1
         }]
     },
     options: {
@@ -636,6 +686,7 @@ var myChart4 = new Chart(ctx4, {
 
 var ctx5 = document.getElementById("myChart-5").getContext('2d');
 var myChart5 = new Chart(ctx5, {
+    plugins: [plugin1],
     type: 'pie',
     data: {
         labels: [{% for item in result['CPC'] %}
@@ -650,20 +701,16 @@ var myChart5 = new Chart(ctx5, {
                   {% endif %}
                 {% endfor %}],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)',
-                'rgba(255, 159, 64, 0.5)'
+                'rgba(228, 53, 1, 0.8)',
+                'rgba(0, 69, 147, 0.8)',
+                'rgba(251, 218, 11, 0.8)',
+                'rgba(75, 192, 192, 0.8)'
             ],
             borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
+                'rgba(228, 53, 1,1)',
+                'rgba(0, 69, 147, 1)',
+                'rgba(2251, 218, 11, 1)',
                 'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 0.5
         }]
@@ -756,7 +803,6 @@ var myChart6 = new Chart(ctx6, {
         }
     }
 });
-
 </script>
 {% endif %}
 {% endblock %}

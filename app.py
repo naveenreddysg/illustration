@@ -4,7 +4,7 @@ from ResultsServices.sessions_category_results import SessionsCategoryResults
 from ResultsServices.events_results import EventsResults
 from ResultsServices.devices_results import DeviceResults
 from ResultsServices.cpc_results import CPCResults
-from ResultsServices.top_conversions import TopConversionsResults
+from ResultsServices.top_conversions_results import TopConversionsResults
 from utilities import get_dates, date_converter
 #=======================================================================================================================
 app = Flask(__name__)
