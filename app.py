@@ -30,6 +30,7 @@ def index():
             devices = DeviceResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
             cpc = CPCResults(dates['pre_start'], dates['pre_end'])
             Top_conversions = TopConversionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+
             result = {
                 "sessions": sessions.main(),
                 "session_category": session_category.main(),
@@ -39,8 +40,14 @@ def index():
                 "Top_conversions": Top_conversions.main()
               }
 
+            DevicesPrv, DevicesPre = [], []
+            for item in result['Devices']:
+                DevicesPrv.append(item['Previous'])
+                DevicesPre.append(item['Goal Completions'])
+            DevicesDict = {'DevicesPrv': DevicesPrv, 'DevicesPre': DevicesPre}
+
             return render_template("index.html",
-                                   result=result)
+                                   result=result, DevicesDict=DevicesDict)
     except Exception as e:
         # print(e)
         dates = get_dates(30)
@@ -61,8 +68,14 @@ def index():
             "CPC": cpc.main(),
             "Top_conversions": Top_conversions.main()
         }
-        return render_template("index.html", result=result)
+        DevicesPrv, DevicesPre = [], []
+        for item in result['Devices']:
+            DevicesPrv.append(item['Previous'])
+            DevicesPre.append(item['Goal Completions'])
+        DevicesDict = {'DevicesPrv': DevicesPrv, 'DevicesPre': DevicesPre}
 
+        return render_template("index.html",
+                               result=result, DevicesDict=DevicesDict)
 if __name__ == '__main__':
 
     from models.models import db

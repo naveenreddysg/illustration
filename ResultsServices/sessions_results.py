@@ -22,3 +22,6 @@ class SessionsResults:
             for i in zip(current_results, previous_results)
         ]
         return main_result
+
+    def year(self):
+        pass
