@@ -299,6 +299,7 @@ margin: 10px;
             </div>
         </div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0'></script>
     <div class="container-fluid" id="swapper-other" style="display:none">
         <div class="animated fadeIn">
             <div class="card-columns cols-2">
@@ -313,13 +314,6 @@ margin: 10px;
                     <div class="card-body">
                         <div class="chart-wrapper">
                             <canvas id="myChart-2"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="chart-wrapper">
-                            <canvas id="myChart-3"></canvas>
                         </div>
                     </div>
                 </div>
@@ -347,7 +341,7 @@ margin: 10px;
             </div>
         </div>
     </div>
-    <script>
+<script>
 var ctx1 = document.getElementById("myChart-1").getContext('2d');
 var myChart1 = new Chart(ctx1, {
     type: 'horizontalBar',
@@ -398,7 +392,6 @@ var myChart1 = new Chart(ctx1, {
     },
     options: {
         title: {
-            responsive: true,
 			display: true,
 			text: 'SESSIONS'
 			},
@@ -429,6 +422,9 @@ var myChart2 = new Chart(ctx2, {
 			data: {
 				labels: ['Organic Search', 'Direct', 'Referral', 'Social', 'Paid Search', 'Email'],
 				datasets: [{
+                datalabels: {
+                    display: false
+                },
                 label: ['UK'],
                 data: [{{result['session_category'][0]['Organic Search']}},{{result['session_category'][0]['Direct']}},
                 {{result['session_category'][0]['Referral']}},{{result['session_category'][0]['Social']}},{{result['session_category'][0]['Paid Search']}},
@@ -442,6 +438,9 @@ var myChart2 = new Chart(ctx2, {
                 borderWidth: 1
             },
             {
+            datalabels: {
+                display: false
+            },
                 label: ['USA'],
                 data: [{{result['session_category'][1]['Organic Search']}},{{result['session_category'][1]['Direct']}},
                 {{result['session_category'][1]['Referral']}},{{result['session_category'][1]['Social']}},{{result['session_category'][1]['Paid Search']}},
@@ -455,6 +454,9 @@ var myChart2 = new Chart(ctx2, {
                 borderWidth: 1
                 },
             {
+            datalabels: {
+                display: false
+            },
                 label: ['France'],
                 data: [{{result['session_category'][2]['Organic Search']}},{{result['session_category'][2]['Direct']}},
                 {{result['session_category'][2]['Referral']}},{{result['session_category'][2]['Social']}},{{result['session_category'][2]['Paid Search']}},
@@ -468,6 +470,9 @@ var myChart2 = new Chart(ctx2, {
                 borderWidth: 1
                 },
             {
+            datalabels: {
+                display: false
+            },
                 label: ['China'],
                 data: [{{result['session_category'][3]['Organic Search']}},{{result['session_category'][3]['Direct']}},
                 {{result['session_category'][3]['Referral']}},{{result['session_category'][3]['Social']}},{{result['session_category'][3]['Paid Search']}},
@@ -481,6 +486,9 @@ var myChart2 = new Chart(ctx2, {
                 borderWidth: 1
                 },
             {
+            datalabels: {
+                display: false
+            },
                 label: ['India'],
                 data: [{{result['session_category'][4]['Organic Search']}},{{result['session_category'][4]['Direct']}},
                 {{result['session_category'][4]['Referral']}},{{result['session_category'][4]['Social']}},{{result['session_category'][4]['Paid Search']}},
@@ -494,6 +502,9 @@ var myChart2 = new Chart(ctx2, {
                 borderWidth: 1
                 },
             {
+            datalabels: {
+                display: false
+            },
                 label: ['SEA'],
                 data: [{{result['session_category'][5]['Organic Search']}},{{result['session_category'][5]['Direct']}},
                 {{result['session_category'][5]['Referral']}},{{result['session_category'][5]['Social']}},{{result['session_category'][5]['Paid Search']}},
@@ -507,6 +518,9 @@ var myChart2 = new Chart(ctx2, {
                 borderWidth: 1
                 },
             {
+            datalabels: {
+                display: false
+            },
                 label: ['ANZ'],
                 data: [{{result['session_category'][6]['Organic Search']}},{{result['session_category'][6]['Direct']}},
                 {{result['session_category'][6]['Referral']}},{{result['session_category'][6]['Social']}},{{result['session_category'][6]['Paid Search']}},
@@ -520,6 +534,9 @@ var myChart2 = new Chart(ctx2, {
                 borderWidth: 1
                             },
             {
+            datalabels: {
+                display: false
+            },
                 label: ['ROW'],
                 data: [{{result['session_category'][7]['Organic Search']}},{{result['session_category'][7]['Direct']}},
                 {{result['session_category'][7]['Referral']}},{{result['session_category'][7]['Social']}},{{result['session_category'][7]['Paid Search']}},
@@ -534,74 +551,9 @@ var myChart2 = new Chart(ctx2, {
             }]
         },
     options: {
-        responsive: true,
         title: {
 			display: true,
 			text: 'SESSIONS BY CATEGORIES'
-			},
-        tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'index'
-                },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    stacked: true,
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
-
-var ctx3 = document.getElementById("myChart-3").getContext('2d');
-var myChart3 = new Chart(ctx3, {
-    type: 'line',
-    data: {
-        labels: [{% for item in result['Events'] %}
-                  {%if item['Country'] != 'Total' %}
-                  "{{item['Country']}}",
-                  {% endif %}
-              {% endfor %}],
-        datasets: [{
-            label: ['HelloBar Events'],
-            data: [{% for item in result['Events'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['HelloBar Events']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-            ],
-            fill:false,
-
-        },{
-            label: ['Previous'],
-            data: [{% for item in result['Events'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['Previous']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [
-                'rgba(2, 60, 252, 1)',
-            ],
-            borderColor: [
-                'rgba(2, 60, 252, 1)',
-            ],
-            fill:false
-        }]
-    },
-    options: {
-        responsive: true,
-        title: {
-			display: true,
-			text: 'EVENTS'
 			},
         tooltips: {
                     mode: 'index',
@@ -656,7 +608,6 @@ var myChart4 = new Chart(ctx4, {
         }]
     },
     options: {
-        responsive: true,
         title: {
 			display: true,
 			text: 'DEVICES'
@@ -693,7 +644,6 @@ var myChart5 = new Chart(ctx5, {
                   {% endif %}
                 {% endfor %}],
         datasets: [{
-            label: ['# of Votes'],
             data: [{% for item in result['CPC'] %}
                    {% if item['Paid Source'] != 'Total' %}
                   "{{item['Goal Completions']}}",
@@ -719,7 +669,6 @@ var myChart5 = new Chart(ctx5, {
         }]
     },
     options: {
-        responsive: true,
         title: {
 			display: true,
 			text: 'CPC'
@@ -738,6 +687,9 @@ var myChart6 = new Chart(ctx6, {
                   {% endif %}
               {% endfor %}],
         datasets: [{
+            datalabels: {
+            display: false
+            },
             label: ['Current'],
             data: [{% for item in result['sessions'] %}
                     {%if item['Country'] != 'Total' %}
@@ -755,8 +707,10 @@ var myChart6 = new Chart(ctx6, {
                   {% endif %}
                   {% endfor %}],
             borderWidth: 0.5
-        },
-        {
+        },{
+            datalabels: {
+            display: false
+            },
             label: ['Previous'],
             data: [{% for item in result['sessions'] %}
                     {%if item['Country'] != 'Total' %}
@@ -777,7 +731,6 @@ var myChart6 = new Chart(ctx6, {
         }]
     },
     options: {
-        responsive: true,
         title: {
 			display: true,
 			text: 'SESSIONS'
