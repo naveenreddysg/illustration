@@ -39,6 +39,29 @@ def index():
                 "CPC": cpc.main(),
                 "Top_conversions": Top_conversions.main()
               }
+            def change(source):
+                present, previous = [], []
+                for item in result['session_category']:
+                    present.append(item[source])
+                for item in result['session_category_prev']:
+                    previous.append(item[source])
+                Change = [round(((float(present[0]) - float(previous[0])) / float(previous[0])) * 100, 2),
+                          round(((float(present[1]) - float(previous[1])) / float(previous[0])) * 100, 2),
+                          round(((float(present[2]) - float(previous[2])) / float(previous[0])) * 100, 2),
+                          round(((float(present[3]) - float(previous[3])) / float(previous[0])) * 100, 2),
+                          round(((float(present[4]) - float(previous[4])) / float(previous[0])) * 100, 2),
+                          round(((float(present[5]) - float(previous[5])) / float(previous[0])) * 100, 2),
+                          round(((float(present[6]) - float(previous[6])) / float(previous[0])) * 100, 2),
+                          round(((float(present[7]) - float(previous[7])) / float(previous[0])) * 100, 2),
+                          ]
+                return Change
+
+            OrganicSearchChange = change(source='Organic Search')
+            DirectChange = change(source='Direct')
+            ReferralChange = change(source='Referral')
+            SocialChange = change(source='Social')
+            PaidSearchChange = change(source='Paid Search')
+            EmailChange = change(source='Email')
 
             DevicesPrv, DevicesPre = [], []
             for item in result['Devices']:
@@ -47,7 +70,9 @@ def index():
             DevicesDict = {'DevicesPrv': DevicesPrv, 'DevicesPre': DevicesPre}
 
             return render_template("index.html",
-                                   result=result, DevicesDict=DevicesDict)
+                                   result=result, DevicesDict=DevicesDict,OrganicSearchChange=OrganicSearchChange,
+                                   DirectChange=DirectChange,ReferralChange=ReferralChange,SocialChange=SocialChange,
+                                   PaidSearchChange=PaidSearchChange,EmailChange=EmailChange)
     except Exception as e:
         # print(e)
         dates = get_dates(30)
@@ -67,7 +92,31 @@ def index():
             "Devices": devices.main(),
             "CPC": cpc.main(),
             "Top_conversions": Top_conversions.main()
-        }
+            }
+
+        def change(source):
+            present, previous = [], []
+            for item in result['session_category']:
+                present.append(item[source])
+            for item in result['session_category_prev']:
+                previous.append(item[source])
+            Change = [round(((float(present[0]) - float(previous[0])) / float(previous[0])) * 100, 2),
+                      round(((float(present[1]) - float(previous[1])) / float(previous[0])) * 100, 2),
+                      round(((float(present[2]) - float(previous[2])) / float(previous[0])) * 100, 2),
+                      round(((float(present[3]) - float(previous[3])) / float(previous[0])) * 100, 2),
+                      round(((float(present[4]) - float(previous[4])) / float(previous[0])) * 100, 2),
+                      round(((float(present[5]) - float(previous[5])) / float(previous[0])) * 100, 2),
+                      round(((float(present[6]) - float(previous[6])) / float(previous[0])) * 100, 2),
+                      round(((float(present[7]) - float(previous[7])) / float(previous[0])) * 100, 2),
+                      ]
+            return Change
+
+        OrganicSearchChange = change(source='Organic Search')
+        DirectChange = change(source='Direct')
+        ReferralChange = change(source='Referral')
+        SocialChange = change(source='Social')
+        PaidSearchChange = change(source='Paid Search')
+        EmailChange = change(source='Email')
         DevicesPrv, DevicesPre = [], []
         for item in result['Devices']:
             DevicesPrv.append(item['Previous'])
@@ -75,7 +124,9 @@ def index():
         DevicesDict = {'DevicesPrv': DevicesPrv, 'DevicesPre': DevicesPre}
 
         return render_template("index.html",
-                               result=result, DevicesDict=DevicesDict)
+                               result=result, DevicesDict=DevicesDict,OrganicSearchChange=OrganicSearchChange,
+                               DirectChange=DirectChange,ReferralChange=ReferralChange,SocialChange=SocialChange,
+                               PaidSearchChange=PaidSearchChange,EmailChange=EmailChange)
 if __name__ == '__main__':
 
     from models.models import db
