@@ -628,7 +628,109 @@ var myChart2 = new Chart(ctx2, {
         }
     }
 });
+</script>
+<script src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
+<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
 
+<script type="text/javascript">
+var barChartData = {
+        labels: ['UK', 'USA', 'France', 'China', 'India', 'SEA', 'ANZ','ROW'],
+        datasets: [{
+            label: 'Organic Search',
+            backgroundColor: [
+               'rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)',
+               'rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ OrganicSearchChange }}
+        }, {
+            label: 'Direct',
+            backgroundColor: [
+               'rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)',
+               'rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ DirectChange }}
+        }, {
+            label: 'Referral',
+            backgroundColor: [
+               'rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)',
+               'rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ ReferralChange }}
+        }, {
+            label: 'Social',
+            backgroundColor: [
+               'rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)',
+               'rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ SocialChange }}
+        }, {
+            label: 'Paid Search',
+            backgroundColor: [
+               'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)',
+               'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ PaidSearchChange }}
+        }, {
+            label: 'Email',
+            backgroundColor: [
+               'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)',
+               'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ EmailChange }}
+        }]
+
+    };
+    window.onload = function() {
+        var ctx = document.getElementById('myChart-3').getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                title: {
+                    display: true
+
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        ticks: {
+								max: 80,
+								min: -80,
+							}
+                    }]
+                }
+            }
+        });
+    };
+</script>
+
+<script type="text/javascript">
 var ctx4 = document.getElementById("myChart-4").getContext('2d');
 var myChart4 = new Chart(ctx4, {
     plugins: [plugin1],
