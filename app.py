@@ -22,7 +22,7 @@ def index():
     try:
         dates = request.form.to_dict()
         dates = date_converter(dates)
-        # print(dates)
+        print(dates)
         if dates['pre_start'] != "":
             sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
             session_category = SessionsCategoryResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
@@ -34,6 +34,7 @@ def index():
             result = {
                 "sessions": sessions.main(),
                 "session_category": session_category.main(),
+                "session_category_prev": session_category.mainprev(),
                 "Events": events.main(),
                 "Devices": devices.main(),
                 "CPC": cpc.main(),
@@ -88,6 +89,7 @@ def index():
         result = {
             "sessions": sessions.main(),
             "session_category": session_category.main(),
+            "session_category_prev": session_category.mainprev(),
             "Events": events.main(),
             "Devices": devices.main(),
             "CPC": cpc.main(),
