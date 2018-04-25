@@ -320,14 +320,14 @@ margin: 10px;
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-3"></canvas>
+                            <canvas id="myChart-4"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-4"></canvas>
+                            <canvas id="myChart-3"></canvas>
                         </div>
                     </div>
                 </div>
@@ -338,13 +338,20 @@ margin: 10px;
                         </div>
                     </div>
                 </div>
-                <!--<div class="card">-->
-                   <!--<div class="card-body">-->
-                       <!--<div class="chart-wrapper">-->
-                           <!--<div id="myChart-6" style="width: 450px; height: 250px; display: inline-block"></div>-->
-                       <!--</div>-->
-                   <!--</div>-->
-               <!--</div>-->
+                <div class="card">
+                   <div class="card-body">
+                       <div class="chart-wrapper">
+                           <div id="myChart-6"></div>
+                       </div>
+                   </div>
+               </div>
+                <div class="card">
+                   <div class="card-body">
+                       <div class="chart-wrapper">
+                           <div id="myChart-7"></div>
+                       </div>
+                   </div>
+               </div>
             </div>
         </div>
     </div>
@@ -832,86 +839,71 @@ var myChart5 = new Chart(ctx5, {
 
     }
 });
-
-var ctx6 = document.getElementById("myChart-6").getContext('2d');
-var myChart6 = new Chart(ctx6, {
-    type: 'bar',
-    data: {
-        labels: [{% for item in result['sessions'] %}
-                  {%if item['Country'] != 'Total' %}
-                  "{{item['Country']}}",
-                  {% endif %}
-              {% endfor %}],
-        datasets: [{
-            datalabels: {
-            display: false
-            },
-            label: ['Current'],
-            data: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['Current']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(255, 99, 132, 0.5)',
-                  {% endif %}
-                  {% endfor %}],
-            borderColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(255,99,132,1)',
-                  {% endif %}
-                  {% endfor %}],
-            borderWidth: 0.5
-        },{
-            datalabels: {
-            display: false
-            },
-            label: ['Previous'],
-            data: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['Previous']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(54, 162, 235, 0.5)',
-                  {% endif %}
-                  {% endfor %}],
-            borderColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(54, 162, 235, 1)',
-                  {% endif %}
-                  {% endfor %}],
-            borderWidth: 0.5
-        }]
-    },
-    options: {
-        title: {
-			display: true,
-			text: 'SESSIONS'
-			},
-        tooltips: {
-            mode: 'index',
-            intersect: false,
-            },
-        scales: {
-            yAxes: [{
-                gridLines: {
-                    display:false
-                },
-                ticks: {
-                    beginAtZero:true
-                }
-            }],
-            xAxes: [{
-                gridLines: {
-                    display:true
-                },
-            }]
-        }
-    }
-});
 </script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['time period','Organic Search', 'Direct', 'Referral', 'Social', 'Paid Search',
+         'Email'],
+        ['Jan17', 28.19,-4.31,-6.05,-18.21,7.31,-26.1],
+        ['Feb17', 8.19,-14.31,-6.05,-18.21,47.31,-26.1],
+        ['Mar17', 18.19,-4.31,26.05,68.21,17.31,-26.1],
+        ['Apr17', -8.19,54.31,-6.05,-18.21,7.31,-26.1],
+        ['May17', 13.19,34.31,26.05,18.21,27.31,-26.1],
+        ['June17',18.19,-4.31,11.05,-18.21,7.31,-26.1],
+        ['Jul17',8.19,-14.31,6.05,8.21,10.31,-26.1],
+        ['Aug17',48.19,4.31,-6.05,-18.21,7.31,-26.1]
+      ]);
+
+        var options = {
+          curveType: 'function',
+          chartArea:{left:100,top:60,width:"100%"},
+    vAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+    hAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+          legend: { position: 'top' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('myChart-6'));
+
+        chart.draw(data, options);
+      }
+    </script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['time period','UK', 'USA', 'France', 'China', 'India',
+         'SEA','ANZ','ROW'],
+        ['Jan17', 28,-4,-6,-18,7,-26,14,1],
+        ['Feb17', 8,-14,-6,-18,47,-26,9,5],
+        ['Mar17', 18,-4,26,68,17,-26,24,8],
+        ['Apr17', -8,54,-6,-18,7,-26,1,25],
+        ['May17', 13,34,26,18,27,-26,16,1],
+        ['June17',18,-4,11,-18,7,-26,2,9],
+        ['Jul17',8,-14,6,8,10,-26,14,8],
+        ['Aug17',48,4,-6,-18,7,-26,17,14]
+      ]);
+
+        var options = {
+            vAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+    hAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+          curveType: 'function',
+          chartArea:{left:100,top:60,width:"100%"},
+
+          legend: { position: 'top' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('myChart-7'));
+
+        chart.draw(data, options);
+      }
+    </script>
 {% endif %}
 {% endblock %}
