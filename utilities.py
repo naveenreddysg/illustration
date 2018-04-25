@@ -3,6 +3,7 @@ import calendar
 import datetime
 from collections import defaultdict
 
+
 def group(req_data, group_by=None):
     groups = defaultdict(list)
     res_data = [item.__dict__ for item in req_data]

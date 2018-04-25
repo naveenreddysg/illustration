@@ -75,6 +75,13 @@ margin: 10px;
 .control-next{
     top:0px;
 }
+
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
 </style>
     <p id="p1"></p>
     <div class="container-fluid">
@@ -303,499 +310,318 @@ margin: 10px;
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-1"></canvas>
+                            <div id="chart1"></div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-2"></canvas>
+                            <div>
+                                <canvas id="canvas"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-3"></canvas>
+                                <div id="curve_chart3"></div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-4"></canvas>
+                            <div id="curve_chart4"></div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-5"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="chart-wrapper">
-                            <canvas id="myChart-6"></canvas>
+                            <div id="colchart_diff" style="width: 450px; height: 250px; display: inline-block"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-var ctx1 = document.getElementById("myChart-1").getContext('2d');
-var myChart1 = new Chart(ctx1, {
-    type: 'horizontalBar',
-    data: {
-        labels: [{% for item in result['sessions'] %}
-                  {%if item['Country'] != 'Total' %}
-                  "{{item['Country']}}",
-                  {% endif %}
-              {% endfor %}],
-        datasets: [{
-            label: ['Current'],
-            data: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['Current']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(255, 99, 132, 0.5)',
-                  {% endif %}
-                  {% endfor %}],
-            borderColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(255,99,132,1)',
-                  {% endif %}
-                  {% endfor %}],
-            borderWidth: 0.5
-        },
-        {
-            label: ['Previous'],
-            data: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['Previous']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(54, 162, 235, 0.5)',
-                  {% endif %}
-                  {% endfor %}],
-            borderColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(54, 162, 235, 1)',
-                  {% endif %}
-                  {% endfor %}],
-            borderWidth: 0.5
-        }]
-    },
-    options: {
-        title: {
-			display: true,
-			text: 'SESSIONS'
-			},
-        tooltips: {
-            mode: 'index',
-            intersect: false,
-            },
-        scales: {
-            yAxes: [{
-                gridLines: {
-                    display:false
-                },
-                ticks: {
-                    beginAtZero:true
-                }
-            }],
-            xAxes: [{
-                gridLines: {
-                    display:true
-                },
-            }]
-        }
+<!--{% for item in result['Devices'] %}-->
+<!--{{ item['Goal Completions'] }}-->
+<!--{{ result['Devices'] }}-->
+<!--{{result['session_category']}}-->
+<!--{{ item['Previous']}}-->
+<!--{% endfor %}-->
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Country','Organic Search', 'Direct', 'Referral', 'Social', 'Paid Search',
+         'Email',{ role: 'annotation' },{ role: 'annotation' },{ role: 'annotation' },
+         { role: 'annotation' },{ role: 'annotation' },{ role: 'annotation' }],
+        ['UK', {{SesCatDict['OrganicSearch'][0]}},{{SesCatDict['Direct'][0]}},{{SesCatDict['Referral'][0]}},{{SesCatDict['Social'][0]}},{{SesCatDict['PaidSearch'][0]}},{{SesCatDict['Email'][0]}},'cu','','','','',''],
+        ['USA', {{SesCatDict['OrganicSearch'][1]}},{{SesCatDict['Direct'][1]}},{{SesCatDict['Referral'][1]}},{{SesCatDict['Social'][1]}},{{SesCatDict['PaidSearch'][1]}},{{SesCatDict['Email'][1]}},'cu','','','','',''],
+        ['France', {{SesCatDict['OrganicSearch'][2]}},{{SesCatDict['Direct'][2]}},{{SesCatDict['Referral'][2]}},{{SesCatDict['Social'][2]}},{{SesCatDict['PaidSearch'][2]}},{{SesCatDict['Email'][2]}},'cu','','','','',''],
+        ['China', {{SesCatDict['OrganicSearch'][3]}},{{SesCatDict['Direct'][3]}},{{SesCatDict['Referral'][3]}},{{SesCatDict['Social'][3]}},{{SesCatDict['PaidSearch'][3]}},{{SesCatDict['Email'][3]}},'cu','','','','',''],
+        ['India', {{SesCatDict['OrganicSearch'][4]}},{{SesCatDict['Direct'][4]}},{{SesCatDict['Referral'][4]}},{{SesCatDict['Social'][4]}},{{SesCatDict['PaidSearch'][4]}},{{SesCatDict['Email'][4]}},'cu','','','','',''],
+        ['SEA', {{SesCatDict['OrganicSearch'][5]}},{{SesCatDict['Direct'][5]}},{{SesCatDict['Referral'][5]}},{{SesCatDict['Social'][5]}},{{SesCatDict['PaidSearch'][5]}},{{SesCatDict['Email'][5]}},'cu','','','','',''],
+        ['ANZ', {{SesCatDict['OrganicSearch'][6]}},{{SesCatDict['Direct'][6]}},{{SesCatDict['Referral'][6]}},{{SesCatDict['Social'][6]}},{{SesCatDict['PaidSearch'][6]}},{{SesCatDict['Email'][6]}},'cu','','','','',''],
+        ['ROW', {{SesCatDict['OrganicSearch'][7]}},{{SesCatDict['Direct'][7]}},{{SesCatDict['Referral'][7]}},{{SesCatDict['Social'][7]}},{{SesCatDict['PaidSearch'][7]}},{{SesCatDict['Email'][7]}},'cu','','','','','']
+      ]);
+
+
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0,1,2,3,4,5,6, {
+      calc: function (dt, row) {
+        a=dt.getValue(row, 1) + dt.getValue(row, 2)+dt.getValue(row, 3) + dt.getValue(row, 4)+dt.getValue(row, 5) + dt.getValue(row, 6);
+        b=a/1000;
+        c=parseInt(b)
+            return c
+      },
+      type: "number",
+      role: "annotation"
     }
-});
-var ctx2 = document.getElementById("myChart-2").getContext('2d');
-var myChart2 = new Chart(ctx2, {
-			type: 'line',
-			data: {
-				labels: ['Organic Search', 'Direct', 'Referral', 'Social', 'Paid Search', 'Email'],
-				datasets: [{
-                label: ['UK'],
-                data: [{{result['session_category'][0]['Organic Search']}},{{result['session_category'][0]['Direct']}},
-                {{result['session_category'][0]['Referral']}},{{result['session_category'][0]['Social']}},{{result['session_category'][0]['Paid Search']}},
-                {{result['session_category'][0]['Email']}}],
-                backgroundColor: [
-                    'rgba(252, 5, 5, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(252, 5, 5,1)',
-                ],
-                borderWidth: 1
-            },
-            {
-                label: ['USA'],
-                data: [{{result['session_category'][1]['Organic Search']}},{{result['session_category'][1]['Direct']}},
-                {{result['session_category'][1]['Referral']}},{{result['session_category'][1]['Social']}},{{result['session_category'][1]['Paid Search']}},
-                {{result['session_category'][1]['Email']}}],
-                backgroundColor: [
-                    'rgba(163, 161, 161, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(163, 161, 161, 1)',
-                ],
-                borderWidth: 1
+                        ]);
+
+      var options = {
+
+        width: 610,
+        height: 650,
+       animation:{
+      duration: 6000,
+      easing: 'out',
+      startup: true
+    },
+        displayAnnotations: true,
+    vAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+    hAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+
+        chartArea:{left:60,top:60,width:"87%"},
+        bar: {groupWidth: "60%"},
+         colors:['#3CBBB6','#2681B9','#F4485F','#D55B12','#92EA5D','#004411'],
+        isStacked: true,
+        legend: { position: "top", textStyle: {color: '#808080', fontSize: 16}},
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("chart1"));
+      chart.draw(view, options);
+  }
+  $(window).resize(function(){
+  drawChart();
+  });
+</script>
+
+<script src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
+<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+
+<script type="text/javascript">
+var barChartData = {
+        labels: ['UK', 'USA', 'France', 'China', 'India', 'SEA', 'ANZ','ROW'],
+        datasets: [{
+            label: 'Organic Search',
+            backgroundColor: [
+               'rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)',
+               'rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ OrganicSearchChange }}
+        }, {
+            label: 'Direct',
+            backgroundColor: [
+               'rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)',
+               'rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ DirectChange }}
+        }, {
+            label: 'Referral',
+            backgroundColor: [
+               'rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)',
+               'rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ ReferralChange }}
+        }, {
+            label: 'Social',
+            backgroundColor: [
+               'rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)',
+               'rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)','rgba(22, 152, 31, 0.5)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ SocialChange }}
+        }, {
+            label: 'Paid Search',
+            backgroundColor: [
+               'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)',
+               'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ PaidSearchChange }}
+        }, {
+            label: 'Email',
+            backgroundColor: [
+               'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)',
+               'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)'],
+            borderColor: [
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+               'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
+            borderWidth: 0.5,
+            data: {{ EmailChange }}
+        }]
+
+    };
+    window.onload = function() {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                title: {
+                    display: true
+
                 },
-            {
-                label: ['France'],
-                data: [{{result['session_category'][2]['Organic Search']}},{{result['session_category'][2]['Direct']}},
-                {{result['session_category'][2]['Referral']}},{{result['session_category'][2]['Social']}},{{result['session_category'][2]['Paid Search']}},
-                {{result['session_category'][2]['Email']}}],
-                backgroundColor: [
-                    'rgba(227, 5, 252, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(227, 5, 252,1)',
-                ],
-                borderWidth: 1
-                },
-            {
-                label: ['China'],
-                data: [{{result['session_category'][3]['Organic Search']}},{{result['session_category'][3]['Direct']}},
-                {{result['session_category'][3]['Referral']}},{{result['session_category'][3]['Social']}},{{result['session_category'][3]['Paid Search']}},
-                {{result['session_category'][3]['Email']}}],
-                backgroundColor: [
-                    'rgba(248, 252, 5, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(248, 252, 5,1)',
-                ],
-                borderWidth: 1
-                },
-            {
-                label: ['India'],
-                data: [{{result['session_category'][4]['Organic Search']}},{{result['session_category'][4]['Direct']}},
-                {{result['session_category'][4]['Referral']}},{{result['session_category'][4]['Social']}},{{result['session_category'][4]['Paid Search']}},
-                {{result['session_category'][4]['Email']}}],
-                backgroundColor: [
-                    'rgba(252, 165, 5, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(252, 165, 5,1)',
-                ],
-                borderWidth: 1
-                },
-            {
-                label: ['SEA'],
-                data: [{{result['session_category'][5]['Organic Search']}},{{result['session_category'][5]['Direct']}},
-                {{result['session_category'][5]['Referral']}},{{result['session_category'][5]['Social']}},{{result['session_category'][5]['Paid Search']}},
-                {{result['session_category'][5]['Email']}}],
-                backgroundColor: [
-                    'rgba(5, 235, 252, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(5, 235, 252,1)',
-                ],
-                borderWidth: 1
-                },
-            {
-                label: ['ANZ'],
-                data: [{{result['session_category'][6]['Organic Search']}},{{result['session_category'][6]['Direct']}},
-                {{result['session_category'][6]['Referral']}},{{result['session_category'][6]['Social']}},{{result['session_category'][6]['Paid Search']}},
-                {{result['session_category'][6]['Email']}}],
-                backgroundColor: [
-                    'rgba(239, 167, 140, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(239, 167, 140,1)',
-                ],
-                borderWidth: 1
-                            },
-            {
-                label: ['ROW'],
-                data: [{{result['session_category'][7]['Organic Search']}},{{result['session_category'][7]['Direct']}},
-                {{result['session_category'][7]['Referral']}},{{result['session_category'][7]['Social']}},{{result['session_category'][7]['Paid Search']}},
-                {{result['session_category'][7]['Email']}}],
-                backgroundColor: [
-                    'rgba(5, 252, 9, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(5, 252, 9,1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-    options: {
-        title: {
-			display: true,
-			text: 'SESSIONS BY CATEGORIES'
-			},
-        tooltips: {
+                tooltips: {
                     mode: 'index',
-                    intersect: false,
+                    intersect: false
                 },
-                hover: {
-                    mode: 'index'
-                },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    stacked: true,
-                    beginAtZero:true
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        ticks: {
+								max: 80,
+								min: -80,
+							}
+                    }]
                 }
-            }]
-        }
-    }
+            }
+        });
+    };
+</script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['time period','Organic Search', 'Direct', 'Referral', 'Social', 'Paid Search',
+         'Email'],
+        ['Jan17', 28.19,-4.31,-6.05,-18.21,7.31,-26.1],
+        ['Feb17', 8.19,-14.31,-6.05,-18.21,47.31,-26.1],
+        ['Mar17', 18.19,-4.31,26.05,68.21,17.31,-26.1],
+        ['Apr17', -8.19,54.31,-6.05,-18.21,7.31,-26.1],
+        ['May17', 13.19,34.31,26.05,18.21,27.31,-26.1],
+        ['June17',18.19,-4.31,11.05,-18.21,7.31,-26.1],
+        ['Jul17',8.19,-14.31,6.05,8.21,10.31,-26.1],
+        ['Aug17',48.19,4.31,-6.05,-18.21,7.31,-26.1]
+      ]);
+
+        var options = {
+          curveType: 'function',
+          chartArea:{left:100,top:60,width:"100%"},
+    vAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+    hAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+          legend: { position: 'top' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart3'));
+
+        chart.draw(data, options);
+      }
+      $(window).resize(function(){
+        drawChart();
+        });
+    </script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['time period','UK', 'USA', 'France', 'China', 'India',
+         'SEA','ANZ','ROW'],
+        ['Jan17', 28,-4,-6,-18,7,-26,14,1],
+        ['Feb17', 8,-14,-6,-18,47,-26,9,5],
+        ['Mar17', 18,-4,26,68,17,-26,24,8],
+        ['Apr17', -8,54,-6,-18,7,-26,1,25],
+        ['May17', 13,34,26,18,27,-26,16,1],
+        ['June17',18,-4,11,-18,7,-26,2,9],
+        ['Jul17',8,-14,6,8,10,-26,14,8],
+        ['Aug17',48,4,-6,-18,7,-26,17,14]
+      ]);
+
+        var options = {
+            vAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+    hAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
+          curveType: 'function',
+          chartArea:{left:100,top:60,width:"100%"},
+
+          legend: { position: 'top' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart4'));
+
+        chart.draw(data, options);
+      }
+    </script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var oldData = google.visualization.arrayToDataTable([
+      ['Devices', 'Previous'],
+      ['Desktop', {{ DevicesDict['DevicesPrv'][0] }}],
+      ['Mobile', {{ DevicesDict['DevicesPrv'][1] }}],
+      ['Tablet', {{ DevicesDict['DevicesPrv'][2] }}],
+
+    ]);
+
+    var newData = google.visualization.arrayToDataTable([
+      ['Devices', 'Goal Completions '],
+      ['Desktop', {{ DevicesDict['DevicesPre'][0] }}],
+      ['Mobile', {{ DevicesDict['DevicesPre'][1] }}],
+      ['Tablet', {{ DevicesDict['DevicesPre'][2] }}],
+
+    ]);
+
+    var colChartDiff = new google.visualization.ColumnChart(document.getElementById('colchart_diff'));
+
+
+    var options = { legend: { position: 'top' } };
+
+
+
+    var diffData = colChartDiff.computeDiff(oldData, newData);
+    colChartDiff.draw(diffData, options);
+
+  }
+  $(window).resize(function(){
+  drawChart();
 });
-
-var ctx3 = document.getElementById("myChart-3").getContext('2d');
-var myChart3 = new Chart(ctx3, {
-    type: 'line',
-    data: {
-        labels: [{% for item in result['Events'] %}
-                  {%if item['Country'] != 'Total' %}
-                  "{{item['Country']}}",
-                  {% endif %}
-              {% endfor %}],
-        datasets: [{
-            label: ['HelloBar Events'],
-            data: [{% for item in result['Events'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['HelloBar Events']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-            ],
-            fill:false,
-
-        },{
-            label: ['Previous'],
-            data: [{% for item in result['Events'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['Previous']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [
-                'rgba(2, 60, 252, 1)',
-            ],
-            borderColor: [
-                'rgba(2, 60, 252, 1)',
-            ],
-            fill:false
-        }]
-    },
-    options: {
-        title: {
-			display: true,
-			text: 'EVENTS'
-			},
-        tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'index'
-                },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    stacked: true,
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
-
-var ctx4 = document.getElementById("myChart-4").getContext('2d');
-var myChart4 = new Chart(ctx4, {
-    type: 'bar',
-    data: {
-        labels: [{% for item in result['Devices'] %}
-                  "{{item['Device']}}",
-              {% endfor %}],
-        datasets: [{
-            label: ['Current'],
-            data: [{% for item in result['Devices'] %}
-                  "{{item['Goal Completions']}}",
-                  {% endfor %}],
-            backgroundColor: [{% for item in result['Devices'] %}
-                  'rgba(255, 99, 132, 0.5)',
-                  {% endfor %}],
-            borderColor: [{% for item in result['Devices'] %}
-                  'rgba(255,99,132,1)',
-                  {% endfor %}],
-            borderWidth: 0.5
-        },
-        {
-            label: ['Previous'],
-            data: [{% for item in result['Devices'] %}
-                  "{{item['Previous']}}",
-                  {% endfor %}],
-            backgroundColor: [{% for item in result['Devices'] %}
-                  'rgba(54, 162, 235, 0.5)',
-                  {% endfor %}],
-            borderColor: [{% for item in result['Devices'] %}
-                  'rgba(54, 162, 235, 1)',
-                  {% endfor %}],
-            borderWidth: 0.5
-        }]
-    },
-    options: {
-        title: {
-			display: true,
-			text: 'DEVICES'
-			},
-        tooltips: {
-            mode: 'index',
-            intersect: false,
-            },
-        scales: {
-            yAxes: [{
-                gridLines: {
-                    display:true
-                },
-                ticks: {
-                    beginAtZero:true
-                }
-            }],
-            xAxes: [{
-                gridLines: {
-                    display:true
-                },
-            }]
-        }
-    }
-});
-
-var ctx5 = document.getElementById("myChart-5").getContext('2d');
-var myChart5 = new Chart(ctx5, {
-    type: 'pie',
-    data: {
-        labels: [{% for item in result['CPC'] %}
-                   {% if item['Paid Source'] != 'Total' %}
-                  "{{item['Paid Source']}}",
-                  {% endif %}
-                {% endfor %}],
-        datasets: [{
-            label: ['# of Votes'],
-            data: [{% for item in result['CPC'] %}
-                   {% if item['Paid Source'] != 'Total' %}
-                  "{{item['Goal Completions']}}",
-                  {% endif %}
-                {% endfor %}],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)',
-                'rgba(255, 159, 64, 0.5)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 0.5
-        }]
-    },
-    options: {
-        title: {
-			display: true,
-			text: 'CPC'
-        },
-
-    }
-});
-
-var ctx6 = document.getElementById("myChart-6").getContext('2d');
-var myChart6 = new Chart(ctx6, {
-    type: 'bar',
-    data: {
-        labels: [{% for item in result['sessions'] %}
-                  {%if item['Country'] != 'Total' %}
-                  "{{item['Country']}}",
-                  {% endif %}
-              {% endfor %}],
-        datasets: [{
-            label: ['Current'],
-            data: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['Current']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(255, 99, 132, 0.5)',
-                  {% endif %}
-                  {% endfor %}],
-            borderColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(255,99,132,1)',
-                  {% endif %}
-                  {% endfor %}],
-            borderWidth: 0.5
-        },
-        {
-            label: ['Previous'],
-            data: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{item['Previous']}}",
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(54, 162, 235, 0.5)',
-                  {% endif %}
-                  {% endfor %}],
-            borderColor: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  'rgba(54, 162, 235, 1)',
-                  {% endif %}
-                  {% endfor %}],
-            borderWidth: 0.5
-        }]
-    },
-    options: {
-        title: {
-			display: true,
-			text: 'SESSIONS'
-			},
-        tooltips: {
-            mode: 'index',
-            intersect: false,
-            },
-        scales: {
-            yAxes: [{
-                gridLines: {
-                    display:false
-                },
-                ticks: {
-                    beginAtZero:true
-                }
-            }],
-            xAxes: [{
-                gridLines: {
-                    display:true
-                },
-            }]
-        }
-    }
-});
-
 </script>
 {% endif %}
 {% endblock %}
