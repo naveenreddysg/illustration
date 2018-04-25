@@ -58,3 +58,18 @@ class SessionsCategoryResults:
         main_result.append(total_previous)
         main_result.append(change)
         return main_result
+
+    def mainprev(self):
+        previous_results = SessionsCategoryService(self.previous_start_date, self.previous_end_date).get_data()
+        main_resultPrev = [
+            {'Country': i['country'],
+             'Direct': i['direct'],
+             'Paid Search': i['paidSearch'],
+             'Organic Search': i['organicSearch'],
+             'Referral': i['referral'],
+             'Social': i['social'],
+             'Email':i['email']
+             }
+            for i in previous_results
+        ]
+        return main_resultPrev
