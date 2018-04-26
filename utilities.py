@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta,date
 import calendar
 import datetime
 from collections import defaultdict
@@ -67,3 +67,23 @@ def get_two_month_dates():
             'prv_start': prv_start.strftime('%Y-%m-%d'),
             'prv_end': prv_end.strftime('%Y-%m-%d')
             }
+
+def get12months():
+    # print int(datetime.datetime.now().strftime('%m'))
+    prev_month = date.today().month - 1
+    year = int((datetime.datetime.now().strftime('%Y-%m')).split('-')[0])
+    print(year)
+    num_days = calendar.monthrange(year, prev_month)
+    # print(num_days)
+    pre_start = datetime.date(year, prev_month, 1)
+    pre_end = datetime.date(year, prev_month, num_days[1])
+    year = year if prev_month != 1 else year - 1
+    prev_month = (prev_month - 1) if prev_month != 1 else 12
+    num_days = calendar.monthrange(year, prev_month)
+    prv_start = datetime.date(year, prev_month, 1)
+    prv_end = datetime.date(year, prev_month, num_days[1])
+
+    print pre_start,pre_end,'\n',prv_start,prv_end
+
+if __name__ == '__main__':
+    get12months()

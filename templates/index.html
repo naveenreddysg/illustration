@@ -320,14 +320,14 @@ margin: 10px;
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-4"></canvas>
+                            <canvas id="myChart-3"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-3"></canvas>
+                            <canvas id="myChart-4"></canvas>
                         </div>
                     </div>
                 </div>
@@ -341,7 +341,7 @@ margin: 10px;
                 <div class="card">
                    <div class="card-body">
                        <div class="chart-wrapper">
-                           <div id="myChart-6"></div>
+                           <canvas id="myChart-6"></canvas>
                        </div>
                    </div>
                </div>
@@ -840,38 +840,104 @@ var myChart5 = new Chart(ctx5, {
     }
 });
 </script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-        ['time period','Organic Search', 'Direct', 'Referral', 'Social', 'Paid Search',
-         'Email'],
-        ['Jan17', 28.19,-4.31,-6.05,-18.21,7.31,-26.1],
-        ['Feb17', 8.19,-14.31,-6.05,-18.21,47.31,-26.1],
-        ['Mar17', 18.19,-4.31,26.05,68.21,17.31,-26.1],
-        ['Apr17', -8.19,54.31,-6.05,-18.21,7.31,-26.1],
-        ['May17', 13.19,34.31,26.05,18.21,27.31,-26.1],
-        ['June17',18.19,-4.31,11.05,-18.21,7.31,-26.1],
-        ['Jul17',8.19,-14.31,6.05,8.21,10.31,-26.1],
-        ['Aug17',48.19,4.31,-6.05,-18.21,7.31,-26.1]
-      ]);
-
-        var options = {
-          curveType: 'function',
-          chartArea:{left:100,top:60,width:"100%"},
-    vAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
-    hAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
-          legend: { position: 'top' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('myChart-6'));
-
-        chart.draw(data, options);
+<script src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
+<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+<script>
+  // var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var config = {
+    type: 'line',
+    data: {
+      labels: ['April-17', 'May-17', 'June-17', 'July-17', 'August-17', 'September-17', 'October-17', 'November-17', 'December-17', 'January-18', 'February-18', 'March-18'],
+      datasets: [{
+        label: 'Organic Search',
+        backgroundColor: 'rgba(51, 100, 255, 0.8)',
+        borderColor: 'rgba(51, 100, 255, 0.8)',
+        data: [
+          45,46,-5,-4,-21,21,5,85,-9,-5,45,65
+        ],
+        fill: false,
+      }, {
+        label: 'Direct',
+        fill: false,
+        backgroundColor: 'rgba(255, 49, 49, 0.8)',
+        borderColor: 'rgba(255, 49, 49, 0.8)',
+        data: [
+          5,25,36,55,45,-55,-16,-4,22,-6,45,-12
+        ],
+      }, {
+        label: 'Referral',
+        backgroundColor: 'rgba(252, 135, 54,0.8)',
+        borderColor: 'rgba(252, 135, 54,0.8)',
+        data: [
+          -5,56,5,54,-1,-21,6,45,-19,-52,-5,55
+        ],
+        fill: false,
+      }, {
+        label: 'Social',
+        backgroundColor: 'rgba(22, 152, 31, 0.5)',
+        borderColor: 'rgba(22, 152, 31, 0.5)',
+        data: [
+           25,45,-55,4,-5,-45,-5,4,45,89,44,89
+        ],
+        fill: false,
+      }, {
+        label: 'Paid Search',
+        backgroundColor: 'rgba(218, 14, 247, 0.8)',
+        borderColor: 'rgba(218, 14, 247, 0.8)',
+        data: [
+          12,19,-49,66,-5,-6,44,18,-6,-32,-15,13
+        ],
+        fill: false,
+      }, {
+        label: 'Email',
+        backgroundColor: 'rgba(1, 169, 214, 0.8)',
+        borderColor: 'rgba(1, 169, 214, 0.8)',
+        data: [
+          44,-2,-3,-8,66,5,41,12,15,18,25,-25
+        ],
+        fill: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: 'Monthly Source Report'
+      },
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'MONTHS'
+          }
+        }],
+        yAxes: [{
+          display: true,
+          position: 'right',
+          scaleLabel: {
+            display: true,
+            labelString: 'Values'
+          }
+        }]
       }
-    </script>
+    }
+  };
+
+  window.onload = function() {
+    var ctx = document.getElementById('myChart-6').getContext('2d');
+    window.myLine = new Chart(ctx, config);
+  };
+
+</script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
