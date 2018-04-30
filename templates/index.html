@@ -638,8 +638,8 @@ var myChart2 = new Chart(ctx2, {
 </script>
 <script src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
 <script src="http://www.chartjs.org/samples/latest/utils.js"></script>
-
 <script type="text/javascript">
+
 var barChartData = {
         labels: ['UK', 'USA', 'France', 'China', 'India', 'SEA', 'ANZ','ROW'],
         datasets: [{
@@ -705,36 +705,34 @@ var barChartData = {
         }]
 
     };
-    window.onload = function() {
-        var ctx = document.getElementById('myChart-3').getContext('2d');
-        window.myBar = new Chart(ctx, {
-            type: 'bar',
-            data: barChartData,
-            options: {
-                title: {
-                    display: true
+var ctx3 = document.getElementById('myChart-3').getContext('2d');
+var myChart3 = new Chart(ctx3, {
+    type: 'bar',
+    data: barChartData,
+    options: {
+        title: {
+            display: true
 
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false
-                },
-                responsive: true,
-                scales: {
-                    xAxes: [{
-                        stacked: true,
-                    }],
-                    yAxes: [{
-                        stacked: true,
-                        ticks: {
-								max: 80,
-								min: -80,
-							}
-                    }]
-                }
-            }
-        });
-    };
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false
+        },
+        responsive: true,
+        scales: {
+            xAxes: [{
+                stacked: true,
+            }],
+            yAxes: [{
+                stacked: true,
+                ticks: {
+                        max: 80,
+                        min: -80,
+                    }
+            }]
+        }
+    }
+});
 </script>
 
 <script type="text/javascript">
@@ -922,7 +920,6 @@ var myChart5 = new Chart(ctx5, {
         }],
         yAxes: [{
           display: true,
-          position: 'right',
           scaleLabel: {
             display: true,
             labelString: 'Values'
