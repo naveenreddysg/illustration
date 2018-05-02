@@ -39,8 +39,8 @@ class SessionsCategoryResults:
              'Direct': i['direct'],
              'Paid Search': i['paidSearch'],
              'Organic Search': i['organicSearch'],
-             'Referral': i['referral'],
-             'Social': i['social'],
+             'Referral': i['social'],
+             'Social': i['referral'],
              'Email': i['email']
              }
             for i in results
@@ -66,8 +66,8 @@ class SessionsCategoryResults:
              'Direct': i['direct'],
              'Paid Search': i['paidSearch'],
              'Organic Search': i['organicSearch'],
-             'Referral': i['referral'],
-             'Social': i['social'],
+             'Referral': i['social'],
+             'Social': i['referral'],
              'Email':i['email']
              }
             for i in previous_results

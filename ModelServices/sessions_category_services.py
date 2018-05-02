@@ -40,9 +40,9 @@ class SessionsCategoryService:
             if data['country'] == 'ROW':
                 new_dict['paidSearch'] += data['paidSearch']
                 new_dict['direct'] += data['direct']
-                new_dict['social'] += data['social']
+                new_dict['referral'] += data['social']
                 new_dict['organicSearch'] += data['organicSearch']
-                new_dict['referral'] += data['referral']
+                new_dict['social'] += data['referral']
                 new_dict['email'] += data['email']
                 res_data.remove(data)
             elif data['country'] == 'ROWUSA':
