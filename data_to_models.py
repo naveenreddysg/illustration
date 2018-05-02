@@ -472,8 +472,8 @@ def main(argv):
           for n in range(int((end_date - start_date).days)):
               yield start_date + timedelta(n)
 
-      start_date = date(2018, 4, 26)
-      end_date = date(2018, 4, 30)
+      start_date = date(2018, 3, 1)
+      end_date = date(2018, 5, 2)
 
       for single_date in daterange(start_date, end_date):
           startDate1 = endDate1 = single_date.strftime("%Y-%m-%d")
@@ -496,31 +496,31 @@ def main(argv):
             results = get_sessions(service, profile_id[0], profile_id[1], startDate1, endDate1)
             print_sessions(results, profile_id[1], startDate1)
 
-          for profile_id in agents:
-              results = get_agents(service, profile_id[0], startDate1, endDate1)
-              # print(results)
-              print_agents(results, startDate1)
+          # for profile_id in agents:
+          #     results = get_agents(service, profile_id[0], startDate1, endDate1)
+          #     # print(results)
+          #     print_agents(results, startDate1)
 
-          for profile_id in sidebtn:
-              results = get_sidebtn(service, profile_id[0], startDate1, endDate1)
-              # print(results)
-              print_sidebtn(results, startDate1)
+          # for profile_id in sidebtn:
+          #     results = get_sidebtn(service, profile_id[0], startDate1, endDate1)
+          #     # print(results)
+          #     print_sidebtn(results, startDate1)
 
-          for profile_id in portpolio:
-              results = get_portpolio(service, profile_id[0], startDate1, endDate1)
-              # print(results)
-              print_portpolio(results, startDate1)
+          # for profile_id in portpolio:
+          #     results = get_portpolio(service, profile_id[0], startDate1, endDate1)
+          #     # print(results)
+          #     print_portpolio(results, startDate1)
 
-          for profile_id in events:
+          # for profile_id in events:
+          #
+          #     results = get_events(service, profile_id[0], startDate1, endDate1)
+          #
+          #     print_events(results, profile_id[1], startDate1)
 
-              results = get_events(service, profile_id[0], startDate1, endDate1)
-
-              print_events(results, profile_id[1], startDate1)
-
-          for profile_id in devices:
-
-              results = get_devices(service, profile_id[0], startDate1, endDate1)
-              print_devices(results, startDate1)
+          # for profile_id in devices:
+          #
+          #     results = get_devices(service, profile_id[0], startDate1, endDate1)
+          #     print_devices(results, startDate1)
 
           for profile_id in cpc:
 
