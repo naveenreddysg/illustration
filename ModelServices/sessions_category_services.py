@@ -28,33 +28,18 @@ class SessionsCategoryService:
         req_data = db.session.query(self.model).filter(self.model.date >= self.start_date, self.model.date <= self.end_date)
         req_data = req_data.all()
         res_data = group(req_data, 'country')
-        new_dict = {}
-        for data in res_data:
-            new_dict['paidSearch'] = 0
-            new_dict['direct'] = 0
-            new_dict['social'] = 0
-            new_dict['organicSearch'] = 0
-            new_dict['referral'] = 0
-            new_dict['email'] = 0
-            new_dict['country'] = 'ROW'
-            if data['country'] == 'ROW':
-                new_dict['paidSearch'] += data['paidSearch']
-                new_dict['direct'] += data['direct']
-                new_dict['referral'] += data['social']
-                new_dict['organicSearch'] += data['organicSearch']
-                new_dict['social'] += data['referral']
-                new_dict['email'] += data['email']
-                res_data.remove(data)
-            elif data['country'] == 'ROWUSA':
-                new_dict['paidSearch'] += (data['paidSearch'])
-                new_dict['direct'] += data['direct']
-                new_dict['social'] += data['social']
-                new_dict['organicSearch'] += data['organicSearch']
-                new_dict['referral'] += data['referral']
-                new_dict['email'] += data['email']
-                res_data.remove(data)
+        new_dict = {
+            'country': "ROW",
+            'paidSearch': res_data[-1]['paidSearch']+res_data[-3]['paidSearch'],
+            'direct': res_data[-1]['direct'] + res_data[-3]['direct'],
+            'social': res_data[-1]['social'] + res_data[-3]['social'],
+            'organicSearch': res_data[-1]['organicSearch'] + res_data[-3]['organicSearch'],
+            'referral': res_data[-1]['referral']+res_data[-3]['referral'],
+            'email': res_data[-1]['email'] + res_data[-3]['email'],
+        }
+        del res_data[-1]
+        del res_data[-2]
         res_data.append(new_dict)
-
         sort_list = ['UK', 'US', 'France', 'China', 'India', 'SEA', 'ANZ', 'ROW']
         res_data = self.sort_by(res_data, sort_list)
         return res_data
