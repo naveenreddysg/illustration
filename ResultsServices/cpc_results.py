@@ -6,6 +6,13 @@ class CPCResults:
         self.current_start_date = current_start_date
         self.current_end_date = current_end_date
 
+    @staticmethod
+    def total(result):
+        res_data = {'Paid Source': 'Total', 'Goal Completions': 0}
+        for item in result:
+            res_data['Goal Completions'] += item['Goal Completions']
+        return res_data
+
     def main(self):
 
         current_results = CPCService(self.current_start_date, self.current_end_date).get_data()
@@ -15,4 +22,7 @@ class CPCResults:
             {'Paid Source': 'Facebook ads', 'Goal Completions': current_results[0]['facebookads']},
             {'Paid Source': 'Instagram ads', 'Goal Completions': current_results[0]['Instagram']}
          ]
+
+        total = self.total(main_result)
+        main_result.append(total)
         return main_result

@@ -359,7 +359,6 @@ margin: 10px;
 <script  type="text/javascript">
 var plugin1 = { afterDatasetsDraw: function(chart) {
 				var ctx = chart.ctx;
-
 				chart.data.datasets.forEach(function(dataset, i) {
 					var meta = chart.getDatasetMeta(i);
 					if (!meta.hidden) {
@@ -491,6 +490,7 @@ var myChart1 = new Chart(ctx1, {
         }
     }
 });
+
 var ctx2 = document.getElementById("myChart-1").getContext('2d');
 var myChart2 = new Chart(ctx2, {
 			type: 'bar',
@@ -846,11 +846,11 @@ var myChart5 = new Chart(ctx5, {
 <script src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
 <script src="http://www.chartjs.org/samples/latest/utils.js"></script>
 <script>
-  // var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  // var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var config = {
     type: 'line',
     data: {
-      labels: ['April-17', 'May-17', 'June-17', 'July-17', 'August-17', 'September-17', 'October-17', 'November-17', 'December-17', 'January-18', 'February-18', 'March-18'],
+      labels: ['Apr-17', 'May-17', 'Jun-17', 'Jul-17', 'Aug-17', 'Sep-17', 'Oct-17', 'Nov-17', 'Dec-17', 'Jan-18', 'Feb-18', 'Mar-18'],
       datasets: [{
         label: 'Organic Search',
         backgroundColor: 'rgba(51, 100, 255, 0.8)',

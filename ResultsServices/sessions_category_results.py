@@ -15,8 +15,8 @@ class SessionsCategoryResults:
             res_data['Organic Search'] += item['organicSearch']
             res_data['Direct'] += item['direct']
             res_data['Paid Search'] += item['paidSearch']
-            res_data['Referral'] += item['referral']
-            res_data['Social'] += item['social']
+            res_data['Referral'] += item['social']
+            res_data['Social'] += item['referral']
             res_data['Email'] += item['email']
         return res_data
 

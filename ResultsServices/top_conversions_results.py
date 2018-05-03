@@ -20,7 +20,7 @@ class TopConversionsResults:
         side_btn_previous_results = SideBtnService(self.previous_start_date, self.previous_end_date).get_data()
         top_conversion_current_results = TopConversionsService(self.current_start_date, self.current_end_date).get_data()
         top_conversion_previous_results = TopConversionsService(self.previous_start_date, self.previous_end_date).get_data()
-
+        print agents_current_results
         top_conversion_result = [
             {'Metric': 'Mobile+Tablet',
              'Current': top_conversion_current_results[0]['MobileTablet'],
@@ -69,6 +69,13 @@ class TopConversionsResults:
              'Change': str(round((((float(agents_current_results[0]['emailClick']) -
                                     float(agents_previous_results[0]['emailClick']))
                                    / float(agents_previous_results[0]['emailClick'])) * 100), 2)) + '%'
+             },
+            {'Metric': 'Agent PopUp Call Btn Click',
+             'Current': agents_current_results[0]['callClick'],
+             'Previous': agents_previous_results[0]['callClick'],
+             'Change': str(round((((float(agents_current_results[0]['callClick']) -
+                                    float(agents_previous_results[0]['callClick']))
+                                   / float(agents_previous_results[0]['callClick'])) * 100), 2)) + '%'
              }
         ]
         side_btn_result = [
