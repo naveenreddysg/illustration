@@ -298,8 +298,8 @@ margin: 10px;
                 </div>
             </div>
         </div>
-    <script src='https://cdn.jsdelivr.net/npm/chart.js@2.7.0/dist/Chart.min.js'></script>
-    <!--<script src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0'></script>-->
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@2.7.1/dist/Chart.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0"></script>
     <div class="container-fluid" id="swapper-other" style="display:none">
         <div class="animated fadeIn">
             <div class="card-columns cols-2">
@@ -345,80 +345,13 @@ margin: 10px;
                        </div>
                    </div>
                </div>
-                <div class="card">
-                   <div class="card-body">
-                       <div class="chart-wrapper">
-                           <div id="myChart-7"></div>
-                       </div>
-                   </div>
-               </div>
             </div>
         </div>
     </div>
 
 <script  type="text/javascript">
-var plugin1 = { afterDatasetsDraw: function(chart) {
-				var ctx = chart.ctx;
-				chart.data.datasets.forEach(function(dataset, i) {
-					var meta = chart.getDatasetMeta(i);
-					if (!meta.hidden) {
-						meta.data.forEach(function(element, index) {
-							// Draw the text in black, with the specified font
-							ctx.fillStyle = 'rgb(0, 0, 0)';
-
-							var fontSize = 10;
-							var fontStyle = 'normal';
-							var fontFamily = 'Helvetica Neue';
-							ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
-
-							// Just naively convert to string for now
-							var dataString = dataset.data[index].toString();
-
-							// Make sure alignment settings are correct
-							ctx.textAlign = 'center';
-							ctx.textBaseline = 'middle';
-
-							var padding = 5;
-							var position = element.tooltipPosition();
-							ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
-						});
-					}
-				});
-			}};
-
-var plugin2 = { afterDatasetsDraw: function(chart) {
-				var ctx = chart.ctx;
-
-				chart.data.datasets.forEach(function(dataset, i) {
-					var meta = chart.getDatasetMeta(i);
-					if (!meta.hidden) {
-						meta.data.forEach(function(element, index) {
-							// Draw the text in black, with the specified font
-							ctx.fillStyle = 'rgb(0, 0, 0)';
-
-							var fontSize = 10;
-							var fontStyle = 'normal';
-							var fontFamily = 'Helvetica Neue';
-							ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
-
-							// Just naively convert to string for now
-							var dataString = dataset.data[index].toString();
-
-							// Make sure alignment settings are correct
-							ctx.textAlign = 'center';
-							ctx.textBaseline = 'middle';
-
-							var padding = 5;
-							var position = element.tooltipPosition();
-							ctx.fillText(dataString, position.x, position.y);
-						});
-					}
-				});
-			}};
-
 var ctx1 = document.getElementById("myChart-2").getContext('2d');
 var myChart1 = new Chart(ctx1, {
-    plugins: [plugin1],
     type: 'bar',
     data: {
         labels: [{% for item in result['sessions'] %}
@@ -428,6 +361,11 @@ var myChart1 = new Chart(ctx1, {
               {% endfor %}],
         datasets: [{
             label: ['Current'],
+            labels: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  {{item['Change'].split('%')[0]}},
+                  {% endif %}
+                  {% endfor %}],
             data: [{% for item in result['sessions'] %}
                     {%if item['Country'] != 'Total' %}
                   "{{item['Current']}}",
@@ -443,26 +381,33 @@ var myChart1 = new Chart(ctx1, {
                   'rgba(240, 94, 16,1)',
                   {% endif %}
                   {% endfor %}],
-            borderWidth: 0.5
-        },
-        {
-            label: ['Change percentage'],
-            type: 'line',
-            fill: false,
-            data: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  {{item['Change'].split('%')[0]}},
-                  {% endif %}
-                  {% endfor %}],
-            backgroundColor: [
-                  'rgba(16, 26, 240, 0.8)',
-                  ],
-            borderColor: [
-                  'rgba(16, 26, 240, 0.8)',
-                  ]
+            borderWidth: 0.51
         }]
     },
     options: {
+         legend: {
+        display: false
+        },
+         plugins: {
+              datalabels: {
+                formatter: function(value, context) {
+                    return context.dataset.labels[context.dataIndex] + '%';
+                },
+                align: 'end',
+                anchor: 'end',
+                backgroundColor: null,
+                borderColor: null,
+                borderRadius: 4,
+                borderWidth: 1,
+                color:'#000000',
+                font: {
+                  size: 14,
+                  weight: 600
+                },
+                offset: 0,
+                padding: 0,
+              }
+            },
         title: {
 			display: true,
 			text: 'SESSIONS'
@@ -473,7 +418,6 @@ var myChart1 = new Chart(ctx1, {
             },
         scales: {
             yAxes: [{
-                stacked: true,
                 gridLines: {
                     display:true
                 },
@@ -482,7 +426,6 @@ var myChart1 = new Chart(ctx1, {
                 }
             }],
             xAxes: [{
-                stacked: true,
                 gridLines: {
                     display:true
                 },
@@ -591,11 +534,13 @@ var myChart2 = new Chart(ctx2, {
                 ],
                 borderWidth: 0.5
                 },
-            {
-                datalabels: {
-                    display: false
-                },
+                {
                 label: ['Email'],
+                labels: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  {{item['Change'].split('%')[0]}},
+                  {% endif %}
+                  {% endfor %}],
                 data: [{{result['session_category'][0]['Email']}},{{result['session_category'][1]['Email']}},
                 {{result['session_category'][2]['Email']}},{{result['session_category'][3]['Email']}},
                 {{result['session_category'][4]['Email']}},{{result['session_category'][5]['Email']}},
@@ -613,6 +558,26 @@ var myChart2 = new Chart(ctx2, {
             ]
         },
     options: {
+        plugins: {
+              datalabels: {
+                formatter: function(value, context) {
+                    return context.dataset.labels[context.dataIndex] + '%';
+                },
+                align: 'end',
+                anchor: 'end',
+                backgroundColor: null,
+                borderColor: null,
+                borderRadius: 4,
+                borderWidth: 1,
+                color:'#000000',
+                font: {
+                  size: 12,
+                  weight: 600
+                },
+                offset: 0,
+                padding: 0,
+              }
+            },
         title: {
 			display: true,
 			text: 'SESSIONS BY CATEGORIES'
@@ -640,10 +605,6 @@ var myChart2 = new Chart(ctx2, {
         }
     }
 });
-</script>
-<script src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
-<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
-<script type="text/javascript">
 
 var barChartData = {
         labels: ['UK', 'USA', 'France', 'China', 'India', 'SEA', 'ANZ','ROW'],
@@ -715,6 +676,24 @@ var myChart3 = new Chart(ctx3, {
     type: 'bar',
     data: barChartData,
     options: {
+        plugins: {
+              datalabels: {
+                display:false,
+                align: 'end',
+                anchor: 'end',
+                backgroundColor: null,
+                borderColor: null,
+                borderRadius: 4,
+                borderWidth: 1,
+                color:'#000000',
+                font: {
+                  size: 11,
+                  weight: 600
+                },
+                offset: 4,
+                padding: 0,
+              }
+            },
         title: {
             display: true
 
@@ -738,12 +717,8 @@ var myChart3 = new Chart(ctx3, {
         }
     }
 });
-</script>
-
-<script type="text/javascript">
 var ctx4 = document.getElementById("myChart-4").getContext('2d');
 var myChart4 = new Chart(ctx4, {
-    plugins: [plugin1],
     type: 'bar',
     data: {
         labels: [{% for item in result['Devices'] %}
@@ -777,6 +752,23 @@ var myChart4 = new Chart(ctx4, {
         }]
     },
     options: {
+        plugins: {
+              datalabels: {
+                align: 'end',
+                anchor: 'end',
+                backgroundColor: null,
+                borderColor: null,
+                borderRadius: 4,
+                borderWidth: 1,
+                color:'#000000',
+                font: {
+                  size: 12,
+                  weight: 600
+                },
+                offset: 0,
+                padding: 0,
+              }
+            },
         title: {
 			display: true,
 			text: 'DEVICES'
@@ -805,7 +797,6 @@ var myChart4 = new Chart(ctx4, {
 
 var ctx5 = document.getElementById("myChart-5").getContext('2d');
 var myChart5 = new Chart(ctx5, {
-    plugins: [plugin1],
     type: 'pie',
     data: {
         labels: [{% for item in result['CPC'] %}
@@ -835,6 +826,25 @@ var myChart5 = new Chart(ctx5, {
         }]
     },
     options: {
+        plugins: {
+              datalabels: {
+                display:function(context) {
+                      var value = context.dataset.data[context.dataIndex];
+                      return value == 0 ? false : true
+                },
+                backgroundColor: null,
+                borderColor: null,
+                borderRadius: 4,
+                borderWidth: 1,
+                color:'#000000',
+                font: {
+                  size: 12,
+                  weight: 600
+                },
+                offset: 0,
+                padding: 0,
+              }
+            },
         title: {
 			display: true,
 			text: 'CPC'
@@ -842,12 +852,9 @@ var myChart5 = new Chart(ctx5, {
 
     }
 });
-</script>
-<script src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
-<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
-<script>
-  // var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var config = {
+
+var ctx6 = document.getElementById("myChart-6").getContext('2d');
+var myChart6 = new Chart(ctx6, {
     type: 'line',
     data: {
       labels: ['Apr-17', 'May-17', 'Jun-17', 'Jul-17', 'Aug-17', 'Sep-17', 'Oct-17', 'Nov-17', 'Dec-17', 'Jan-18', 'Feb-18', 'Mar-18'],
@@ -902,6 +909,11 @@ var myChart5 = new Chart(ctx5, {
       }]
     },
     options: {
+      plugins:{
+          datalabels: {
+                    display: false,
+                },
+      },
       responsive: true,
       title: {
         display: true,
@@ -927,51 +939,11 @@ var myChart5 = new Chart(ctx5, {
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'Values'
           }
         }]
       }
     }
-  };
-
-  window.onload = function() {
-    var ctx = document.getElementById('myChart-6').getContext('2d');
-    window.myLine = new Chart(ctx, config);
-  };
-
+  });
 </script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-        ['time period','UK', 'USA', 'France', 'China', 'India',
-         'SEA','ANZ','ROW'],
-        ['Jan17', 28,-4,-6,-18,7,-26,14,1],
-        ['Feb17', 8,-14,-6,-18,47,-26,9,5],
-        ['Mar17', 18,-4,26,68,17,-26,24,8],
-        ['Apr17', -8,54,-6,-18,7,-26,1,25],
-        ['May17', 13,34,26,18,27,-26,16,1],
-        ['June17',18,-4,11,-18,7,-26,2,9],
-        ['Jul17',8,-14,6,8,10,-26,14,8],
-        ['Aug17',48,4,-6,-18,7,-26,17,14]
-      ]);
-
-        var options = {
-            vAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
-    hAxis: {textStyle: {color: "#808080"},gridlines: {count: 10,color: "#808080"},baselineColor: '#808080'},
-          curveType: 'function',
-          chartArea:{left:100,top:60,width:"100%"},
-
-          legend: { position: 'top' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('myChart-7'));
-
-        chart.draw(data, options);
-      }
-    </script>
 {% endif %}
 {% endblock %}
