@@ -86,8 +86,6 @@ def getweekdates(D):
     pre_MonthName= pre_start.strftime('%B')
     prv_MonthName= prv_start.strftime('%B')
 
-    print pre_MonthName,'\n',prv_MonthName
-
     pre_start2 = pre_end.replace(day=D+1)
     pre_end2 = pre_start2.replace(day=pre_start2.day+D-1)
     prv_start2 = prv_end.replace(day=D+1)
@@ -119,7 +117,9 @@ def getweekdates(D):
             'pre_end4': pre_end4.strftime('%Y-%m-%d'),
             'prv_start4': prv_start4.strftime('%Y-%m-%d'),
             'prv_end4': prv_end4.strftime('%Y-%m-%d'),
-            },pre_MonthName,prv_MonthName
+            'pre_MonthName': pre_MonthName,
+            'prv_MonthName': prv_MonthName,
+            }
 
 def get12months():
     # print int(datetime.datetime.now().strftime('%m'))
@@ -153,7 +153,7 @@ def change(source,result):
 def line_resutls():
     from ResultsServices.sessions_category_results import SessionsCategoryResults
 
-    linedates = getweekdates(7)[0]
+    linedates = getweekdates(7)
 
     session_category_line1 = SessionsCategoryResults(linedates['pre_start'], linedates['pre_end'],
                                                      linedates['prv_start'], linedates['prv_end'])

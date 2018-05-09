@@ -6,7 +6,7 @@ from ResultsServices.devices_results import DeviceResults
 from ResultsServices.cpc_results import CPCResults
 from ResultsServices.top_conversions_results import TopConversionsResults
 from ResultsServices.device_sessions_results import DeviceSessionsResults
-from utilities import get_dates, date_converter,change,line_resutls
+from utilities import get_dates, date_converter,change,line_resutls,getweekdates
 #=======================================================================================================================
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://webanalytics:PyPrince@123@68.178.217.13/webanalytics'
@@ -85,6 +85,9 @@ def index():
             "CPC": cpc.main(),
             "Top_conversions": Top_conversions.main()
             }
+        MonthNames = [getweekdates(7)['pre_MonthName'],
+                      getweekdates(7)['prv_MonthName']]
+        print(MonthNames)
 
         OrganicSearchChange = change(source='Organic Search',result=result)
         DirectChange = change(source='Direct',result=result)
@@ -102,7 +105,8 @@ def index():
         return render_template("index.html",
                                result=result, DevicesDict=DevicesDict,OrganicSearchChange=OrganicSearchChange,
                                DirectChange=DirectChange,ReferralChange=ReferralChange,SocialChange=SocialChange,
-                               PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_resutls())
+                               PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_resutls(),
+                               MonthNames=MonthNames)
 if __name__ == '__main__':
 
     from models.models import db
