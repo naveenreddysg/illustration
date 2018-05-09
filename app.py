@@ -6,7 +6,7 @@ from ResultsServices.devices_results import DeviceResults
 from ResultsServices.cpc_results import CPCResults
 from ResultsServices.top_conversions_results import TopConversionsResults
 from ResultsServices.device_sessions_results import DeviceSessionsResults
-from utilities import get_dates, date_converter,change,line_resutls,getweekdates
+from utilities import get_dates, date_converter,change,line_resutls,getweekdates,get_two_month_dates
 #=======================================================================================================================
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://webanalytics:PyPrince@123@68.178.217.13/webanalytics'
@@ -30,7 +30,7 @@ def index():
             events = EventsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
             devices = DeviceResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
             devices_sessions = DeviceSessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'],dates['prv_end'])
-            cpc = CPCResults(dates['pre_start'], dates['pre_end'])
+            cpc = CPCResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
             Top_conversions = TopConversionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
 
             result = {
@@ -40,10 +40,12 @@ def index():
                 "Events": events.main(),
                 "Devices": devices.main(),
                 'Device_sessions': devices_sessions.main(),
-                "CPC": cpc.main(),
+                "CPC": cpc.main()[0],
+                "CPC_prv": cpc.main()[1],
                 "Top_conversions": Top_conversions.main()
             }
-
+            MonthNames = [getweekdates(7)['pre_MonthName'],
+                          getweekdates(7)['prv_MonthName']]
 
             OrganicSearchChange = change(source='Organic Search',result=result)
             DirectChange = change(source='Direct',result=result)
@@ -61,7 +63,8 @@ def index():
             return render_template("index.html",
                                    result=result, DevicesDict=DevicesDict,OrganicSearchChange=OrganicSearchChange,
                                    DirectChange=DirectChange,ReferralChange=ReferralChange,SocialChange=SocialChange,
-                                   PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_resutls())
+                                   PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_resutls(),
+                                   MonthNames = MonthNames)
     except Exception as e:
         print(e)
         dates = get_dates(30)
@@ -72,7 +75,7 @@ def index():
         events = EventsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
         devices = DeviceResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
         devices_sessions = DeviceSessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
-        cpc = CPCResults(dates['pre_start'], dates['pre_end'])
+        cpc = CPCResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
         Top_conversions = TopConversionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'],
                                                 dates['prv_end'])
         result = {
@@ -82,12 +85,13 @@ def index():
             "Events": events.main(),
             "Devices": devices.main(),
             "Device_sessions": devices_sessions.main(),
-            "CPC": cpc.main(),
+            "CPC": cpc.main()[0],
+            "CPC_prv": cpc.main()[1],
             "Top_conversions": Top_conversions.main()
             }
+
         MonthNames = [getweekdates(7)['pre_MonthName'],
                       getweekdates(7)['prv_MonthName']]
-        print(MonthNames)
 
         OrganicSearchChange = change(source='Organic Search',result=result)
         DirectChange = change(source='Direct',result=result)

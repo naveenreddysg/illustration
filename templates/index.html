@@ -863,7 +863,9 @@ var myChart5 = new Chart(ctx5, {
             borderWidth: 5
         },
         {
-            data: [10, 8, 0, 0],
+            data: [{% for item in result['CPC_prv'] %}
+                  {{item['Goal Completions']}},
+                {% endfor %}],
             backgroundColor: [
                 'rgba(51, 100, 255, 0.2)',
                 'rgba(255, 49, 49, 0.2)',
