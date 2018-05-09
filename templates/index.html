@@ -241,6 +241,35 @@ margin: 10px;
                             </div>
                             <div class="card">
                                 <div class="card-header">
+                                    <font size="4">Device Sessions</font>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-container">
+                                        <table class="table table-hover table-outline table-sortable mb-0"  style="border-collapse: collapse !important;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Country</th>
+                                                    <th>Desktop</th>
+                                                    <th>Tablet</th>
+                                                    <th>Mobile</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in result['Device_sessions'] %}
+                                                    <tr>
+                                                        <td>{{item['Country']}}</td>
+                                                        <td>{{item['Desktop']}}</td>
+                                                        <td>{{item['Tablet']}}</td>
+                                                        <td>{{item['Mobile']}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
                                     <font size="4">CPC</font>
                                 </div>
                                 <div class="card-body">
@@ -361,11 +390,6 @@ var myChart1 = new Chart(ctx1, {
               {% endfor %}],
         datasets: [{
             label: ['Current'],
-            labels: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  {{item['Change'].split('%')[0]}},
-                  {% endif %}
-                  {% endfor %}],
             data: [{% for item in result['sessions'] %}
                     {%if item['Country'] != 'Total' %}
                   "{{item['Current']}}",
@@ -373,35 +397,52 @@ var myChart1 = new Chart(ctx1, {
                   {% endfor %}],
             backgroundColor: [{% for item in result['sessions'] %}
                     {%if item['Country'] != 'Total' %}
-                  'rgba(240, 94, 16, 0.8)',
+                  'rgba(45, 180, 152, 0.7)',
                   {% endif %}
                   {% endfor %}],
             borderColor: [{% for item in result['sessions'] %}
                     {%if item['Country'] != 'Total' %}
-                  'rgba(240, 94, 16,1)',
+                  'rgba(45, 180, 152, 1)',
                   {% endif %}
                   {% endfor %}],
-            borderWidth: 0.51
+            borderWidth: 0.5
+        },
+        {
+        datalabels: {
+            color:'#000000',
+            offset: -20,
+      	    formatter: function(value, context) {
+                    return context.dataset.data[context.dataIndex] + ' %';
+                }
+                },
+            label: ['Change percentage'],
+            type: 'line',
+            fill: false,
+            data: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  {{item['Change'].split('%')[0]}},
+                  {% endif %}
+                  {% endfor %}],
+            backgroundColor: [
+                  'rgba(225, 52, 65, 0.8)',
+                  ],
+            borderColor: [
+                  'rgba(225, 52, 65, 0.4)',
+                  ]
         }]
     },
     options: {
-         legend: {
-        display: false
-        },
-         plugins: {
+        plugins: {
               datalabels: {
-                formatter: function(value, context) {
-                    return context.dataset.labels[context.dataIndex] + '%';
-                },
                 align: 'end',
                 anchor: 'end',
                 backgroundColor: null,
                 borderColor: null,
                 borderRadius: 4,
                 borderWidth: 1,
-                color:'#000000',
+                color:'#6b6a66',
                 font: {
-                  size: 14,
+                  size: 12,
                   weight: 600
                 },
                 offset: 0,
@@ -414,10 +455,10 @@ var myChart1 = new Chart(ctx1, {
 			},
         tooltips: {
             mode: 'index',
-            intersect: false,
             },
         scales: {
             yAxes: [{
+                stacked: true,
                 gridLines: {
                     display:true
                 },
@@ -426,6 +467,7 @@ var myChart1 = new Chart(ctx1, {
                 }
             }],
             xAxes: [{
+                stacked: true,
                 gridLines: {
                     display:true
                 },
@@ -433,7 +475,6 @@ var myChart1 = new Chart(ctx1, {
         }
     }
 });
-
 var ctx2 = document.getElementById("myChart-1").getContext('2d');
 var myChart2 = new Chart(ctx2, {
 			type: 'bar',
@@ -538,7 +579,7 @@ var myChart2 = new Chart(ctx2, {
                 label: ['Email'],
                 labels: [{% for item in result['sessions'] %}
                     {%if item['Country'] != 'Total' %}
-                  {{item['Change'].split('%')[0]}},
+                  "{{((item['Current']|int /result['sessions'][-1]['Current']|int) * 100)|round(2) }}",
                   {% endif %}
                   {% endfor %}],
                 data: [{{result['session_category'][0]['Email']}},{{result['session_category'][1]['Email']}},
@@ -569,7 +610,7 @@ var myChart2 = new Chart(ctx2, {
                 borderColor: null,
                 borderRadius: 4,
                 borderWidth: 1,
-                color:'#000000',
+                color:'#6b6a66',
                 font: {
                   size: 12,
                   weight: 600
@@ -584,7 +625,6 @@ var myChart2 = new Chart(ctx2, {
 			},
         tooltips: {
                     mode: 'index',
-                    intersect: false,
                 },
                 hover: {
                     mode: 'index'
@@ -685,7 +725,7 @@ var myChart3 = new Chart(ctx3, {
                 borderColor: null,
                 borderRadius: 4,
                 borderWidth: 1,
-                color:'#000000',
+                color:'#6b6a66',
                 font: {
                   size: 11,
                   weight: 600
@@ -700,7 +740,6 @@ var myChart3 = new Chart(ctx3, {
         },
         tooltips: {
             mode: 'index',
-            intersect: false
         },
         responsive: true,
         scales: {
@@ -760,7 +799,7 @@ var myChart4 = new Chart(ctx4, {
                 borderColor: null,
                 borderRadius: 4,
                 borderWidth: 1,
-                color:'#000000',
+                color:'#6b6a66',
                 font: {
                   size: 12,
                   weight: 600
@@ -775,7 +814,6 @@ var myChart4 = new Chart(ctx4, {
 			},
         tooltips: {
             mode: 'index',
-            intersect: false,
             },
         scales: {
             yAxes: [{
@@ -797,7 +835,7 @@ var myChart4 = new Chart(ctx4, {
 
 var ctx5 = document.getElementById("myChart-5").getContext('2d');
 var myChart5 = new Chart(ctx5, {
-    type: 'pie',
+    type: 'doughnut',
     data: {
         labels: [{% for item in result['CPC'] %}
                    {% if item['Paid Source'] != 'Total' %}
@@ -811,21 +849,38 @@ var myChart5 = new Chart(ctx5, {
                   {% endif %}
                 {% endfor %}],
             backgroundColor: [
-                'rgba(51, 100, 255, 0.8)',
-                'rgba(255, 49, 49, 0.8)',
-                'rgba(252, 135, 54, 0.8)',
-                'rgba(22, 152, 31, 0.8)'
+                'rgba(51, 100, 255, 0.6)',
+                'rgba(255, 49, 49, 0.6)',
+                'rgba(252, 135, 54, 0.6)',
+                'rgba(22, 152, 31, 0.6)'
             ],
             borderColor: [
-                'rgba(51, 100, 255, 1)',
-                'rgba(255, 49, 49, 1)',
-                'rgba(252, 135, 54, 1)',
-                'rgba(22, 152, 31, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
             ],
-            borderWidth: 0.5
+            borderWidth: 5
+        },
+        {
+            data: [10, 8, 0, 0],
+            backgroundColor: [
+                'rgba(51, 100, 255, 0.2)',
+                'rgba(255, 49, 49, 0.2)',
+                'rgba(252, 135, 54, 0.2)',
+                'rgba(22, 152, 31, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 255, 255, 1)',
+            ],
+            borderWidth: 7
         }]
     },
     options: {
+        cutoutPercentage: 10,
         plugins: {
               datalabels: {
                 display:function(context) {
@@ -836,7 +891,7 @@ var myChart5 = new Chart(ctx5, {
                 borderColor: null,
                 borderRadius: 4,
                 borderWidth: 1,
-                color:'#000000',
+                color:'#6b6a66',
                 font: {
                   size: 12,
                   weight: 600
@@ -857,13 +912,13 @@ var ctx6 = document.getElementById("myChart-6").getContext('2d');
 var myChart6 = new Chart(ctx6, {
     type: 'line',
     data: {
-      labels: [W1, W2, W3, W4],
+      labels: ['WEEK-1', 'WEEK-2', 'WEEK-3', 'WEEK-4'],
       datasets: [{
         label: 'Organic Search',
         backgroundColor: 'rgba(51, 100, 255, 0.8)',
         borderColor: 'rgba(51, 100, 255, 0.8)',
         data: [
-          45,46,-5,-4,-21,21,5,85,-9,-5,45,65
+          45,46,-5,-4
         ],
         fill: false,
       }, {
@@ -872,14 +927,14 @@ var myChart6 = new Chart(ctx6, {
         backgroundColor: 'rgba(255, 49, 49, 0.8)',
         borderColor: 'rgba(255, 49, 49, 0.8)',
         data: [
-          5,25,36,55,45,-55,-16,-4,22,-6,45,-12
+          5,25,36,55
         ],
       }, {
         label: 'Referral',
         backgroundColor: 'rgba(252, 135, 54,0.8)',
         borderColor: 'rgba(252, 135, 54,0.8)',
         data: [
-          -5,56,5,54,-1,-21,6,45,-19,-52,-5,55
+          -5,56,5,54
         ],
         fill: false,
       }, {
@@ -887,7 +942,7 @@ var myChart6 = new Chart(ctx6, {
         backgroundColor: 'rgba(22, 152, 31, 0.5)',
         borderColor: 'rgba(22, 152, 31, 0.5)',
         data: [
-           25,45,-55,4,-5,-45,-5,4,45,89,44,89
+           25,45,-55,4
         ],
         fill: false,
       }, {
@@ -895,7 +950,7 @@ var myChart6 = new Chart(ctx6, {
         backgroundColor: 'rgba(218, 14, 247, 0.8)',
         borderColor: 'rgba(218, 14, 247, 0.8)',
         data: [
-          12,19,-49,66,-5,-6,44,18,-6,-32,-15,13
+          12,19,-49,66
         ],
         fill: false,
       }, {
@@ -903,7 +958,7 @@ var myChart6 = new Chart(ctx6, {
         backgroundColor: 'rgba(1, 169, 214, 0.8)',
         borderColor: 'rgba(1, 169, 214, 0.8)',
         data: [
-          44,-2,-3,-8,66,5,41,12,15,18,25,-25
+          44,-2,-3,-8
         ],
         fill: false,
       }]
@@ -921,7 +976,6 @@ var myChart6 = new Chart(ctx6, {
       },
       tooltips: {
         mode: 'index',
-        intersect: false,
       },
       hover: {
         mode: 'nearest',
@@ -932,7 +986,6 @@ var myChart6 = new Chart(ctx6, {
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'WEEKS'
           }
         }],
         yAxes: [{

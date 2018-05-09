@@ -5,6 +5,7 @@ from ResultsServices.events_results import EventsResults
 from ResultsServices.devices_results import DeviceResults
 from ResultsServices.cpc_results import CPCResults
 from ResultsServices.top_conversions_results import TopConversionsResults
+from ResultsServices.device_sessions_results import DeviceSessionsResults
 from utilities import get_dates, date_converter
 #=======================================================================================================================
 app = Flask(__name__)
@@ -28,18 +29,20 @@ def index():
             session_category = SessionsCategoryResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
             events = EventsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
             devices = DeviceResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+            devices_sessions = DeviceSessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'],dates['prv_end'])
             cpc = CPCResults(dates['pre_start'], dates['pre_end'])
             Top_conversions = TopConversionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
 
             result = {
                 "sessions": sessions.main(),
-                "session_category": session_category.main(),
-                "session_category_prev": session_category.mainprev(),
+                "session_category": session_category.main()[0],
+                "session_category_prev": session_category.main()[1],
                 "Events": events.main(),
                 "Devices": devices.main(),
+                'Device_sessions': devices_sessions.main(),
                 "CPC": cpc.main(),
                 "Top_conversions": Top_conversions.main()
-              }
+            }
             def change(source):
                 present, previous = [], []
                 for item in result['session_category']:
@@ -75,7 +78,7 @@ def index():
                                    DirectChange=DirectChange,ReferralChange=ReferralChange,SocialChange=SocialChange,
                                    PaidSearchChange=PaidSearchChange,EmailChange=EmailChange)
     except Exception as e:
-        # print(e)
+        print(e)
         dates = get_dates(30)
         # print(dates)
         sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
@@ -83,15 +86,17 @@ def index():
                                                    dates['prv_end'])
         events = EventsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
         devices = DeviceResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
+        devices_sessions = DeviceSessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
         cpc = CPCResults(dates['pre_start'], dates['pre_end'])
         Top_conversions = TopConversionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'],
                                                 dates['prv_end'])
         result = {
             "sessions": sessions.main(),
-            "session_category": session_category.main(),
-            "session_category_prev": session_category.mainprev(),
+            "session_category": session_category.main()[0],
+            "session_category_prev": session_category.main()[1],
             "Events": events.main(),
             "Devices": devices.main(),
+            "Device_sessions": devices_sessions.main(),
             "CPC": cpc.main(),
             "Top_conversions": Top_conversions.main()
             }

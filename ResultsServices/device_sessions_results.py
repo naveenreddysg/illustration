@@ -1,6 +1,6 @@
-from ModelServices.sessions_category_services import SessionsCategoryService
+from ModelServices.device_sessions_service import DeviceSessionsService
 
-class SessionsCategoryResults:
+class DeviceSessionsResults:
 
     def __init__(self, current_start_date, current_end_date, previous_start_date, previous_end_date):
         self.current_start_date = current_start_date
@@ -10,14 +10,11 @@ class SessionsCategoryResults:
 
     @staticmethod
     def total(result, country):
-        res_data = {'Country': country, 'Organic Search': 0, 'Direct': 0, 'Paid Search': 0, 'Referral': 0, 'Social': 0, 'Email': 0}
+        res_data = {'Country': country, 'Desktop': 0, 'Mobile': 0, 'Tablet': 0}
         for item in result:
-            res_data['Organic Search'] += item['organicSearch']
-            res_data['Direct'] += item['direct']
-            res_data['Paid Search'] += item['paidSearch']
-            res_data['Referral'] += item['social']
-            res_data['Social'] += item['referral']
-            res_data['Email'] += item['email']
+            res_data['Desktop'] += item['desktop']
+            res_data['Mobile'] += item['mobile']
+            res_data['Tablet'] += item['tablet']
         return res_data
 
     @staticmethod
@@ -36,26 +33,22 @@ class SessionsCategoryResults:
     def result(results):
         main_result = [
             {'Country': i['country'],
-             'Direct': i['direct'],
-             'Paid Search': i['paidSearch'],
-             'Organic Search': i['organicSearch'],
-             'Referral': i['social'],
-             'Social': i['referral'],
-             'Email': i['email']
+             'Desktop': i['desktop'],
+             'Mobile': i['mobile'],
+             'Tablet': i['tablet'],
              }
             for i in results
         ]
         return main_result
 
     def main(self):
-        current_results = SessionsCategoryService(self.current_start_date, self.current_end_date).get_data()
-        previous_results = SessionsCategoryService(self.previous_start_date, self.previous_end_date).get_data()
+        current_results = DeviceSessionsService(self.current_start_date, self.current_end_date).get_data()
+        previous_results = DeviceSessionsService(self.previous_start_date, self.previous_end_date).get_data()
         main_result = self.result(current_results)
-        main_resultPrev = self.result(previous_results)
         total_current = self.total(current_results, 'Total')
         total_previous = self.total(previous_results, 'Total(Prev)')
         change = self.change_cal(total_current, total_previous)
         main_result.append(total_current)
         main_result.append(total_previous)
         main_result.append(change)
-        return main_result, main_resultPrev
+        return main_result

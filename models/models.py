@@ -83,6 +83,31 @@ class DevicesModel(db.Model):
         db.session.add(self)
         db.session.commit()
 
+class DevicesSessionsModel(db.Model):
+
+    __tablename__ = 'devices_sessions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    country = db.Column('country', db.String(30))
+    mobile = db.Column('mobile', db.String(30))
+    tablet = db.Column('tablet', db.String(30))
+    desktop = db.Column('desktop', db.String(30))
+    total = db.Column('total', db.String(30))
+    date = db.Column('date', db.Date)
+
+    def __init__(self, country, mobile, tablet, desktop, total, date):
+
+        self.country = country
+        self.mobile = mobile
+        self.tablet = tablet
+        self.desktop = desktop
+        self.total = total
+        self.date = date
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
 class CPCModel(db.Model):
 
     __tablename__ = 'cpc'

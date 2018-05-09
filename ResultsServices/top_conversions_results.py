@@ -20,7 +20,6 @@ class TopConversionsResults:
         side_btn_previous_results = SideBtnService(self.previous_start_date, self.previous_end_date).get_data()
         top_conversion_current_results = TopConversionsService(self.current_start_date, self.current_end_date).get_data()
         top_conversion_previous_results = TopConversionsService(self.previous_start_date, self.previous_end_date).get_data()
-        print agents_current_results
         top_conversion_result = [
             {'Metric': 'Mobile+Tablet',
              'Current': top_conversion_current_results[0]['MobileTablet'],
