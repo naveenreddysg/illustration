@@ -6,7 +6,7 @@ from ResultsServices.devices_results import DeviceResults
 from ResultsServices.cpc_results import CPCResults
 from ResultsServices.top_conversions_results import TopConversionsResults
 from ResultsServices.device_sessions_results import DeviceSessionsResults
-from utilities import get_dates, date_converter
+from utilities import get_dates, date_converter,change,line_resutls
 #=======================================================================================================================
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://webanalytics:PyPrince@123@68.178.217.13/webanalytics'
@@ -43,29 +43,14 @@ def index():
                 "CPC": cpc.main(),
                 "Top_conversions": Top_conversions.main()
             }
-            def change(source):
-                present, previous = [], []
-                for item in result['session_category']:
-                    present.append(item[source])
-                for item in result['session_category_prev']:
-                    previous.append(item[source])
-                Change = [round(((float(present[0]) - float(previous[0])) / float(previous[0])) * 100, 2),
-                          round(((float(present[1]) - float(previous[1])) / float(previous[0])) * 100, 2),
-                          round(((float(present[2]) - float(previous[2])) / float(previous[0])) * 100, 2),
-                          round(((float(present[3]) - float(previous[3])) / float(previous[0])) * 100, 2),
-                          round(((float(present[4]) - float(previous[4])) / float(previous[0])) * 100, 2),
-                          round(((float(present[5]) - float(previous[5])) / float(previous[0])) * 100, 2),
-                          round(((float(present[6]) - float(previous[6])) / float(previous[0])) * 100, 2),
-                          round(((float(present[7]) - float(previous[7])) / float(previous[0])) * 100, 2),
-                          ]
-                return Change
 
-            OrganicSearchChange = change(source='Organic Search')
-            DirectChange = change(source='Direct')
-            ReferralChange = change(source='Referral')
-            SocialChange = change(source='Social')
-            PaidSearchChange = change(source='Paid Search')
-            EmailChange = change(source='Email')
+
+            OrganicSearchChange = change(source='Organic Search',result=result)
+            DirectChange = change(source='Direct',result=result)
+            ReferralChange = change(source='Referral',result=result)
+            SocialChange = change(source='Social',result=result)
+            PaidSearchChange = change(source='Paid Search',result=result)
+            EmailChange = change(source='Email',result=result)
 
             DevicesPrv, DevicesPre = [], []
             for item in result['Devices']:
@@ -76,11 +61,11 @@ def index():
             return render_template("index.html",
                                    result=result, DevicesDict=DevicesDict,OrganicSearchChange=OrganicSearchChange,
                                    DirectChange=DirectChange,ReferralChange=ReferralChange,SocialChange=SocialChange,
-                                   PaidSearchChange=PaidSearchChange,EmailChange=EmailChange)
+                                   PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_resutls())
     except Exception as e:
         print(e)
         dates = get_dates(30)
-        # print(dates)
+        print(dates)
         sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
         session_category = SessionsCategoryResults(dates['pre_start'], dates['pre_end'], dates['prv_start'],
                                                    dates['prv_end'])
@@ -101,30 +86,14 @@ def index():
             "Top_conversions": Top_conversions.main()
             }
 
-        def change(source):
-            present, previous = [], []
-            for item in result['session_category']:
-                present.append(item[source])
-            for item in result['session_category_prev']:
-                previous.append(item[source])
-            Change = [round(((float(present[0]) - float(previous[0])) / float(previous[0])) * 100, 2),
-                      round(((float(present[1]) - float(previous[1])) / float(previous[0])) * 100, 2),
-                      round(((float(present[2]) - float(previous[2])) / float(previous[0])) * 100, 2),
-                      round(((float(present[3]) - float(previous[3])) / float(previous[0])) * 100, 2),
-                      round(((float(present[4]) - float(previous[4])) / float(previous[0])) * 100, 2),
-                      round(((float(present[5]) - float(previous[5])) / float(previous[0])) * 100, 2),
-                      round(((float(present[6]) - float(previous[6])) / float(previous[0])) * 100, 2),
-                      round(((float(present[7]) - float(previous[7])) / float(previous[0])) * 100, 2),
-                      ]
-            return Change
-
-        OrganicSearchChange = change(source='Organic Search')
-        DirectChange = change(source='Direct')
-        ReferralChange = change(source='Referral')
-        SocialChange = change(source='Social')
-        PaidSearchChange = change(source='Paid Search')
-        EmailChange = change(source='Email')
+        OrganicSearchChange = change(source='Organic Search',result=result)
+        DirectChange = change(source='Direct',result=result)
+        ReferralChange = change(source='Referral',result=result)
+        SocialChange = change(source='Social',result=result)
+        PaidSearchChange = change(source='Paid Search',result=result)
+        EmailChange = change(source='Email',result=result)
         DevicesPrv, DevicesPre = [], []
+
         for item in result['Devices']:
             DevicesPrv.append(item['Previous'])
             DevicesPre.append(item['Goal Completions'])
@@ -133,7 +102,7 @@ def index():
         return render_template("index.html",
                                result=result, DevicesDict=DevicesDict,OrganicSearchChange=OrganicSearchChange,
                                DirectChange=DirectChange,ReferralChange=ReferralChange,SocialChange=SocialChange,
-                               PaidSearchChange=PaidSearchChange,EmailChange=EmailChange)
+                               PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_resutls())
 if __name__ == '__main__':
 
     from models.models import db

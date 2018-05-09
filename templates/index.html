@@ -335,13 +335,6 @@ margin: 10px;
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-1"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="chart-wrapper">
                             <canvas id="myChart-2"></canvas>
                         </div>
                     </div>
@@ -363,14 +356,21 @@ margin: 10px;
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-5"></canvas>
+                            <canvas id="myChart-1"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="myChart-6"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                    <div class="card-body">
                        <div class="chart-wrapper">
-                           <canvas id="myChart-6"></canvas>
+                           <canvas id="myChart-5"></canvas>
                        </div>
                    </div>
                </div>
@@ -908,95 +908,118 @@ var myChart5 = new Chart(ctx5, {
     }
 });
 
-var ctx6 = document.getElementById("myChart-6").getContext('2d');
+var ctx6 = document.getElementById('myChart-6').getContext('2d');
 var myChart6 = new Chart(ctx6, {
-    type: 'line',
-    data: {
-      labels: ['WEEK-1', 'WEEK-2', 'WEEK-3', 'WEEK-4'],
-      datasets: [{
-        label: 'Organic Search',
-        backgroundColor: 'rgba(51, 100, 255, 0.8)',
-        borderColor: 'rgba(51, 100, 255, 0.8)',
-        data: [
-          45,46,-5,-4
-        ],
-        fill: false,
-      }, {
-        label: 'Direct',
-        fill: false,
-        backgroundColor: 'rgba(255, 49, 49, 0.8)',
-        borderColor: 'rgba(255, 49, 49, 0.8)',
-        data: [
-          5,25,36,55
-        ],
-      }, {
-        label: 'Referral',
-        backgroundColor: 'rgba(252, 135, 54,0.8)',
-        borderColor: 'rgba(252, 135, 54,0.8)',
-        data: [
-          -5,56,5,54
-        ],
-        fill: false,
-      }, {
-        label: 'Social',
-        backgroundColor: 'rgba(22, 152, 31, 0.5)',
-        borderColor: 'rgba(22, 152, 31, 0.5)',
-        data: [
-           25,45,-55,4
-        ],
-        fill: false,
-      }, {
-        label: 'Paid Search',
-        backgroundColor: 'rgba(218, 14, 247, 0.8)',
-        borderColor: 'rgba(218, 14, 247, 0.8)',
-        data: [
-          12,19,-49,66
-        ],
-        fill: false,
-      }, {
-        label: 'Email',
-        backgroundColor: 'rgba(1, 169, 214, 0.8)',
-        borderColor: 'rgba(1, 169, 214, 0.8)',
-        data: [
-          44,-2,-3,-8
-        ],
-        fill: false,
-      }]
-    },
-    options: {
-      plugins:{
-          datalabels: {
-                    display: false,
-                },
-      },
-      responsive: true,
-      title: {
-        display: true,
-        text: 'Monthly Source Report'
-      },
-      tooltips: {
-        mode: 'index',
-      },
-      hover: {
-        mode: 'nearest',
-        intersect: true
-      },
-      scales: {
-        xAxes: [{
-          display: true,
-          scaleLabel: {
-            display: true,
-          }
-        }],
-        yAxes: [{
-          display: true,
-          scaleLabel: {
-            display: true,
-          }
-        }]
-      }
-    }
-  });
+   type: 'line',
+   data: {
+     labels: ['W1', 'W2', 'W3', 'W4'],
+     datasets: [{
+       label: 'Organic Search',
+       backgroundColor: 'rgba(51, 100, 255, 0.8)',
+       borderColor: 'rgba(51, 100, 255, 0.8)',
+       data: [
+         {{lineresults['session_category_line1']['Organic Search'].split('%')[0]}},
+         {{lineresults['session_category_line2']['Organic Search'].split('%')[0]}},
+         {{lineresults['session_category_line3']['Organic Search'].split('%')[0]}},
+         {{lineresults['session_category_line4']['Organic Search'].split('%')[0]}},
+       ],
+       fill: false,
+     }, {
+       label: 'Direct',
+       fill: false,
+       backgroundColor: 'rgba(255, 49, 49, 0.8)',
+       borderColor: 'rgba(255, 49, 49, 0.8)',
+       data: [
+         {{lineresults['session_category_line1']['Direct'].split('%')[0]}},
+         {{lineresults['session_category_line2']['Direct'].split('%')[0]}},
+         {{lineresults['session_category_line3']['Direct'].split('%')[0]}},
+         {{lineresults['session_category_line4']['Direct'].split('%')[0]}},
+       ],
+     }, {
+       label: 'Referral',
+       backgroundColor: 'rgba(252, 135, 54,0.8)',
+       borderColor: 'rgba(252, 135, 54,0.8)',
+       data: [
+         {{lineresults['session_category_line1']['Referral'].split('%')[0]}},
+         {{lineresults['session_category_line2']['Referral'].split('%')[0]}},
+         {{lineresults['session_category_line3']['Referral'].split('%')[0]}},
+         {{lineresults['session_category_line4']['Referral'].split('%')[0]}},
+       ],
+       fill: false,
+     }, {
+       label: 'Social',
+       backgroundColor: 'rgba(22, 152, 31, 0.5)',
+       borderColor: 'rgba(22, 152, 31, 0.5)',
+       data: [
+         {{lineresults['session_category_line1']['Social'].split('%')[0]}},
+         {{lineresults['session_category_line2']['Social'].split('%')[0]}},
+         {{lineresults['session_category_line3']['Social'].split('%')[0]}},
+         {{lineresults['session_category_line4']['Social'].split('%')[0]}},
+       ],
+       fill: false,
+     }, {
+       label: 'Paid Search',
+       backgroundColor: 'rgba(218, 14, 247, 0.8)',
+       borderColor: 'rgba(218, 14, 247, 0.8)',
+       data: [
+         {{lineresults['session_category_line1']['Paid Search'].split('%')[0]}},
+         {{lineresults['session_category_line2']['Paid Search'].split('%')[0]}},
+         {{lineresults['session_category_line3']['Paid Search'].split('%')[0]}},
+         {{lineresults['session_category_line4']['Paid Search'].split('%')[0]}},
+       ],
+       fill: false,
+     }, {
+       label: 'Email',
+       backgroundColor: 'rgba(1, 169, 214, 0.8)',
+       borderColor: 'rgba(1, 169, 214, 0.8)',
+       data: [
+         {{lineresults['session_category_line1']['Email'].split('%')[0]}},
+         {{lineresults['session_category_line2']['Email'].split('%')[0]}},
+         {{lineresults['session_category_line3']['Email'].split('%')[0]}},
+         {{lineresults['session_category_line4']['Email'].split('%')[0]}},
+       ],
+       fill: false,
+     }]
+   },
+   options: {
+     plugins:{
+         datalabels: {
+                   display: false,
+               },
+     },
+     responsive: true,
+     title: {
+       display: true,
+       text: 'Monthly Source Report'
+     },
+     tooltips: {
+       mode: 'index',
+
+     },
+     hover: {
+       mode: 'nearest',
+       intersect: true
+     },
+     scales: {
+       xAxes: [{
+         display: true,
+         scaleLabel: {
+           display: true,
+           labelString: ,
+         }
+       }],
+       yAxes: [{
+         ticks: {
+                 stepSize: 10,
+                 },
+         display: true,
+         scaleLabel: {
+           display: true,
+         }
+       }]
+     }
+   }
+ });
 </script>
 {% endif %}
 {% endblock %}
