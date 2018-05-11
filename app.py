@@ -67,7 +67,7 @@ def index():
                                    MonthNames = MonthNames)
     except Exception as e:
         print(e)
-        dates = get_dates(30)
+        dates = get_two_month_dates()
         print(dates)
         sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
         session_category = SessionsCategoryResults(dates['pre_start'], dates['pre_end'], dates['prv_start'],

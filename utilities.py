@@ -2,6 +2,8 @@ from datetime import timedelta,date
 import calendar
 import datetime
 from collections import defaultdict
+'''hbsytdbufeanjodiyfubaheicuaysdgechuyebcdhyusbdefcuysdhefyedc'''
+
 
 def group(req_data, group_by=None):
     groups = defaultdict(list)
@@ -73,13 +75,13 @@ def getweekdates(D):
     prev_month = int(datetime.datetime.now().strftime('%m')) - 1
     year = int((datetime.datetime.now().strftime('%Y-%m')).split('-')[0])
     num_days = calendar.monthrange(year, prev_month)
-    premonthend = datetime.date(year, prev_month, num_days[1])
+    pre_monthend = datetime.date(year, prev_month, num_days[1])
     pre_start = datetime.date(year, prev_month, 1)
     pre_end = pre_start.replace(day=D)
     year = year if prev_month != 1 else year - 1
     prev_month = (prev_month - 1) if prev_month != 1 else 12
     num_days = calendar.monthrange(year, prev_month)
-    prvmonthend = datetime.date(year, prev_month, num_days[1])
+    prv_monthend = datetime.date(year, prev_month, num_days[1])
     prv_start = datetime.date(year, prev_month, 1)
     prv_end = prv_start.replace(day=D)
 
@@ -97,9 +99,9 @@ def getweekdates(D):
     prv_end3 = prv_start3.replace(day=prv_start3.day + D - 1)
 
     pre_start4 = pre_end3.replace(day=pre_end3.day + 1)
-    pre_end4 = premonthend
+    pre_end4 = pre_monthend
     prv_start4 = prv_end3.replace(day=prv_end3.day + 1)
-    prv_end4 = prvmonthend
+    prv_end4 = prv_monthend
 
     return {'pre_start': pre_start.strftime('%Y-%m-%d'),
             'pre_end': pre_end.strftime('%Y-%m-%d'),
