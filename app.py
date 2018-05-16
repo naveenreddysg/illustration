@@ -7,6 +7,7 @@ from ResultsServices.cpc_results import CPCResults
 from ResultsServices.top_conversions_results import TopConversionsResults
 from ResultsServices.device_sessions_results import DeviceSessionsResults
 from utilities import get_dates, date_converter,change,line_resutls,getweekdates,get_two_month_dates
+import os
 #=======================================================================================================================
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://webanalytics:PyPrince@123@68.178.217.13/webanalytics'
@@ -115,5 +116,6 @@ if __name__ == '__main__':
 
     from models.models import db
     db.init_app(app)
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
 
