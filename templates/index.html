@@ -354,6 +354,13 @@ margin: 10px;
                     </div>
                 </div>
                 <div class="card">
+                   <div class="card-body">
+                       <div class="chart-wrapper">
+                           <canvas id="myChart-7"></canvas>
+                       </div>
+                   </div>
+                </div>
+                <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
                             <canvas id="myChart-1"></canvas>
@@ -368,9 +375,16 @@ margin: 10px;
                     </div>
                 </div>
                 <div class="card">
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="myChart-5"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
                    <div class="card-body">
                        <div class="chart-wrapper">
-                           <canvas id="myChart-5"></canvas>
+                           <canvas id="myChart-8"></canvas>
                        </div>
                    </div>
                </div>
@@ -1022,6 +1036,248 @@ var myChart6 = new Chart(ctx6, {
      }
    }
  });
+var ctx2 = document.getElementById("myChart-7").getContext('2d');
+var myChart2 = new Chart(ctx2, {
+			type: 'bar',
+			data: {
+				labels: ['UK', 'US', 'France', 'China'],
+				datasets: [{
+                datalabels: {
+                    display: false
+                },
+                label: ['Desktop'],
+                data: [{{result['Device_sessions'][0]['Desktop']}},{{result['Device_sessions'][1]['Desktop']}},
+                {{result['Device_sessions'][2]['Desktop']}},{{result['Device_sessions'][3]['Desktop']}},
+                ],
+                backgroundColor: [
+                    'rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)',
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+                ],
+                borderWidth: 0.5
+                },
+            {
+                datalabels: {
+                    display: false
+                },
+                label: ['Tablet'],
+                data: [{{result['Device_sessions'][0]['Tablet']}},{{result['Device_sessions'][1]['Tablet']}},
+                {{result['Device_sessions'][2]['Tablet']}},{{result['Device_sessions'][3]['Tablet']}},
+                ],
+                backgroundColor: [
+                    'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)',
+
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+                ],
+                borderWidth: 0.5
+                },
+                {
+                label: ['Mobile'],
+                labels: [{% for item in result['sessions'] %}
+                    {%if item['Country'] != 'Total' %}
+                  "{{((item['Current']|int /result['sessions'][-1]['Current']|int) * 100)|round(2) }}",
+                  {% endif %}
+                  {% endfor %}],
+                data: [{{result['Device_sessions'][0]['Mobile']}},{{result['Device_sessions'][1]['Mobile']}},
+                {{result['Device_sessions'][2]['Mobile']}},{{result['Device_sessions'][3]['Mobile']}},
+                ],
+                backgroundColor: [
+                    'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)',
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
+                ],
+                borderWidth: 0.5
+                },
+            ]
+        },
+    options: {
+        plugins: {
+              datalabels: {
+                formatter: function(value, context) {
+                    return context.dataset.labels[context.dataIndex] + '%';
+                },
+                align: 'end',
+                anchor: 'end',
+                backgroundColor: null,
+                borderColor: null,
+                borderRadius: 4,
+                borderWidth: 1,
+                color:'#6b6a66',
+                font: {
+                  size: 12,
+                  weight: 600
+                },
+                offset: 0,
+                padding: 0,
+              }
+            },
+        title: {
+			display: true,
+			text: 'SESSIONS BY CATEGORIES'
+			},
+        tooltips: {
+                    mode: 'index',
+                },
+                hover: {
+                    mode: 'index'
+                },
+        scales: {
+            yAxes: [{
+                stacked: true,
+                gridLines: {
+                    display:true
+                }
+            }],
+            xAxes: [{
+                stacked: true,
+                gridLines: {
+                    display:false
+                },
+            }]
+        }
+    }
+});
+var ctx2 = document.getElementById("myChart-8").getContext('2d');
+var myChart2 = new Chart(ctx2,{
+   type: 'line',
+   data: {
+     labels: ['W1', 'W2', 'W3', 'W4'],
+     datasets: [{
+       label: 'UK',
+       backgroundColor: 'rgba(51, 100, 255, 0.8)',
+       borderColor: 'rgba(51, 100, 255, 0.8)',
+       data: [
+         {{lineregionresults['session_line1'][0]['Change'].split('%')[0]}},
+         {{lineregionresults['session_line2'][0]['Change'].split('%')[0]}},
+         {{lineregionresults['session_line3'][0]['Change'].split('%')[0]}},
+         {{lineregionresults['session_line4'][0]['Change'].split('%')[0]}},
+       ],
+       fill: false,
+     }, {
+       label: 'USA',
+       fill: false,
+       backgroundColor: 'rgba(255, 49, 49, 0.8)',
+       borderColor: 'rgba(255, 49, 49, 0.8)',
+       data: [
+           {{lineregionresults['session_line1'][1]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line2'][1]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line3'][1]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line4'][1]['Change'].split('%')[0]}},
+       ],
+     }, {
+       label: 'France',
+       backgroundColor: 'rgba(252, 135, 54,0.8)',
+       borderColor: 'rgba(252, 135, 54,0.8)',
+       data: [
+           {{lineregionresults['session_line1'][2]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line2'][2]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line3'][2]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line4'][2]['Change'].split('%')[0]}},
+       ],
+       fill: false,
+     }, {
+       label: 'China',
+       backgroundColor: 'rgba(110, 234, 70,0.8)',
+       borderColor: 'rgba(110, 234, 70,0.8)',
+       data: [
+           {{lineregionresults['session_line1'][3]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line2'][3]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line3'][3]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line4'][3]['Change'].split('%')[0]}},
+       ],
+       fill: false,
+     },{
+       label: 'India',
+       backgroundColor: 'rgba(234, 70, 194,0.8)',
+       borderColor: 'rgba(234, 70, 194,0.8)',
+       data: [
+           {{lineregionresults['session_line1'][4]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line2'][4]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line3'][4]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line4'][4]['Change'].split('%')[0]}},
+       ],
+       fill: false,
+     },
+     {
+       label: 'SEA',
+       backgroundColor: 'rgba(22, 152, 31, 0.5)',
+       borderColor: 'rgba(22, 152, 31, 0.5)',
+       data: [
+           {{lineregionresults['session_line1'][5]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line2'][5]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line3'][5]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line4'][5]['Change'].split('%')[0]}},
+       ],
+       fill: false,
+     }, {
+       label: 'ANZ',
+       backgroundColor: 'rgba(218, 14, 247, 0.8)',
+       borderColor: 'rgba(218, 14, 247, 0.8)',
+       data: [
+           {{lineregionresults['session_line1'][6]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line2'][6]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line3'][6]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line4'][6]['Change'].split('%')[0]}},
+       ],
+       fill: false,
+     }, {
+       label: 'ROW',
+       backgroundColor: 'rgba(1, 169, 214, 0.8)',
+       borderColor: 'rgba(1, 169, 214, 0.8)',
+       data: [
+           {{lineregionresults['session_line1'][7]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line2'][7]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line3'][7]['Change'].split('%')[0]}},
+           {{lineregionresults['session_line4'][7]['Change'].split('%')[0]}},
+       ],
+       fill: false,
+     }]
+   },
+   options: {
+     plugins:{
+         datalabels: {
+                   display: false,
+               },
+     },
+     responsive: true,
+     title: {
+       display: true,
+       text: 'Weekly Source Report'
+     },
+     tooltips: {
+       mode: 'index',
+       intersect: false,
+     },
+     hover: {
+       mode: 'nearest',
+       intersect: true
+     },
+     scales: {
+       xAxes: [{
+
+         display: true,
+         scaleLabel: {
+
+           display: true,
+           labelString: "{{MonthNames[1]}} vs {{MonthNames[0]}}",
+         }
+       }],
+       yAxes: [{
+
+         display: true,
+         scaleLabel: {
+
+           display: true,
+           labelString: 'Values'
+         }
+       }]
+     }
+   }
+});
 </script>
 {% endif %}
 {% endblock %}

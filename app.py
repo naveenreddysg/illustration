@@ -6,7 +6,7 @@ from ResultsServices.devices_results import DeviceResults
 from ResultsServices.cpc_results import CPCResults
 from ResultsServices.top_conversions_results import TopConversionsResults
 from ResultsServices.device_sessions_results import DeviceSessionsResults
-from utilities import get_dates, date_converter,change,line_resutls,getweekdates,get_two_month_dates
+from utilities import get_dates, date_converter,change,line_results,line_results_region,getweekdates,get_two_month_dates
 #=======================================================================================================================
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://webanalytics:PyPrince@123@68.178.217.13/webanalytics'
@@ -63,10 +63,10 @@ def index():
             return render_template("index.html",
                                    result=result, DevicesDict=DevicesDict,OrganicSearchChange=OrganicSearchChange,
                                    DirectChange=DirectChange,ReferralChange=ReferralChange,SocialChange=SocialChange,
-                                   PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_resutls(),
-                                   MonthNames = MonthNames)
+                                   PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_results(),
+                                   lineregionresults=line_results_region(),MonthNames = MonthNames)
     except Exception as e:
-        print(e)
+        # print(e)
         dates = get_two_month_dates()
         print(dates)
         sessions = SessionsResults(dates['pre_start'], dates['pre_end'], dates['prv_start'], dates['prv_end'])
@@ -109,8 +109,8 @@ def index():
         return render_template("index.html",
                                result=result, DevicesDict=DevicesDict,OrganicSearchChange=OrganicSearchChange,
                                DirectChange=DirectChange,ReferralChange=ReferralChange,SocialChange=SocialChange,
-                               PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_resutls(),
-                               MonthNames=MonthNames)
+                               PaidSearchChange=PaidSearchChange,EmailChange=EmailChange,lineresults=line_results(),
+                               lineregionresults=line_results_region(),MonthNames=MonthNames)
 if __name__ == '__main__':
 
     from models.models import db

@@ -152,7 +152,7 @@ def change(source,result):
         Change.append(change)
     return Change
 
-def line_resutls():
+def line_results():
     from ResultsServices.sessions_category_results import SessionsCategoryResults
 
     linedates = getweekdates(7)
@@ -172,5 +172,24 @@ def line_resutls():
                    }
     return lineresults
 
+
+def line_results_region():
+    from ResultsServices.sessions_results import SessionsResults
+    linedatesregion  = getweekdates(7)
+    session_line1 = SessionsResults(linedatesregion['pre_start'], linedatesregion['pre_end'],
+                                    linedatesregion['prv_start'], linedatesregion['prv_end'])
+    session_line2 = SessionsResults(linedatesregion['pre_start2'], linedatesregion['pre_end2'],
+                                    linedatesregion['prv_start2'], linedatesregion['prv_end2'])
+    session_line3 = SessionsResults(linedatesregion['pre_start3'], linedatesregion['pre_end3'],
+                                    linedatesregion['prv_start3'], linedatesregion['prv_end3'])
+    session_line4 = SessionsResults(linedatesregion['pre_start4'], linedatesregion['pre_end4'],
+                                    linedatesregion['prv_start4'], linedatesregion['prv_end4'])
+
+    lineregionresults = {'session_line1': session_line1.main(),'session_line2': session_line2.main(),
+                         'session_line3': session_line3.main(),'session_line4': session_line4.main()}
+    return lineregionresults
+
+
+
 if __name__ == '__main__':
-    getweekdates(7)
+    line_results()
