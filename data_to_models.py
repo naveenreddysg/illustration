@@ -5,6 +5,7 @@ from googleapiclient.errors import HttpError
 from oauth2client.client import AccessTokenRefreshError
 from DbConnections.db_connection import Db
 
+
 #----------------------------------------------------------------------------------------------------
 
 def get_profile_id(service):
@@ -525,7 +526,6 @@ def main(argv):
 
           lst = [[], [], [], [], []]
           for profile_id in out:
-              print(profile_id)
               results = get_top_keywords(service, profile_id[0], startDate1, endDate1)
               lst[0].append(int(results[0].get('totalsForAllResults')['ga:sessions']))
               lst[1].append(float(results[1].get('totalsForAllResults')['ga:bouncerate']))
