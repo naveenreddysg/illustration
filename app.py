@@ -115,5 +115,5 @@ if __name__ == '__main__':
 
     from models.models import db
     db.init_app(app)
-    app.run(debug=True)
+    app.run(port=8001, debug=True)
 
