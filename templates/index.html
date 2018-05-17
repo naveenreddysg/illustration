@@ -349,7 +349,7 @@ margin: 10px;
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-4"></canvas>
+                            <canvas id="myChart-8"></canvas>
                         </div>
                     </div>
                 </div>
@@ -384,7 +384,7 @@ margin: 10px;
                 <div class="card">
                    <div class="card-body">
                        <div class="chart-wrapper">
-                           <canvas id="myChart-8"></canvas>
+                           <canvas id="myChart-4"></canvas>
                        </div>
                    </div>
                </div>
@@ -1267,7 +1267,9 @@ var myChart2 = new Chart(ctx2,{
          }
        }],
        yAxes: [{
-
+         ticks: {
+                 stepSize: 10,
+                 },
          display: true,
          scaleLabel: {
 
