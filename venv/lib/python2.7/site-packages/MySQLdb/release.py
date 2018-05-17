@@ -1,4 +1,4 @@
 
 __author__ = "Andy Dustman <farcepest@gmail.com>"
-version_info = (1,3,12,'final',0)
-__version__ = "1.3.12"
+version_info = (1,2,5,'final',1)
+__version__ = "1.2.5"
