@@ -1,4 +1,4 @@
-#!/Volumes/work/SanctusIT/illustration_api/illustration/venv/bin/python
+#!/Volumes/work/SanctusIT/illustration_api/venv/bin/python
 
 # -*- coding: utf-8 -*-
 import re
