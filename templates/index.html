@@ -110,7 +110,7 @@ margin: 10px;
                             </form>
                             <div class="container" style="text-align:center; margin-top:10px">
                                     {% if result %}
-                                    <a href="javascript:SwapDivsWithClick('swapper-first','swapper-other')"><button class="btn btn-primary btn-sm" onclick="changeText(this)">Show Charts</button></a>
+                                    <a href="javascript:SwapDivsWithClick('swapper-first','swapper-other')"><button class="btn btn-primary btn-sm" onclick="changeText(this)">Show Tables</button></a>
                                     {% endif %}
                             </div>
                         </div>
@@ -118,7 +118,7 @@ margin: 10px;
                 </div>
             </div>
             {% if result %}
-            <div id="swapper-first" style="display:block;">
+            <div class="container-fluid" id="swapper-other" style="display:none">
                 <div class="animated fadeIn">
                     <div class="card-columns cols-2">
                         <div class="card">
@@ -329,7 +329,7 @@ margin: 10px;
         </div>
     <script src='https://cdn.jsdelivr.net/npm/chart.js@2.7.1/dist/Chart.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0"></script>
-    <div class="container-fluid" id="swapper-other" style="display:none">
+    <div id="swapper-first" style="display:block;">
         <div class="animated fadeIn">
             <div class="card-columns cols-2">
                 <div class="card">
@@ -1032,110 +1032,9 @@ var myChart6 = new Chart(ctx6, {
      }
    }
  });
-var ctx2 = document.getElementById("myChart-7").getContext('2d');
-var myChart2 = new Chart(ctx2, {
-			type: 'bar',
-			data: {
-				labels: ['UK', 'US', 'France', 'China'],
-				datasets: [{
-                datalabels: {
-                    display: false
-                },
-                label: ['Desktop'],
-                data: [{{result['Device_sessions'][0]['Desktop']}},{{result['Device_sessions'][1]['Desktop']}},
-                {{result['Device_sessions'][2]['Desktop']}},{{result['Device_sessions'][3]['Desktop']}},
-                ],
-                backgroundColor: [
-                    'rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)',
-                ],
-                borderColor: [
-                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
-                ],
-                borderWidth: 0.5
-                },
-            {
-                datalabels: {
-                    display: false
-                },
-                label: ['Tablet'],
-                data: [{{result['Device_sessions'][0]['Tablet']}},{{result['Device_sessions'][1]['Tablet']}},
-                {{result['Device_sessions'][2]['Tablet']}},{{result['Device_sessions'][3]['Tablet']}},
-                ],
-                backgroundColor: [
-                    'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)',
 
-                ],
-                borderColor: [
-                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
-                ],
-                borderWidth: 0.5
-                },
-                {
-                label: ['Mobile'],
-                labels: [{% for item in result['sessions'] %}
-                    {%if item['Country'] != 'Total' %}
-                  "{{((item['Current']|int /result['sessions'][-1]['Current']|int) * 100)|round(2) }}",
-                  {% endif %}
-                  {% endfor %}],
-                data: [{{result['Device_sessions'][0]['Mobile']}},{{result['Device_sessions'][1]['Mobile']}},
-                {{result['Device_sessions'][2]['Mobile']}},{{result['Device_sessions'][3]['Mobile']}},
-                ],
-                backgroundColor: [
-                    'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)',
-                ],
-                borderColor: [
-                    'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
-                ],
-                borderWidth: 0.5
-                },
-            ]
-        },
-    options: {
-        plugins: {
-              datalabels: {
-                formatter: function(value, context) {
-                    return context.dataset.labels[context.dataIndex] + '%';
-                },
-                align: 'end',
-                anchor: 'end',
-                backgroundColor: null,
-                borderColor: null,
-                borderRadius: 4,
-                borderWidth: 1,
-                color:'#6b6a66',
-                font: {
-                  size: 12,
-                  weight: 600
-                },
-                offset: 0,
-                padding: 0,
-              }
-            },
-        title: {
-			display: true,
-			text: 'SESSIONS BY CATEGORIES'
-			},
-        tooltips: {
-                    mode: 'index',
-                },
-        scales: {
-            yAxes: [{
-                stacked: true,
-                gridLines: {
-                    display:true
-                }
-            }],
-            xAxes: [{
-                stacked: true,
-                gridLines: {
-                    display:false
-                },
-            }]
-        }
-    }
-});
-var ctx2 = document.getElementById("myChart-8").getContext('2d');
-var myChart2 = new Chart(ctx2,{
+var ctx8 = document.getElementById("myChart-8").getContext('2d');
+var myChart8 = new Chart(ctx8,{
    type: 'line',
    data: {
      labels: ['W1', 'W2', 'W3', 'W4'],
@@ -1268,6 +1167,118 @@ var myChart2 = new Chart(ctx2,{
      }
    }
 });
+
+var ctx7 = document.getElementById("myChart-7").getContext('2d');
+var myChart7 = new Chart(ctx7,{
+   type: 'bar',
+   data: {
+     labels: ['Desktop','Tablet','Mobile'],
+     datasets: [
+     {
+        type: 'bar',
+        label: 'UK',
+        backgroundColor: 'rgba(231, 166, 88, 0.5)',
+        borderColor: 'rgba(240, 226, 210, 0.8)',
+        data: [
+        26763,1862,7749
+        ]
+     }, {
+        type: 'bar',
+        label: 'USA',
+        legend: {
+        position: "right"
+      },
+        backgroundColor: 'rgba(34, 233, 158, 0.8)',
+        borderColor: 'rgba(240, 226, 210, 0.8)',
+        data: [
+        14440,1084,4895
+        ]
+    },
+    {
+        type: 'bar',
+        label: 'FRANCE',
+        backgroundColor: 'rgba(89, 98, 234, 0.8)',
+        borderColor: 'rgba(240, 226, 210, 0.8)',
+        data: [2461,130,574]
+
+    },
+    {
+        type: 'bar',
+        label: 'CHINA',
+        backgroundColor: 'rgba(34, 233, 230, 0.8)',
+        borderColor: 'rgba(240, 226, 210, 0.8)',
+        data: [1894,38,311]
+    },
+    {
+        type: 'line',
+        label: 'Current Month Total',
+        fill: false,
+        borderDash: [5, 5],
+        pointRadius: 10,
+        pointHoverRadius: 5,
+        backgroundColor: 'rgba(70, 171, 218, 1)',
+        borderColor: 'rgba(240, 226, 210, 2)',
+        data: [45558,3114,13529]
+    },
+     {
+        type: 'line',
+        label: 'Previous Month Total',
+        fill: false,
+        borderDash: [5, 5],
+        pointRadius: 20,
+        pointHoverRadius: 15,
+        pointStyle: 'triangle',
+        backgroundColor: 'rgba(231, 88, 129, 1)',
+        borderColor: 'rgba(240, 226, 210, 2)',
+        data: [
+            50804,3719,15060
+        ]
+    },
+    {
+        type: 'line',
+        label: 'Change',
+        backgroundColor: 'FFFF00',
+        data: [
+            -10.33,-16.27,-10.17
+        ],
+        fill: false,
+        borderDash: [5, 5],
+        pointRadius: 20,
+        pointHoverRadius: 15,
+    }
+    ]
+   },
+   options: {
+        plugins: {
+              datalabels: {
+                display: false,
+              }
+            },
+        title: {
+			display: true,
+			text: 'DEVICES'
+			},
+        tooltips: {
+            mode: 'index',
+            },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    display:true
+                },
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display:true
+                },
+            }]
+        }
+    }
+});
+
 </script>
 {% endif %}
 {% endblock %}
