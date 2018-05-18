@@ -53,12 +53,25 @@ import datetime
 # print prv_end.strftime('%Y-%m-%d')
 
 
-devices = [{'Device': 'Desktop', 'Goal Completions': 68, 'Change': '-33.98%', 'Previous': 103}, {'Device': 'Mobile', 'Goal Completions': 24, 'Change': '33.33%', 'Previous': 18},{'Device': 'Tablet', 'Goal Completions': 3, 'Change': '-50.0%', 'Previous': 6}]
+# devices = [{'Device': 'Desktop', 'Goal Completions': 68, 'Change': '-33.98%', 'Previous': 103}, {'Device': 'Mobile', 'Goal Completions': 24, 'Change': '33.33%', 'Previous': 18},{'Device': 'Tablet', 'Goal Completions': 3, 'Change': '-50.0%', 'Previous': 6}]
+#
+# for item in devices:
+#     print item
+#
+# print ['Devices', 'Goal Completions']
+#
+# for item in devices:
+#     print [item['Device'], item['Goal Completions']]
 
-for item in devices:
-    print item
+date1 = '2018-03-05'
+date2 = '2018-04-05'
+import calendar
+print calendar.month_name[int(date1.split("-")[1])]
 
-print ['Devices', 'Goal Completions']
+def get_month_names(date1, date2):
 
-for item in devices:
-    print [item['Device'], item['Goal Completions']]
+    month1 = calendar.month_name[int(date1.split("-")[1])]
+    month2 = calendar.month_name[int(date2.split("-")[1])]
+    return(month1, month2)
+
+print get_month_names(date1, date2)

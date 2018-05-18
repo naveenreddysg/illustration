@@ -189,6 +189,11 @@ def line_results_region():
                          'session_line3': session_line3.main(),'session_line4': session_line4.main()}
     return lineregionresults
 
+def get_month_names(date1, date2):
+
+    month1 = calendar.month_name[int(date1.split("-")[1])]
+    month2 = calendar.month_name[int(date2.split("-")[1])]
+    return(month1, month2)
 
 
 if __name__ == '__main__':
