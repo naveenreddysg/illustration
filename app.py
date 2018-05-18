@@ -46,6 +46,7 @@ def index():
             }
 
             MonthNames = get_month_names(dates['pre_start'], dates['prv_start'])
+            MonthNames2 = [getweekdates(7)['pre_MonthName'], getweekdates(7)['prv_MonthName']]
 
             OrganicSearchChange = change(source='Organic Search',result=result)
             DirectChange = change(source='Direct',result=result)
@@ -64,7 +65,7 @@ def index():
                                    result=result, DevicesDict=DevicesDict, OrganicSearchChange=OrganicSearchChange,
                                    DirectChange=DirectChange, ReferralChange=ReferralChange, SocialChange=SocialChange,
                                    PaidSearchChange=PaidSearchChange, EmailChange=EmailChange, lineresults=line_results(),
-                                   lineregionresults=line_results_region(), MonthNames=MonthNames, dates=dates)
+                                   lineregionresults=line_results_region(), MonthNames=MonthNames, MonthNames2=MonthNames2, dates=dates)
     except Exception as e:
         print(e)
         dates = get_two_month_dates()
@@ -91,7 +92,7 @@ def index():
             }
 
         MonthNames = get_month_names(dates['pre_start'], dates['prv_start'])
-
+        MonthNames2 = [getweekdates(7)[0]['pre_MonthName'], getweekdates(7)[0]['prv_MonthName']]
         OrganicSearchChange = change(source='Organic Search',result=result)
         DirectChange = change(source='Direct',result=result)
         ReferralChange = change(source='Referral',result=result)
@@ -109,7 +110,7 @@ def index():
                                result=result, DevicesDict=DevicesDict, OrganicSearchChange=OrganicSearchChange,
                                DirectChange=DirectChange, ReferralChange=ReferralChange, SocialChange=SocialChange,
                                PaidSearchChange=PaidSearchChange, EmailChange=EmailChange, lineresults=line_results(),
-                               lineregionresults=line_results_region(), MonthNames=MonthNames, dates=dates)
+                               lineregionresults=line_results_region(), MonthNames=MonthNames, MonthNames2=MonthNames2, dates=dates)
 if __name__ == '__main__':
 
     from models.models import db

@@ -66,7 +66,6 @@ import datetime
 date1 = '2018-03-05'
 date2 = '2018-04-05'
 import calendar
-print calendar.month_name[int(date1.split("-")[1])]
 
 def get_month_names(date1, date2):
 

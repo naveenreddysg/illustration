@@ -118,7 +118,7 @@ margin: 10px;
                 </div>
             </div>
             {% if result %}
-            <div class="container-fluid" id="swapper-other" style="display:none">
+            <div id="swapper-other" style="display:none">
                 <div class="animated fadeIn">
                     <div class="card-columns cols-2">
                         <div class="card">
@@ -329,7 +329,7 @@ margin: 10px;
         </div>
     <script src='https://cdn.jsdelivr.net/npm/chart.js@2.7.1/dist/Chart.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0"></script>
-    <div id="swapper-first" style="display:block;">
+    <div class="container-fluid" id="swapper-first" style="display:block;">
         <div class="animated fadeIn">
             <div class="card-columns cols-2">
                 <div class="card">
@@ -342,21 +342,21 @@ margin: 10px;
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-3"></canvas>
+                            <canvas id="myChart-8"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-8"></canvas>
+                            <canvas id="myChart-3"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                    <div class="card-body">
                        <div class="chart-wrapper">
-                           <canvas id="myChart-7"></canvas>
+                           <canvas id="myChart-5"></canvas>
                        </div>
                    </div>
                 </div>
@@ -377,7 +377,7 @@ margin: 10px;
                 <div class="card">
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <canvas id="myChart-5"></canvas>
+                            <canvas id="myChart-7"></canvas>
                         </div>
                     </div>
                 </div>
@@ -429,7 +429,7 @@ var myChart1 = new Chart(ctx1, {
                     return context.dataset.data[context.dataIndex] + ' %';
                 }
                 },
-            label: ['Change percentage'],
+            label: ['Change'],
             type: 'line',
             fill: false,
             data: [{% for item in result['sessions'] %}
@@ -465,7 +465,7 @@ var myChart1 = new Chart(ctx1, {
             },
         title: {
 			display: true,
-			text: 'REGION WITH CHANGE PERCENTAGE'
+			text: 'Traffic Performance by Region'
 			},
         tooltips: {
             mode: 'index',
@@ -635,7 +635,7 @@ var myChart2 = new Chart(ctx2, {
             },
         title: {
 			display: true,
-			text: 'SOURCE, REGION WITH PERCENTAGE SHARE'
+			text: 'Traffic by Region & Source'
 			},
         tooltips: {
                     mode: 'index',
@@ -747,7 +747,7 @@ var myChart3 = new Chart(ctx3, {
             },
         title: {
             display: true,
-            text: 'REGION, SOURCE WITH INDIVIDUAL CHANGE PERCENTAGE'
+            text: 'Traffic Performance (% Change) by Region & Source'
         },
         tooltips: {
             mode: 'index',
@@ -1003,7 +1003,7 @@ var myChart6 = new Chart(ctx6, {
      responsive: true,
      title: {
        display: true,
-       text: 'MONTHLY SOURCE REPORT WITH CHANGE PERCENTAGE'
+       text: 'Monthly Traffic Performance (% Change) By Source'
      },
      tooltips: {
        mode: 'index',
@@ -1017,7 +1017,7 @@ var myChart6 = new Chart(ctx6, {
          display: true,
          scaleLabel: {
            display: true,
-           labelString: "{{MonthNames[1]}} vs {{MonthNames[0]}}",
+           labelString: "{{MonthNames2[1]}} vs {{MonthNames2[0]}}",
          }
        }],
        yAxes: [{
@@ -1138,7 +1138,7 @@ var myChart8 = new Chart(ctx8,{
      responsive: true,
      title: {
        display: true,
-       text: 'MONTHLY REGION REPORT WITH CHANGE PERCENTAGE'
+       text: 'Monthly Traffic Performance (% Change) By Region'
      },
     tooltips: {
         mode: 'index',
@@ -1150,7 +1150,7 @@ var myChart8 = new Chart(ctx8,{
          scaleLabel: {
 
            display: true,
-           labelString: "{{MonthNames[1]}} vs {{MonthNames[0]}}",
+           labelString: "{{MonthNames2[1]}} vs {{MonthNames2[0]}}",
          }
        }],
        yAxes: [{
@@ -1269,7 +1269,7 @@ var myChart7 = new Chart(ctx7,{
             },
         title: {
 			display: true,
-			text: 'DEVICES'
+			text: 'Monthly Traffic Performance (% Change) By Region'
 			},
         tooltips: {
             mode: 'index',
