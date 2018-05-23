@@ -1169,89 +1169,53 @@ var myChart8 = new Chart(ctx8,{
 });
 
 var ctx7 = document.getElementById("myChart-7").getContext('2d');
-var myChart7 = new Chart(ctx7,{
-   type: 'bar',
-   data: {
-     labels: ['Desktop','Tablet','Mobile'],
-     datasets: [
-     {
-        type: 'bar',
-        label: 'UK',
-        backgroundColor: 'rgba(231, 166, 88, 0.5)',
-        borderColor: 'rgba(240, 226, 210, 0.8)',
-        data: [
-        26763,1862,7749
-        ]
-     }, {
-        type: 'bar',
-        label: 'USA',
-        legend: {
-        position: "right"
-      },
-        backgroundColor: 'rgba(34, 233, 158, 0.8)',
-        borderColor: 'rgba(240, 226, 210, 0.8)',
-        data: [
-        14440,1084,4895
-        ]
+var myChart7 = new Chart(ctx7, {
+    type: 'bar',
+    data: {
+        labels: ['Desktop','Tablet','Mobile'],
+        datasets: [{
+            label: ['Current'],
+            data: [ {{result['Device_sessions'][4]['Desktop']}},
+                    {{result['Device_sessions'][4]['Tablet']}},
+                    {{result['Device_sessions'][4]['Mobile']}},],
+            backgroundColor: ['rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)',],
+            borderColor: ['rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',],
+            borderWidth: 1
+        },
+        {
+            label: ['Previous'],
+            data: [ {{result['Device_sessions'][5]['Desktop']}},
+                    {{result['Device_sessions'][5]['Tablet']}},
+                    {{result['Device_sessions'][5]['Mobile']}},],
+            backgroundColor: ['rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)',],
+            borderColor: ['rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',],
+            borderWidth: 1
+        },
+        {
+        datalabels: {
+            color:'#000000',
+            offset: -20,
+      	    formatter: function(value, context) {
+                    return context.dataset.data[context.dataIndex] + ' %';
+                }
+                },
+            label: ['Change'],
+            type: 'line',
+            fill: false,
+            data: [ {{result['Device_sessions'][6]['Desktop'].split('%')[0]}},
+                    {{result['Device_sessions'][6]['Tablet'].split('%')[0]}},
+                    {{result['Device_sessions'][6]['Mobile'].split('%')[0]}},],
+            backgroundColor: [
+                  'rgba(110, 188, 107,1)',
+                  ],
+            borderColor: [
+                  'rgba(110, 188, 107,1)',
+                  ]
+        }]
     },
-    {
-        type: 'bar',
-        label: 'FRANCE',
-        backgroundColor: 'rgba(89, 98, 234, 0.8)',
-        borderColor: 'rgba(240, 226, 210, 0.8)',
-        data: [2461,130,574]
-
-    },
-    {
-        type: 'bar',
-        label: 'CHINA',
-        backgroundColor: 'rgba(34, 233, 230, 0.8)',
-        borderColor: 'rgba(240, 226, 210, 0.8)',
-        data: [1894,38,311]
-    },
-    {
-        type: 'line',
-        label: 'Current Month Total',
-        fill: false,
-        borderDash: [5, 5],
-        pointRadius: 10,
-        pointHoverRadius: 5,
-        backgroundColor: 'rgba(70, 171, 218, 1)',
-        borderColor: 'rgba(240, 226, 210, 2)',
-        data: [45558,3114,13529]
-    },
-     {
-        type: 'line',
-        label: 'Previous Month Total',
-        fill: false,
-        borderDash: [5, 5],
-        pointRadius: 20,
-        pointHoverRadius: 15,
-        pointStyle: 'triangle',
-        backgroundColor: 'rgba(231, 88, 129, 1)',
-        borderColor: 'rgba(240, 226, 210, 2)',
-        data: [
-            50804,3719,15060
-        ]
-    },
-    {
-        type: 'line',
-        label: 'Change',
-        backgroundColor: 'FFFF00',
-        data: [
-            -10.33,-16.27,-10.17
-        ],
-        fill: false,
-        borderDash: [5, 5],
-        pointRadius: 20,
-        pointHoverRadius: 15,
-    }
-    ]
-   },
-   options: {
+    options: {
         plugins: {
               datalabels: {
-                display: false,
                 align: 'end',
                 anchor: 'end',
                 backgroundColor: null,
@@ -1269,7 +1233,7 @@ var myChart7 = new Chart(ctx7,{
             },
         title: {
 			display: true,
-			text: 'Monthly Traffic Performance (% Change) By Region'
+			text: 'Monthly Traffic Performance (% Change) By Devices'
 			},
         tooltips: {
             mode: 'index',
@@ -1291,7 +1255,6 @@ var myChart7 = new Chart(ctx7,{
         }
     }
 });
-
 </script>
 {% endif %}
 {% endblock %}

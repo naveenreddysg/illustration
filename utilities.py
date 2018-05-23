@@ -148,7 +148,7 @@ def change(source,result):
         previous.append(item[source])
     Change = []
     for i in range(len(previous)):
-        change = round(((float(present[i]) - float(previous[i])) / float(previous[i])) * 100, 2) if previous[                                                                                             i] != 0 else 100
+        change = round(((float(present[i]) - float(previous[i])) / float(previous[i])) * 100, 2) if previous[i] != 0 else 100
         Change.append(change)
     return Change
 
