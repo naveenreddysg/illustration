@@ -58,4 +58,4 @@ class SessionsCategoryResults:
         main_result.append(total_current)
         main_result.append(total_previous)
         main_result.append(change)
-        return main_result, main_resultPrev
+        return {'present': main_result, 'previous': main_resultPrev}

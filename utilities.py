@@ -124,7 +124,7 @@ def getweekdates(D):
             }
 
 def get12months():
-    # print int(datetime.datetime.now().strftime('%m'))
+
     prev_month = date.today().month - 1
     year = int((datetime.datetime.now().strftime('%Y-%m')).split('-')[0])
     print(year)
@@ -140,11 +140,12 @@ def get12months():
 
     print pre_start,pre_end,'\n',prv_start,prv_end
 
-def change(source,result):
+def change(source, result):
+
     present, previous = [], []
-    for item in result['session_category']:
+    for item in result['present']:
         present.append(item[source])
-    for item in result['session_category_prev']:
+    for item in result['previous']:
         previous.append(item[source])
     Change = []
     for i in range(len(previous)):
@@ -165,10 +166,10 @@ def line_results():
                                                      linedates['prv_start3'], linedates['prv_end3'])
     session_category_line4 = SessionsCategoryResults(linedates['pre_start4'], linedates['pre_end4'],
                                                      linedates['prv_start4'], linedates['prv_end4'])
-    lineresults = {'session_category_line1': session_category_line1.main()[0][10],
-                   'session_category_line2': session_category_line2.main()[0][10],
-                   'session_category_line3': session_category_line3.main()[0][10],
-                   'session_category_line4': session_category_line4.main()[0][10],
+    lineresults = {'session_category_line1': session_category_line1.main()['present'][10],
+                   'session_category_line2': session_category_line2.main()['present'][10],
+                   'session_category_line3': session_category_line3.main()['present'][10],
+                   'session_category_line4': session_category_line4.main()['present'][10],
                    }
     return lineresults
 

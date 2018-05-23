@@ -169,7 +169,7 @@ margin: 10px;
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for item in result['session_category'] %}
+                                                {% for item in result['session_category']['present'] %}
                                                     <tr>
                                                         <td>{{item['Country']}}</td>
                                                         <td>{{item['Organic Search']}}</td>
@@ -279,6 +279,7 @@ margin: 10px;
                                                 <tr>
                                                     <th>Paid Source</th>
                                                     <th>Goal Completions</th>
+                                                    <th>Previous</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -286,6 +287,7 @@ margin: 10px;
                                                     <tr>
                                                         <td>{{item['Paid Source']}}</td>
                                                         <td>{{item['Goal Completions']}}</td>
+                                                        <td>{{item['Previous']}}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </tbody>
@@ -499,10 +501,10 @@ var myChart2 = new Chart(ctx2, {
                     display: false,
                 },
                 label: ['Organic Search'],
-                data: [{{result['session_category'][0]['Organic Search']}},{{result['session_category'][1]['Organic Search']}},
-                {{result['session_category'][2]['Organic Search']}},{{result['session_category'][3]['Organic Search']}},
-                {{result['session_category'][4]['Organic Search']}},{{result['session_category'][5]['Organic Search']}},
-                {{result['session_category'][6]['Organic Search']}},{{result['session_category'][7]['Organic Search']}}],
+                data: [{{result['session_category']['present'][0]['Organic Search']}},{{result['session_category']['present'][1]['Organic Search']}},
+                {{result['session_category']['present'][2]['Organic Search']}},{{result['session_category']['present'][3]['Organic Search']}},
+                {{result['session_category']['present'][4]['Organic Search']}},{{result['session_category']['present'][5]['Organic Search']}},
+                {{result['session_category']['present'][6]['Organic Search']}},{{result['session_category']['present'][7]['Organic Search']}}],
                 backgroundColor: [
                     'rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)',
                     'rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)','rgba(51, 100, 255, 0.8)'
@@ -518,10 +520,10 @@ var myChart2 = new Chart(ctx2, {
                     display: false
                 },
                 label: ['Direct'],
-                data: [{{result['session_category'][0]['Direct']}},{{result['session_category'][1]['Direct']}},
-                {{result['session_category'][2]['Direct']}},{{result['session_category'][3]['Direct']}},
-                {{result['session_category'][4]['Direct']}},{{result['session_category'][5]['Direct']}},
-                {{result['session_category'][6]['Direct']}},{{result['session_category'][7]['Direct']}}],
+                data: [{{result['session_category']['present'][0]['Direct']}},{{result['session_category']['present'][1]['Direct']}},
+                {{result['session_category']['present'][2]['Direct']}},{{result['session_category']['present'][3]['Direct']}},
+                {{result['session_category']['present'][4]['Direct']}},{{result['session_category']['present'][5]['Direct']}},
+                {{result['session_category']['present'][6]['Direct']}},{{result['session_category']['present'][7]['Direct']}}],
                 backgroundColor: [
                     'rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)',
                     'rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)','rgba(255, 49, 49, 0.8)'
@@ -537,10 +539,10 @@ var myChart2 = new Chart(ctx2, {
                     display: false
                 },
                 label: ['Referral'],
-                data: [{{result['session_category'][0]['Referral']}},{{result['session_category'][1]['Referral']}},
-                {{result['session_category'][2]['Referral']}},{{result['session_category'][3]['Referral']}},
-                {{result['session_category'][4]['Referral']}},{{result['session_category'][5]['Referral']}},
-                {{result['session_category'][6]['Referral']}},{{result['session_category'][7]['Referral']}}],
+                data: [{{result['session_category']['present'][0]['Referral']}},{{result['session_category']['present'][1]['Referral']}},
+                {{result['session_category']['present'][2]['Referral']}},{{result['session_category']['present'][3]['Referral']}},
+                {{result['session_category']['present'][4]['Referral']}},{{result['session_category']['present'][5]['Referral']}},
+                {{result['session_category']['present'][6]['Referral']}},{{result['session_category']['present'][7]['Referral']}}],
                 backgroundColor: [
                     'rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)',
                     'rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)','rgba(252, 135, 54,0.8)'
@@ -556,10 +558,10 @@ var myChart2 = new Chart(ctx2, {
                     display: false
                 },
                 label: ['Social'],
-                data: [{{result['session_category'][0]['Social']}},{{result['session_category'][1]['Social']}},
-                {{result['session_category'][2]['Social']}},{{result['session_category'][3]['Social']}},
-                {{result['session_category'][4]['Social']}},{{result['session_category'][5]['Social']}},
-                {{result['session_category'][6]['Social']}},{{result['session_category'][7]['Social']}}],
+                data: [{{result['session_category']['present'][0]['Social']}},{{result['session_category']['present'][1]['Social']}},
+                {{result['session_category']['present'][2]['Social']}},{{result['session_category']['present'][3]['Social']}},
+                {{result['session_category']['present'][4]['Social']}},{{result['session_category']['present'][5]['Social']}},
+                {{result['session_category']['present'][6]['Social']}},{{result['session_category']['present'][7]['Social']}}],
                 backgroundColor: [
                     'rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)',
                     'rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)','rgba(22, 152, 31, 0.8)'
@@ -575,10 +577,10 @@ var myChart2 = new Chart(ctx2, {
                     display: false
                 },
                 label: ['Paid Search'],
-                data: [{{result['session_category'][0]['Paid Search']}},{{result['session_category'][1]['Paid Search']}},
-                {{result['session_category'][2]['Paid Search']}},{{result['session_category'][3]['Paid Search']}},
-                {{result['session_category'][4]['Paid Search']}},{{result['session_category'][5]['Paid Search']}},
-                {{result['session_category'][6]['Paid Search']}},{{result['session_category'][7]['Paid Search']}}],
+                data: [{{result['session_category']['present'][0]['Paid Search']}},{{result['session_category']['present'][1]['Paid Search']}},
+                {{result['session_category']['present'][2]['Paid Search']}},{{result['session_category']['present'][3]['Paid Search']}},
+                {{result['session_category']['present'][4]['Paid Search']}},{{result['session_category']['present'][5]['Paid Search']}},
+                {{result['session_category']['present'][6]['Paid Search']}},{{result['session_category']['present'][7]['Paid Search']}}],
                 backgroundColor: [
                     'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)',
                     'rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)','rgba(218, 14, 247, 0.8)'
@@ -596,10 +598,10 @@ var myChart2 = new Chart(ctx2, {
                   "{{((item['Current']|int /result['sessions'][-1]['Current']|int) * 100)|round(2) }}",
                   {% endif %}
                   {% endfor %}],
-                data: [{{result['session_category'][0]['Email']}},{{result['session_category'][1]['Email']}},
-                {{result['session_category'][2]['Email']}},{{result['session_category'][3]['Email']}},
-                {{result['session_category'][4]['Email']}},{{result['session_category'][5]['Email']}},
-                {{result['session_category'][6]['Email']}},{{result['session_category'][7]['Email']}}],
+                data: [{{result['session_category']['present'][0]['Email']}},{{result['session_category']['present'][1]['Email']}},
+                {{result['session_category']['present'][2]['Email']}},{{result['session_category']['present'][3]['Email']}},
+                {{result['session_category']['present'][4]['Email']}},{{result['session_category']['present'][5]['Email']}},
+                {{result['session_category']['present'][6]['Email']}},{{result['session_category']['present'][7]['Email']}}],
                 backgroundColor: [
                     'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)',
                     'rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)','rgba(1, 169, 214, 0.8)'
@@ -668,7 +670,7 @@ var barChartData = {
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
             borderWidth: 0.5,
-            data: {{ OrganicSearchChange }}
+            data: {{ Change['Organic Search'] }}
         }, {
             label: 'Direct',
             backgroundColor: [
@@ -678,7 +680,7 @@ var barChartData = {
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
             borderWidth: 0.5,
-            data: {{ DirectChange }}
+            data: {{ Change['Direct'] }}
         }, {
             label: 'Referral',
             backgroundColor: [
@@ -688,7 +690,7 @@ var barChartData = {
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
             borderWidth: 0.5,
-            data: {{ ReferralChange }}
+            data: {{ Change['Referral'] }}
         }, {
             label: 'Social',
             backgroundColor: [
@@ -698,7 +700,7 @@ var barChartData = {
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
             borderWidth: 0.5,
-            data: {{ SocialChange }}
+            data: {{ Change['Social'] }}
         }, {
             label: 'Paid Search',
             backgroundColor: [
@@ -708,7 +710,7 @@ var barChartData = {
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
             borderWidth: 0.5,
-            data: {{ PaidSearchChange }}
+            data: {{ Change['Paid Search'] }}
         }, {
             label: 'Email',
             backgroundColor: [
@@ -718,7 +720,7 @@ var barChartData = {
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)',
                'rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)','rgba(255, 255, 255, 1)'],
             borderWidth: 0.5,
-            data: {{ EmailChange }}
+            data: {{ Change['Email'] }}
         }]
 
     };
@@ -874,8 +876,10 @@ var myChart5 = new Chart(ctx5, {
             borderWidth: 5
         },
         {
-            data: [{% for item in result['CPC_prv'] %}
-                  {{item['Goal Completions']}},
+            data: [{% for item in result['CPC'] %}
+                   {% if item['Paid Source'] != 'Total' %}
+                  "{{item['Previous']}}",
+                  {% endif %}
                 {% endfor %}],
             backgroundColor: [
                 'rgba(51, 100, 255, 0.2)',

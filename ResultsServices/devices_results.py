@@ -15,18 +15,18 @@ class DeviceResults:
 
         main_result = [
             {
-            'Device': 'Desktop',
-            'Goal Completions': current_results[0]['desktop'],
-            'Previous': previous_results[0]['desktop'],
-            'Change': str(round(((float(current_results[0]['desktop'])-float(previous_results[0]['desktop'])) /
-                                 float(previous_results[0]['desktop'])) * 100, 2)) + '%'
+                'Device': 'Desktop',
+                'Goal Completions': current_results[0]['desktop'],
+                'Previous': previous_results[0]['desktop'],
+                'Change': str(round(((float(current_results[0]['desktop'])-float(previous_results[0]['desktop'])) /
+                                     float(previous_results[0]['desktop'])) * 100, 2)) + '%'
             },
             {
-            'Device': 'Mobile',
-            'Goal Completions': current_results[0]['mobile'],
-            'Previous': previous_results[0]['mobile'],
-            'Change': str(round(((float(current_results[0]['mobile']) - float(previous_results[0]['mobile'])) /
-                              float(previous_results[0]['mobile'])) * 100, 2)) + '%'
+                'Device': 'Mobile',
+                'Goal Completions': current_results[0]['mobile'],
+                'Previous': previous_results[0]['mobile'],
+                'Change': str(round(((float(current_results[0]['mobile']) - float(previous_results[0]['mobile'])) /
+                                  float(previous_results[0]['mobile'])) * 100, 2)) + '%'
             },
             {
                 'Device': 'Tablet',
